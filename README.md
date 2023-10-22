@@ -19,7 +19,7 @@ Pour lancer le serveur : `ng serve`. L'url de l'application : `http://localhost:
 
 ## Liens
 
-- **Trello** :
+- **Trello** : https://trello.com/b/9ucmatzJ/s5-sae-emploi-du-temps
 
 
 ## Documentation
