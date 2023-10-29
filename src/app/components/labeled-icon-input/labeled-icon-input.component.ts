@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthLoginForm } from 'src/app/models/forms/AuthLoginForm';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-labeled-icon-input',
@@ -15,4 +14,5 @@ export class LabeledIconInputComponent {
     @Input() typeInput: string = 'text';
     @Input() hasIcon: boolean = true;
     @Input() hasAction: boolean = false;
+    @Input() control!: FormControl;
 }
