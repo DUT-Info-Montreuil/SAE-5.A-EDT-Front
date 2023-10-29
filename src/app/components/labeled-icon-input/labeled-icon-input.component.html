@@ -12,7 +12,7 @@
                     'pr-2': !hasAction,
                     'pl-12': hasIcon,
                     'pl-4': !hasIcon,
-                    'border-red-500 ' : control.touched && control.invalid,
+                    'border-2 border-danger focus:border-danger focus:ring-transparent' : (control.touched && control.invalid),
                 }"
                 value=""
                 [placeholder]="placeholder"
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div @fade *ngIf="control.touched && control.invalid">
-        <div class="py-1 text-red-500 font-aileron text-sm">
+        <div class="py-1 text-danger font-aileron text-sm">
             <div class="flex gap-x-1 items-center content-center">
                 <svg width="15" height="15" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path

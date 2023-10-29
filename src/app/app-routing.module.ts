@@ -24,7 +24,7 @@ const routes: Routes = [
         component: AuthLayoutComponent,
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'login' },
-            { path: 'login', component: LoginComponent },
+            { path: 'login', component: LoginComponent, data: { animation: 'loginPage' } },
             { path: 'logout', component: LogoutComponent },
             // ici on mettra les autres routes d'authentification si nécessaire
         ],

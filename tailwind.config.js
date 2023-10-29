@@ -30,6 +30,22 @@ module.exports = {
             subtitle: "#E9E9EF",
             light: "#F5F5FB",
             black: "#000000",
+
+            warning: "#FF9F10",
+            "warning-light-1": "#FFEDD2",
+            "warning-light-2": "#FFFCF8",
+
+            danger: "#FA5353",
+            "danger-light-1": "#F8E8E8",
+            "danger-light-2": "#FFF9F8",
+
+            info: "#4162FF",
+            "info-light-1": "#E8EBF8",
+            "info-light-2": "#F8FBFF",
+
+            success: "#4EC53B",
+            "success-light-1": "#E6F5E6",
+            "success-light-2": "#F8FFF8",
         },
         container: {
             center: true,
