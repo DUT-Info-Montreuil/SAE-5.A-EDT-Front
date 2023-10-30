@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RoutePaths } from 'src/app/routes';
 
 @Component({
     selector: 'app-login',
@@ -7,11 +9,12 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
     styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+    public routes = RoutePaths;
     loginForm: FormGroup;
     isPasswordVisible: boolean = false;
     isLoading: boolean = false;
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, private router: Router) {
         this.loginForm = this.fb.group({
             username: ['', [Validators.required, Validators.minLength(3)]],
             password: ['', [Validators.required, Validators.minLength(6)]],
@@ -31,6 +34,7 @@ export class LoginComponent {
         if (this.loginForm.valid) {
             console.log('Form Submitted', this.loginForm.value);
             this.isLoading = true;
+            this.router.navigate([this.routes.APP]);
             // Ici l'appel à l'API
         } else {
             this.loginForm.markAllAsTouched();

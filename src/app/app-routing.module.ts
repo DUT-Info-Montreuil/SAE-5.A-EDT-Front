@@ -5,6 +5,9 @@ import { LogoutComponent } from './views/auth/logout/logout.component';
 import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { RootComponent } from './views/root/root.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { CalendarComponent } from './views/calendar/calendar.component';
+import { GestionComponent } from './views/gestion/gestion.component';
 
 const routes: Routes = [
     {
@@ -15,7 +18,10 @@ const routes: Routes = [
         path: 'app',
         component: AppLayoutComponent,
         children: [
-            //{ path: 'dashboard', component: DashboardComponent },
+            { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+            { path: 'dashboard', component: DashboardComponent },
+            { path: 'calendar', component: CalendarComponent },
+            { path: 'gestion', component: GestionComponent },
             // ici on mettra les autres routes de l'application
         ],
     },
