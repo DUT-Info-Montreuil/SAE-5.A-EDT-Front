@@ -1,4 +1,4 @@
-<aside class="fixed top-0 left-0 z-40 h-screen transition-all duration-300" [ngClass]="{ 'w-24': sideBarCollapsed, 'w-64': !sideBarCollapsed }">
+<div class="fixed top-0 left-0 z-40 h-screen transition-all duration-300" [ngClass]="{ 'w-24': sideBarCollapsed, 'w-64': !sideBarCollapsed }">
     <div class="flex flex-col justify-between h-full pt-4 bg-white border-r-1 border-subtitle">
         <div class="flex flex-col">
             <div class="flex relative h-24 border-b-1 border-subtitle pl-7">
@@ -69,7 +69,7 @@
                 </ul>
             </div>
         </div>
-        <div class="overflow-x-hidden overflow-y-auto py-4 border-t-1 border-subtitle" [ngClass]="{ 'overflow-y-hidden': overflowYHidden }">
+        <div class="overflow-y-auto py-4 border-t-1 border-subtitle" [ngClass]="{ 'overflow-y-hidden': overflowYHidden }">
             <div class="pl-7 uppercase text-medium font-aileron text-xs font-semibold" [ngClass]="{ 'opacity-0': sideBarCollapsed }"><span>compte</span></div>
             <ul class="pt-2">
                 <app-sidebar-item label="Paramètre" [collapse]="sideBarCollapsed" [routePath]="routes.USER_PROFILE" [active]="isRouteActive(routes.USER_PROFILE)">
@@ -95,4 +95,4 @@
             </ul>
         </div>
     </div>
-</aside>
+</div>
