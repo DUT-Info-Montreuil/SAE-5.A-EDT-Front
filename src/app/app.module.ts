@@ -18,9 +18,10 @@ import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.com
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { CalendarComponent } from './views/calendar/calendar.component';
 import { GestionComponent } from './views/gestion/gestion.component';
+import { SidebarMobileComponent } from './components/sidebar-mobile/sidebar-mobile.component';
 
 @NgModule({
-    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarComponent, GestionComponent],
+    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarComponent, GestionComponent, SidebarMobileComponent],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer })],
     providers: [],
     bootstrap: [RootComponent],
