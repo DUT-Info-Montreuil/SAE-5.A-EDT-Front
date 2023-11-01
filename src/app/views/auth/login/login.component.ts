@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RoutePaths } from 'src/app/routes';
+import { DarkModeService } from 'src/app/services/dark-mode.service';
 
 @Component({
     selector: 'app-login',
@@ -14,12 +15,16 @@ export class LoginComponent {
     isPasswordVisible: boolean = false;
     isLoading: boolean = false;
 
-    constructor(private fb: FormBuilder, private router: Router) {
+    constructor(private fb: FormBuilder, private router: Router, private darkModeService: DarkModeService) {
         this.loginForm = this.fb.group({
             username: ['', [Validators.required, Validators.minLength(3)]],
             password: ['', [Validators.required, Validators.minLength(6)]],
             rememberMe: [false],
         });
+    }
+
+    get isDarkMode(): boolean {
+        return this.darkModeService.getDarkModeStatus();
     }
 
     get usernameControl(): FormControl {

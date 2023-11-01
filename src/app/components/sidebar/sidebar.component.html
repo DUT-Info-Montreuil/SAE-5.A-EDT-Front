@@ -1,23 +1,22 @@
 <div class="fixed top-0 left-0 z-40 h-screen transition-all duration-300" [ngClass]="{ 'w-16': sideBarCollapsed, 'w-64': !sideBarCollapsed }">
-    <div class="flex flex-col justify-between h-full pt-4 bg-white border-r-1 border-subtitle">
+    <div class="flex flex-col justify-between h-full pt-4 bg-white dark:bg-light-dark border-r-0.5 border-subtitle dark:border-grey">
         <div class="flex flex-col">
-            <div class="flex relative h-24 border-b-1 border-subtitle pl-7">
+            <div class="flex relative h-24 border-b-0.5 border-subtitle dark:border-grey pl-7">
                 <a class="flex gap-x-4 items-center" routerLink="/app">
                     <div class="w-10 h-10">
                         <!--Ici le logo -->
                     </div>
                     <div [@textAnimation]="sideBarCollapsed ? 'collapsed' : 'expanded'" class="flex flex-col overflow-x-hidden">
-                        <p class="text-base text-grey font-bold leading-5 truncate">ENT</p>
-                        <p class="text-sm text-medium leading-4 truncate">IUT de Montreuil</p>
+                        <p class="text-base text-grey dark:text-body-light font-bold leading-5 truncate">ENT</p>
+                        <p class="text-sm text-medium dark:text-medium leading-4 truncate">IUT de Montreuil</p>
                     </div>
                 </a>
 
-                <button (click)="toggleSidebar()" class="absolute -bottom-4 -right-4 h-8 w-8 rounded-full bg-light p-1">
+                <button (click)="toggleSidebar()" class="absolute -bottom-4 -right-4 h-8 w-8 rounded-full bg-light dark:bg-dark p-1">
                     <div class="rounded-full aspect-square flex justify-center items-center">
-                        <svg class="transition duration-300" width="25" height="25" viewBox="0 0 25 25" fill="none" [ngClass]="{ 'rotate-180': sideBarCollapsed }">
+                        <svg class="transition duration-300 fill-primary" width="25" height="25" viewBox="0 0 25 25" fill="none" [ngClass]="{ 'rotate-180': sideBarCollapsed }">
                             <path
                                 d="M12.5 0C19.4033 0 25 5.59667 25 12.5C25 19.4033 19.4033 25 12.5 25C5.59667 25 0 19.4033 0 12.5C0 5.59667 5.59667 0 12.5 0ZM8.58333 13.0917L13.9883 18.4967C14.1455 18.6485 14.356 18.7325 14.5745 18.7306C14.793 18.7287 15.002 18.641 15.1565 18.4865C15.311 18.332 15.3987 18.123 15.4006 17.9045C15.4025 17.686 15.3185 17.4755 15.1667 17.3183L10.3483 12.5L15.1667 7.68167C15.3185 7.5245 15.4025 7.314 15.4006 7.0955C15.3987 6.877 15.311 6.66799 15.1565 6.51348C15.002 6.35898 14.793 6.27134 14.5745 6.26944C14.356 6.26754 14.1455 6.35153 13.9883 6.50333L8.58333 11.9083C8.5055 11.9858 8.44389 12.0781 8.40211 12.1797C8.36033 12.2813 8.33922 12.3902 8.34 12.5C8.33945 12.6098 8.36067 12.7186 8.40244 12.8202C8.4442 12.9217 8.50569 13.014 8.58333 13.0917Z"
-                                fill="#5E81F4"
                             />
                         </svg>
                     </div>
@@ -28,7 +27,7 @@
                 <ul class="mt-2">
                     <app-sidebar-item label="Tableau de bord" [collapse]="sideBarCollapsed" [routePath]="routes.DASHBOARD" [active]="isRouteActive(routes.DASHBOARD)">
                         <ng-container icon>
-                            <svg class="w-5 h-5" [ngClass]="{ 'fill-primary stroke-primary': isRouteActive(routes.DASHBOARD), 'fill-grey stroke-grey': !isRouteActive(routes.DASHBOARD) }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none">
+                            <svg class="w-5 h-5" [ngClass]="{ 'fill-primary stroke-primary': isRouteActive(routes.DASHBOARD), 'fill-grey dark:fill-body-light stroke-grey dark:stroke-body-light': !isRouteActive(routes.DASHBOARD) }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none">
                                 <path
                                     d="M1 3.63158V18.3684C1.00073 19.0661 1.27822 19.7351 1.77158 20.2284C2.26494 20.7218 2.93387 20.9993 3.63158 21H18.3684C19.0661 20.9993 19.7351 20.7218 20.2284 20.2284C20.7218 19.7351 20.9993 19.0661 21 18.3684V3.63158C20.9993 2.93387 20.7218 2.26494 20.2284 1.77158C19.7351 1.27822 19.0661 1.00073 18.3684 1H3.63158C2.93387 1.00073 2.26494 1.27822 1.77158 1.77158C1.27822 2.26494 1.00073 2.93387 1 3.63158ZM8.36842 2.05263H18.3684C18.787 2.05309 19.1884 2.21959 19.4844 2.5156C19.7804 2.81161 19.9469 3.21296 19.9474 3.63158V10.4737H8.36842V2.05263ZM8.36842 11.5263H19.9474V18.3684C19.9469 18.787 19.7804 19.1884 19.4844 19.4844C19.1884 19.7804 18.787 19.9469 18.3684 19.9474H8.36842V11.5263ZM2.05263 3.63158C2.05309 3.21296 2.21959 2.81161 2.5156 2.5156C2.81161 2.21959 3.21296 2.05309 3.63158 2.05263H7.31579V19.9474H3.63158C3.21296 19.9469 2.81161 19.7804 2.5156 19.4844C2.21959 19.1884 2.05309 18.787 2.05263 18.3684V3.63158Z"
                                 />
@@ -37,7 +36,7 @@
                     </app-sidebar-item>
                     <app-sidebar-item label="Emploi du temps" [collapse]="sideBarCollapsed" [routePath]="routes.CALENDAR" [active]="isRouteActive(routes.CALENDAR)">
                         <ng-container icon>
-                            <svg class="w-5 h-5" [ngClass]="{ 'fill-primary': isRouteActive(routes.CALENDAR), 'fill-grey': !isRouteActive(routes.CALENDAR) }" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="w-5 h-5" [ngClass]="{ 'fill-primary': isRouteActive(routes.CALENDAR), 'fill-grey dark:fill-body-light': !isRouteActive(routes.CALENDAR) }" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M19 2H18V1C18 0.734784 17.8946 0.48043 17.7071 0.292893C17.5196 0.105357 17.2652 0 17 0C16.7348 0 16.4804 0.105357 16.2929 0.292893C16.1054 0.48043 16 0.734784 16 1V2H6V1C6 0.734784 5.89464 0.48043 5.70711 0.292893C5.51957 0.105357 5.26522 0 5 0C4.73478 0 4.48043 0.105357 4.29289 0.292893C4.10536 0.48043 4 0.734784 4 1V2H3C2.20435 2 1.44129 2.31607 0.87868 2.87868C0.316071 3.44129 0 4.20435 0 5V19C0 19.7956 0.316071 20.5587 0.87868 21.1213C1.44129 21.6839 2.20435 22 3 22H15C15.1316 22.0008 15.2621 21.9755 15.3839 21.9258C15.5057 21.876 15.6166 21.8027 15.71 21.71L21.71 15.71C21.7888 15.6281 21.853 15.5334 21.9 15.43V15.34C21.929 15.2527 21.9458 15.1619 21.95 15.07C21.95 15.07 21.95 15.07 21.95 15.01V5C21.9501 4.21294 21.6409 3.45736 21.0891 2.89616C20.5372 2.33497 19.787 2.01312 19 2ZM3 4H4V5C4 5.26522 4.10536 5.51957 4.29289 5.70711C4.48043 5.89464 4.73478 6 5 6C5.26522 6 5.51957 5.89464 5.70711 5.70711C5.89464 5.51957 6 5.26522 6 5V4H16V5C16 5.26522 16.1054 5.51957 16.2929 5.70711C16.4804 5.89464 16.7348 6 17 6C17.2652 6 17.5196 5.89464 17.7071 5.70711C17.8946 5.51957 18 5.26522 18 5V4H19C19.2652 4 19.5196 4.10536 19.7071 4.29289C19.8946 4.48043 20 4.73478 20 5V8H2V5C2 4.73478 2.10536 4.48043 2.29289 4.29289C2.48043 4.10536 2.73478 4 3 4ZM2 19V10H20V14H17C16.2044 14 15.4413 14.3161 14.8787 14.8787C14.3161 15.4413 14 16.2044 14 17V20H3C2.73478 20 2.48043 19.8946 2.29289 19.7071C2.10536 19.5196 2 19.2652 2 19ZM16 18.59V17C16 16.7348 16.1054 16.4804 16.2929 16.2929C16.4804 16.1054 16.7348 16 17 16H18.59L16 18.59Z"
                                 />
@@ -49,7 +48,7 @@
                     </app-sidebar-item>
                     <app-sidebar-item label="Gestion" [collapse]="sideBarCollapsed" [routePath]="routes.GESTION" [active]="isRouteActive(routes.GESTION)">
                         <ng-container icon>
-                            <svg class="w-5 h-5" [ngClass]="{ 'fill-primary': isRouteActive(routes.GESTION), 'fill-grey': !isRouteActive(routes.GESTION) }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none">
+                            <svg class="w-5 h-5" [ngClass]="{ 'fill-primary': isRouteActive(routes.GESTION), 'fill-grey dark:fill-body-light': !isRouteActive(routes.GESTION) }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none">
                                 <g clip-path="url(#clip0_62_172)">
                                     <path
                                         d="M2.625 18H13.875C14.5723 17.998 15.2403 17.7195 15.7324 17.2255C16.2245 16.7316 16.5006 16.0625 16.5 15.3652V9.7125C16.5 9.51359 16.421 9.32282 16.2803 9.18217C16.1397 9.04152 15.9489 8.9625 15.75 8.9625C15.5511 8.9625 15.3603 9.04152 15.2197 9.18217C15.079 9.32282 15 9.51359 15 9.7125V15.3652C15.001 15.6648 14.8831 15.9526 14.6722 16.1653C14.4613 16.378 14.1746 16.4984 13.875 16.5H2.625C2.32543 16.4984 2.03873 16.378 1.82781 16.1653C1.6169 15.9526 1.499 15.6648 1.5 15.3652V4.13475C1.499 3.83518 1.6169 3.54745 1.82781 3.3347C2.03873 3.12196 2.32543 3.00159 2.625 3H8.25C8.44891 3 8.63968 2.92098 8.78033 2.78033C8.92098 2.63968 9 2.44891 9 2.25C9 2.05109 8.92098 1.86032 8.78033 1.71967C8.63968 1.57902 8.44891 1.5 8.25 1.5H2.625C1.92773 1.50199 1.25973 1.78052 0.767594 2.27448C0.275461 2.76845 -0.000597818 3.43748 9.72081e-07 4.13475V15.3652C-0.000597818 16.0625 0.275461 16.7316 0.767594 17.2255C1.25973 17.7195 1.92773 17.998 2.625 18Z"
@@ -69,12 +68,12 @@
                 </ul>
             </div>
         </div>
-        <div class="overflow-x-hidden overflow-y-auto py-4 border-t-1 border-subtitle" [ngClass]="{ 'overflow-y-hidden': overflowYHidden }">
+        <div class="overflow-x-hidden overflow-y-auto py-4 border-t-0.5 border-subtitle dark:border-grey flex flex-col gap-y-2" [ngClass]="{ 'overflow-y-hidden': overflowYHidden }">
             <div class="pl-7 uppercase text-medium font-aileron text-xs font-semibold" [ngClass]="{ 'opacity-0': sideBarCollapsed }"><span>compte</span></div>
-            <ul class="pt-2">
+            <ul>
                 <app-sidebar-item label="Paramètres" [collapse]="sideBarCollapsed" [routePath]="routes.USER_PROFILE" [active]="isRouteActive(routes.USER_PROFILE)">
                     <ng-container icon>
-                        <svg class="w-5 h-5" [ngClass]="{ 'fill-primary': isRouteActive(routes.USER_PROFILE), 'fill-grey': !isRouteActive(routes.USER_PROFILE) }" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="w-5 h-5" [ngClass]="{ 'fill-primary': isRouteActive(routes.USER_PROFILE), 'fill-grey dark:fill-body-light': !isRouteActive(routes.USER_PROFILE) }" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 fill-rule="evenodd"
                                 clip-rule="evenodd"
@@ -85,7 +84,7 @@
                 </app-sidebar-item>
                 <app-sidebar-item label="Se déconnecter" [collapse]="sideBarCollapsed" [routePath]="routes.AUTH" [active]="isRouteActive(routes.AUTH_LOGOUT)">
                     <ng-container icon>
-                        <svg class="w-5 h-5" [ngClass]="{ 'stroke-primary': isRouteActive(routes.AUTH), 'stroke-grey': !isRouteActive(routes.AUTH) }" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="w-5 h-5" [ngClass]="{ 'stroke-primary': isRouteActive(routes.AUTH), 'stroke-grey dark:stroke-body-light': !isRouteActive(routes.AUTH) }" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M146.011 58L188 100L146.011 142" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M76 100H187.971" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M76 188H20C17.8783 188 15.8434 187.157 14.3431 185.657C12.8429 184.157 12 182.122 12 180V20C12 17.8783 12.8429 15.8434 14.3431 14.3431C15.8434 12.8429 17.8783 12 20 12H76" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" />
@@ -93,6 +92,23 @@
                     </ng-container>
                 </app-sidebar-item>
             </ul>
+            <div class="pt-4 flex gap-x-3 items-center" [ngClass]="{ 'pl-7': !sideBarCollapsed, 'w-full justify-center': sideBarCollapsed }">
+                <svg *ngIf="!sideBarCollapsed" class="fill-medium dark:fill-body-light w-4 h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M3 10C3 9.73478 2.89464 9.48043 2.70711 9.29289C2.51957 9.10536 2.26522 9 2 9H1C0.734784 9 0.48043 9.10536 0.292893 9.29289C0.105357 9.48043 0 9.73478 0 10C0 10.2652 0.105357 10.5196 0.292893 10.7071C0.48043 10.8946 0.734784 11 1 11H2C2.26522 11 2.51957 10.8946 2.70711 10.7071C2.89464 10.5196 3 10.2652 3 10ZM3.64 15L2.93 15.71C2.74375 15.8974 2.63921 16.1508 2.63921 16.415C2.63921 16.6792 2.74375 16.9326 2.93 17.12C3.11736 17.3063 3.37081 17.4108 3.635 17.4108C3.89919 17.4108 4.15264 17.3063 4.34 17.12L5.05 16.41C5.21383 16.2187 5.29943 15.9726 5.28971 15.7209C5.27999 15.4693 5.17566 15.2305 4.99756 15.0524C4.81947 14.8743 4.58073 14.77 4.32905 14.7603C4.07738 14.7506 3.8313 14.8362 3.64 15ZM10 3C10.2652 3 10.5196 2.89464 10.7071 2.70711C10.8946 2.51957 11 2.26522 11 2V1C11 0.734784 10.8946 0.48043 10.7071 0.292893C10.5196 0.105357 10.2652 0 10 0C9.73478 0 9.48043 0.105357 9.29289 0.292893C9.10536 0.48043 9 0.734784 9 1V2C9 2.26522 9.10536 2.51957 9.29289 2.70711C9.48043 2.89464 9.73478 3 10 3ZM15.66 5.34C15.9223 5.3389 16.1737 5.23474 16.36 5.05L17.07 4.34C17.1747 4.25035 17.2597 4.14003 17.3197 4.01597C17.3797 3.89191 17.4135 3.75677 17.4188 3.61905C17.4241 3.48133 17.4009 3.344 17.3506 3.21568C17.3004 3.08735 17.2241 2.9708 17.1266 2.87335C17.0292 2.77589 16.9126 2.69964 16.7843 2.64936C16.656 2.59909 16.5187 2.57588 16.3809 2.5812C16.2432 2.58652 16.1081 2.62025 15.984 2.68027C15.86 2.7403 15.7496 2.82532 15.66 2.93L15 3.64C14.8137 3.82736 14.7092 4.08081 14.7092 4.345C14.7092 4.60919 14.8137 4.86264 15 5.05C15.1763 5.22536 15.4116 5.32875 15.66 5.34ZM3.66 5.05C3.84626 5.23474 4.09766 5.3389 4.36 5.34C4.49161 5.34076 4.62207 5.31554 4.74391 5.26577C4.86574 5.21601 4.97656 5.14268 5.07 5.05C5.25625 4.86264 5.36079 4.60919 5.36079 4.345C5.36079 4.08081 5.25625 3.82736 5.07 3.64L4.36 2.93C4.26742 2.8361 4.15725 2.76136 4.03578 2.71005C3.91432 2.65873 3.78393 2.63184 3.65207 2.63091C3.52021 2.62998 3.38946 2.65503 3.26728 2.70463C3.14511 2.75424 3.0339 2.82742 2.94 2.92C2.8461 3.01258 2.77136 3.12275 2.72005 3.24422C2.66873 3.36568 2.64184 3.49607 2.64091 3.62793C2.63903 3.89423 2.74302 4.15037 2.93 4.34L3.66 5.05ZM19 9H18C17.7348 9 17.4804 9.10536 17.2929 9.29289C17.1054 9.48043 17 9.73478 17 10C17 10.2652 17.1054 10.5196 17.2929 10.7071C17.4804 10.8946 17.7348 11 18 11H19C19.2652 11 19.5196 10.8946 19.7071 10.7071C19.8946 10.5196 20 10.2652 20 10C20 9.73478 19.8946 9.48043 19.7071 9.29289C19.5196 9.10536 19.2652 9 19 9ZM16.36 15C16.17 14.8943 15.9508 14.8534 15.7355 14.8835C15.5202 14.9136 15.3205 15.0131 15.1668 15.1668C15.0131 15.3205 14.9136 15.5202 14.8835 15.7355C14.8534 15.9508 14.8943 16.17 15 16.36L15.71 17.07C15.8974 17.2563 16.1508 17.3608 16.415 17.3608C16.6792 17.3608 16.9326 17.2563 17.12 17.07C17.3063 16.8826 17.4108 16.6292 17.4108 16.365C17.4108 16.1008 17.3063 15.8474 17.12 15.66L16.36 15ZM10 4.5C8.9122 4.5 7.84883 4.82257 6.94436 5.42692C6.03989 6.03126 5.33494 6.89025 4.91866 7.89524C4.50238 8.90023 4.39346 10.0061 4.60568 11.073C4.8179 12.1399 5.34172 13.1199 6.11091 13.8891C6.8801 14.6583 7.86011 15.1821 8.927 15.3943C9.9939 15.6065 11.0998 15.4976 12.1048 15.0813C13.1098 14.6651 13.9687 13.9601 14.5731 13.0556C15.1774 12.1512 15.5 11.0878 15.5 10C15.4974 8.54212 14.917 7.14471 13.8862 6.11383C12.8553 5.08295 11.4579 4.50264 10 4.5ZM10 13.5C9.30777 13.5 8.63108 13.2947 8.0555 12.9101C7.47993 12.5256 7.03133 11.9789 6.76642 11.3394C6.50151 10.6999 6.4322 9.99612 6.56725 9.31718C6.7023 8.63825 7.03564 8.01461 7.52513 7.52513C8.01461 7.03564 8.63825 6.7023 9.31718 6.56725C9.99612 6.4322 10.6999 6.50151 11.3394 6.76642C11.9789 7.03133 12.5256 7.47993 12.9101 8.0555C13.2947 8.63108 13.5 9.30777 13.5 10C13.5 10.9283 13.1313 11.8185 12.4749 12.4749C11.8185 13.1313 10.9283 13.5 10 13.5ZM10 17C9.73478 17 9.48043 17.1054 9.29289 17.2929C9.10536 17.4804 9 17.7348 9 18V19C9 19.2652 9.10536 19.5196 9.29289 19.7071C9.48043 19.8946 9.73478 20 10 20C10.2652 20 10.5196 19.8946 10.7071 19.7071C10.8946 19.5196 11 19.2652 11 19V18C11 17.7348 10.8946 17.4804 10.7071 17.2929C10.5196 17.1054 10.2652 17 10 17Z"
+                    />
+                </svg>
+                <app-theme-toggle-button class="flex"></app-theme-toggle-button>
+
+                <svg *ngIf="!sideBarCollapsed" class="stroke-medium dark:stroke-body-light w-4 h-4" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M21.5375 20.75C18.575 20.7904 15.7161 19.6605 13.5817 17.6056C11.4473 15.5508 10.2096 12.7369 10.1375 9.775C10.1381 8.32168 10.433 6.88352 11.0044 5.54727C11.5759 4.21101 12.412 3.00433 13.4625 2C10.3484 2.30748 7.45704 3.75276 5.34209 6.05914C3.22714 8.36552 2.03717 11.3709 2 14.5C2.07548 17.8829 3.48868 21.098 5.93004 23.4409C8.3714 25.7839 11.6419 27.0637 15.025 27C17.5444 27.022 20.0161 26.3136 22.1413 24.9603C24.2666 23.6071 25.9541 21.6671 27 19.375C25.3194 20.2742 23.4435 20.7464 21.5375 20.75Z"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
         </div>
     </div>
 </div>

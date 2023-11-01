@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     purge: ["./src/**/*.{html,ts}"],
-    darkMode: false,
+    darkMode: "class",
     theme: {
         borderWidth: {
             DEFAULT: "1px",
             0: "0",
+            0.5: "0.5px",
             1: "1px",
             2: "2px",
             4: "4px",
@@ -15,21 +16,26 @@ module.exports = {
             // Base
             transparent: "transparent",
             white: "#FFFFFF",
+            black: "#000000",
 
-            // Custom
+            // Custom - Light Mode
             primary: "#5E81F4",
             "primary-hover": "#3255C6",
-
             secondary: "#484796",
-
             grey: "#6C6773",
-
+            dark: "#141414",
             accent: "#322F37",
             body: "#131336",
-            medium: "#A2A2C3",
+            medium: "#A5A5A5",
             subtitle: "#E9E9EF",
             light: "#F5F5FB",
-            black: "#000000",
+
+            // Custom - Dark Mode
+            "body-light": "#FAFAFA",
+            "primary-dark": "#4356B4",
+            "grey-dark": "#444444",
+            "subtitle-dark": "#6A6A6A",
+            "light-dark": "#252525",
 
             warning: "#FF9F10",
             "warning-light-1": "#FFEDD2",

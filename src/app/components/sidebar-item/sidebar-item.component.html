@@ -1,21 +1,22 @@
 <li #menuItem (click)="handleClick()" class="flex overflow-x-hidden">
     <a
         [routerLink]="routePath"
-        class="grow flex items-center py-2.5 my-0.5 mx-4 rounded-lg transition-all duration-300"
+        class="grow flex items-center py-2.5 my-0.5 mx-4 rounded-lg transition-all duration-100"
         [ngClass]="{
             'justify-center': collapse,
             'justify-start': !collapse,
-            'bg-light': active,
-            'hover:bg-light': !active,
+            'bg-light dark:bg-grey-dark': active,
+            'hover:bg-light dark:hover:bg-grey-dark': !active,
             'pl-3 mx-4': !collapse,
             'mx-2': collapse
         }"
     >
         <ng-content select="[icon]"></ng-content>
-        <span *ngIf="!collapse" class="ml-3 font-aileron text-sm truncate" [ngClass]="{ 'text-body font-semibold': active, 'text-grey': !active }">{{ label }}</span>
+        <span *ngIf="!collapse" class="ml-3 font-aileron text-sm truncate" [ngClass]="{ 'text-body dark:text-white font-semibold': active, 'text-grey dark:text-body-light': !active }">{{ label }}</span>
     </a>
+    <!--
     <div #tooltip *ngIf="collapse" class="absolute z-10 invisible inline-block px-3 py-2 text-base font-aileron font-bold text-white bg-primary rounded-lg shadow-sm opacity-0 tooltip">
         {{ label }}
         <div class="tooltip-arrow" data-popper-arrow></div>
-    </div>
+    </div>-->
 </li>

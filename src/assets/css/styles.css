@@ -4,10 +4,6 @@
 @import "tailwindcss/utilities";
 
 @layer base {
-    html,
-    body {
-        background-color: #f5f5fb;
-    }
 }
 
 @layer components {
@@ -32,7 +28,7 @@
     }
 
     p {
-        @apply text-body font-normal font-aileron text-base leading-5 lg:leading-6;
+        @apply text-body dark:text-light font-normal font-aileron text-base leading-5 lg:leading-6;
     }
 
     .btn-primary {
