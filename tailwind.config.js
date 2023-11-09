@@ -21,6 +21,7 @@ module.exports = {
             // Custom - Light Mode
             primary: "#5E81F4",
             "primary-hover": "#3255C6",
+            "primary-dark": "#333A54",
             secondary: "#484796",
             grey: "#6C6773",
             dark: "#141414",
@@ -32,7 +33,6 @@ module.exports = {
 
             // Custom - Dark Mode
             "body-light": "#FAFAFA",
-            "primary-dark": "#4356B4",
             "grey-dark": "#444444",
             "subtitle-dark": "#6A6A6A",
             "light-dark": "#252525",
@@ -52,6 +52,12 @@ module.exports = {
             success: "#4EC53B",
             "success-light-1": "#E6F5E6",
             "success-light-2": "#F8FFF8",
+
+            // Custom - Calendar Item
+            "calendar-purple": "#3F3D56",
+            "calendar-pink": "#BD428F",
+            "calendar-red": "#FF808B",
+            "calendar-blue": "#9698D6",
         },
         container: {
             center: true,
@@ -69,6 +75,10 @@ module.exports = {
             },
             boxShadow: {
                 card: "0px 8px 16px 0px rgba(0, 0, 0, 0.03)",
+                purple: "0px 4px 10px 0px rgba(63, 61, 86, 0.15)",
+                pink: "0px 4px 10px 0px rgba(189, 66, 143, 0.15)",
+                red: "0px 4px 10px 0px rgba(255, 128, 139, 0.15)",
+                blue: "0px 4px 10px 0px rgba(150, 152, 214, 0.15)",
             },
             lineHeight: {
                 12: "3rem",

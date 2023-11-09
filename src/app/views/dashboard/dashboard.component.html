@@ -1,1 +1,33 @@
-<p>dashboard works!</p>
+<div class="p-8 flex flex-col gap-y-8">
+    <div class="w-full flex justify-between items-center">
+        <h3 class="text-body">Tableau de bord</h3>
+        <h3 class="font-normal text-medium dark:text-medium">{{ formattedDate }}</h3>
+    </div>
+    <div class="lg:mt-6 w-full bg-purple p-4 rounded-xl flex bg-primary-dark dark:bg-light-dark relative">
+        <div class="flex flex-col lg:basis-1/2">
+            <h1 class="text-white dark:text-white">Salut, [Prénom] !</h1>
+            <p class="text-medium text-xs md:text-sm">Nous sommes ravis de vous retrouver sur notre plateforme. Profitez de tous les avantages de notre environnement numérique de travail.</p>
+        </div>
+        <div class="hidden lg:flex absolute mr-20 right-0 bottom-0">
+            <img src="../../../assets/illustrations/dashboard/dashboard_first.svg" alt="ENT - Dashboard" />
+        </div>
+    </div>
+    <div class="flex flex-col gap-y-4">
+        <h3 class="text-body">Prochain cours</h3>
+        <div #menu class="flex overflow-x-scroll scrollbar-hide max-w-full" (scroll)="updateProgressBar()">
+            <div class="flex flex-nowrap gap-x-4">
+                <app-calendar-item color="bg-calendar-purple shadow-purple" personal="AGo" timeStart="9h30" timeEnd="11h30" course="Anglais" room="B0-06"></app-calendar-item>
+                <app-calendar-item color="bg-calendar-pink shadow-pink"></app-calendar-item>
+                <app-calendar-item color="bg-calendar-red shadow-red"></app-calendar-item>
+                <app-calendar-item color="bg-calendar-blue shadow-blue"></app-calendar-item>
+                <app-calendar-item color="bg-calendar-purple shadow-purple"></app-calendar-item>
+                <app-calendar-item color="bg-calendar-pink shadow-pink"></app-calendar-item>
+                <app-calendar-item color="bg-calendar-red shadow-red"></app-calendar-item>
+                <app-calendar-item color="bg-calendar-blue shadow-blue"></app-calendar-item>
+            </div>
+        </div>
+        <div class="w-32 bg-subtitle dark:bg-light-dark h-1 mx-auto rounded-md relative">
+            <div class="w-8 h-1 bg-primary rounded-md absolute top-0 left-0" [style.left.%]="scrollProgress"></div>
+        </div>
+    </div>
+</div>
