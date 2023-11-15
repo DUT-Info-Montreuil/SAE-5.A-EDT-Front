@@ -9,6 +9,5 @@ export enum RoutePaths {
     DASHBOARD = '/app/dashboard',
     CALENDAR = '/app/calendar',
     GESTION = '/app/gestion',
-
-    USER_PROFILE = '/user',
+    USER_PROFILE = '/app/settings',
 }

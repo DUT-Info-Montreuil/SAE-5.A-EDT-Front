@@ -1,0 +1,37 @@
+<div class="p-4 md:p-8 flex flex-col gap-y-8">
+    <div class="w-full flex justify-between items-center">
+        <h3 class="text-body">Paramêtres</h3>
+        <h3 class="font-normal text-medium dark:text-medium text-right">{{ formattedDate }}</h3>
+    </div>
+    <div  class="flex flex-col w-full p-5 rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
+        <form class="space-y-4">
+            <div>
+                <h3 class="text-body">Identifiant</h3>
+                <input id="nom" type="text" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Votre nom">
+            </div>
+            <div>
+                <h3 class="text-body">Email</h3>
+                <input id="email" type="email" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Votre email">
+            </div>
+        </form>
+    </div>
+    <div  class="flex flex-col w-full p-5 rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
+        <form class="space-y-4">
+            <div>
+                <h3 class="text-body">Ancien mot de passe</h3>
+                <input id="motDePasse" type="password" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Nouveau mot de passe">
+            </div>
+            <div>
+                <h3 class="text-body">Nouveau mot de passe</h3>
+                <input id="motDePasse" type="password" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Nouveau mot de passe">
+            </div>
+            <div>
+                <h3 class="text-body">Confirmation</h3>
+                <input id="motDePasse" type="password" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Nouveau mot de passe">
+            </div>
+            <div>
+                <button type="submit" class="bg-blue-500 text-white rounded-md px-4 py-2">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</div>
