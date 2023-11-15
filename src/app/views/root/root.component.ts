@@ -25,7 +25,7 @@ export class RootComponent implements OnInit {
         if (this.authService.isAuthenticated) {
             this.router.navigate([RoutePaths.APP]);
         } else {
-            this.router.navigate([RoutePaths.APP]);
+            this.router.navigate([RoutePaths.AUTH]);
         }
     }
 }
