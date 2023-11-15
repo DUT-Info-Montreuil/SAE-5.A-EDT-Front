@@ -1,8 +1,9 @@
 <div class="flex justify-center">
-    <div class="flex w-96 md:w-auto bg-white rounded-2xl shadow-card py-10 px-5 md:px-10 lg:px-20 gap-x-16">
-        <img class="hidden md:flex" src="../../../../assets/illustrations/auth/auth_login.svg" alt="ENT - Connexion" />
+    <div class="flex w-96 md:w-auto bg-white dark:bg-light-dark rounded-2xl shadow-card py-10 px-5 md:px-10 lg:px-20 gap-x-16">
+        <img *ngIf="!isDarkMode" class="hidden md:flex" src="../../../../assets/illustrations/auth/auth_login.svg" alt="ENT - Connexion" />
+        <img *ngIf="isDarkMode" class="hidden md:flex" src="../../../../assets/illustrations/auth/auth_login_dark.svg" alt="ENT - Connexion" />
         <div class="flex flex-col gap-y-10 w-full md:w-80">
-            <h4 class="text-center text-secondary">Connexion</h4>
+            <h2 class="text-center text-secondary dark:text-white font-bold">Connexion</h2>
             <div class="flex flex-col gap-y-8">
                 <div [formGroup]="loginForm" class="flex flex-col gap-y-5">
                     <app-labeled-icon-input [control]="usernameControl" model="email" label="Identifiant" placeholder="Entrez votre identifiant">
@@ -38,8 +39,8 @@
                         </ng-container>
                     </app-labeled-icon-input>
                     <div class="flex items-center gap-x-3">
-                        <input type="checkbox" class="w-5 h-5 rounded-[5px] bg-light checked:bg-secondary focus:shadow-none focus:ring-0" />
-                        <label for="" class="font-aileron text-grey text-base">Se souvenir de moi</label>
+                        <input type="checkbox" class="w-5 h-5 rounded-[5px] bg-light checked:bg-secondary dark:checked:bg-secondary focus:shadow-none focus:ring-0" />
+                        <label for="" class="font-aileron text-grey dark:text-medium text-base">Se souvenir de moi</label>
                     </div>
                 </div>
                 <div class="flex justify-center">

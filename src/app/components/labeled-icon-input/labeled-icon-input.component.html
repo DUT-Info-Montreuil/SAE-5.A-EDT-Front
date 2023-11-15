@@ -1,12 +1,12 @@
 <div class="flex flex-col gap-y-1">
-    <label class="font-aileron text-body font-semibold">{{ label }}</label>
+    <label class="font-aileron text-body dark:text-white font-semibold">{{ label }}</label>
     <div class="group">
         <div class="flex relative w-full items-center">
             <div *ngIf="hasIcon" class="absolute flex justify-center items-center content-center rounded-l-md aspect-square h-10">
                 <ng-content select="[icon]"></ng-content>
             </div>
             <input
-                class="w-full bg-subtitle font-aileron text-grey placeholder:text-grey border-1 border-transparent rounded-lg focus:ring-primary"
+                class="w-full bg-subtitle font-aileron text-grey placeholder:text-grey dark:text-body-light placeholder:dark:text-body-light dark:bg-grey-dark border-1 border-transparent rounded-lg focus:ring-primary"
                 [ngClass]="{
                     'pr-8': !hasAction,
                     'pr-2': !hasAction,
