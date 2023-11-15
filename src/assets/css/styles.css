@@ -20,7 +20,7 @@
     }
 
     p {
-        @apply text-body dark:text-light font-normal font-aileron text-base leading-5 lg:leading-6;
+        @apply text-body dark:text-light font-normal font-aileron text-xs xs:text-sm md:text-base leading-5 lg:leading-6;
     }
 
     .btn-primary {

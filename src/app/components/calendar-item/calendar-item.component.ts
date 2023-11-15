@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./calendar-item.component.css'],
 })
 export class CalendarItemComponent {
-    @Input() color: string = 'Non renseigné';
+    @Input() color: string = 'bg-calendar-purple';
     @Input() timeStart: string = 'Non renseigné';
     @Input() timeEnd: string = 'Non renseigné';
     @Input() personal: string = 'Non renseigné';

@@ -20,6 +20,7 @@ module.exports = {
 
             // Custom - Light Mode
             primary: "#5E81F4",
+            "primary-light-1": "#BBC7F4",
             "primary-hover": "#3255C6",
             "primary-dark": "#333A54",
             secondary: "#484796",
@@ -93,8 +94,14 @@ module.exports = {
             minWidth: {
                 18: "18rem",
             },
+            minHeight: {
+                18: "18rem",
+            },
             width: {
                 120: "30rem",
+            },
+            fontSize: {
+                xxs: "10px",
             },
         },
         fontFamily: {
