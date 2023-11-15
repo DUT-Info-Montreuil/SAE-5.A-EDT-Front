@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     purge: ["./src/**/*.{html,ts}"],
-    darkMode: false,
+    darkMode: "class",
     theme: {
         borderWidth: {
             DEFAULT: "1px",
             0: "0",
+            0.5: "0.5px",
             1: "1px",
             2: "2px",
             4: "4px",
@@ -15,21 +16,27 @@ module.exports = {
             // Base
             transparent: "transparent",
             white: "#FFFFFF",
+            black: "#000000",
 
-            // Custom
+            // Custom - Light Mode
             primary: "#5E81F4",
+            "primary-light-1": "#BBC7F4",
             "primary-hover": "#3255C6",
-
+            "primary-dark": "#333A54",
             secondary: "#484796",
-
             grey: "#6C6773",
-
+            dark: "#141414",
             accent: "#322F37",
             body: "#131336",
-            medium: "#A2A2C3",
+            medium: "#A5A5A5",
             subtitle: "#E9E9EF",
             light: "#F5F5FB",
-            black: "#000000",
+
+            // Custom - Dark Mode
+            "body-light": "#FAFAFA",
+            "grey-dark": "#444444",
+            "subtitle-dark": "#6A6A6A",
+            "light-dark": "#252525",
 
             warning: "#FF9F10",
             "warning-light-1": "#FFEDD2",
@@ -46,6 +53,12 @@ module.exports = {
             success: "#4EC53B",
             "success-light-1": "#E6F5E6",
             "success-light-2": "#F8FFF8",
+
+            // Custom - Calendar Item
+            "calendar-purple": "#3F3D56",
+            "calendar-pink": "#BD428F",
+            "calendar-red": "#FF808B",
+            "calendar-blue": "#9698D6",
         },
         container: {
             center: true,
@@ -63,6 +76,10 @@ module.exports = {
             },
             boxShadow: {
                 card: "0px 8px 16px 0px rgba(0, 0, 0, 0.03)",
+                purple: "0px 4px 10px 0px rgba(63, 61, 86, 0.15)",
+                pink: "0px 4px 10px 0px rgba(189, 66, 143, 0.15)",
+                red: "0px 4px 10px 0px rgba(255, 128, 139, 0.15)",
+                blue: "0px 4px 10px 0px rgba(150, 152, 214, 0.15)",
             },
             lineHeight: {
                 12: "3rem",
@@ -77,8 +94,14 @@ module.exports = {
             minWidth: {
                 18: "18rem",
             },
+            minHeight: {
+                18: "18rem",
+            },
             width: {
                 120: "30rem",
+            },
+            fontSize: {
+                xxs: "10px",
             },
         },
         fontFamily: {

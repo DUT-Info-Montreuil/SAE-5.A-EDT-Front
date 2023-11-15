@@ -1,0 +1,26 @@
+<nav aria-label="Page navigation example">
+    <ul class="inline-flex -space-x-px">
+        <li *ngIf="totalPage > 1 && currentPage !== 1" class="group transition duration-300 hover:-translate-y-0.5">
+            <a [routerLink]="[routeName]" [queryParams]="{ page: currentPage - 1 }" class="px-4 w-full h-full flex flex-col justify-center content-center">
+                <svg class="fill-primary-light-1 group-hover:fill-primary-hover" width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6.55409 11.6234C6.05198 12.1255 5.23792 12.1255 4.73581 11.6234L0.627618 7.51522C-0.209218 6.67839 -0.209221 5.3216 0.627618 4.48476L4.73581 0.376569C5.23791 -0.125533 6.05198 -0.125533 6.55409 0.376569C7.05619 0.878672 7.05619 1.69274 6.55409 2.19484L2.74894 5.99999L6.55409 9.80514C7.05619 10.3072 7.05619 11.1213 6.55409 11.6234Z" />
+                </svg>
+            </a>
+        </li>
+
+        <ng-container *ngIf="totalPage > 1">
+            <li *ngFor="let p of pagination; let index = index" [ngClass]="{ 'group transition duration-300 hover:-translate-y-0.5': p !== -1 }">
+                <a *ngIf="p !== -1" [routerLink]="[routeName]" [queryParams]="{ page: p }" class="px-3 py-2 rounded-lg" [ngClass]="p === currentPage ? 'bg-primary text-white group-hover:bg-primary-hover' : 'bg-transparent text-primary-light-1 hover:text-primary'">{{ p }}</a>
+                <span *ngIf="p === -1" class="px-3 py-2 bg-transparent text-primary-light-1 cursor-default">...</span>
+            </li>
+        </ng-container>
+
+        <li *ngIf="totalPage > 1 && currentPage !== totalPage" class="group transition duration-300 hover:-translate-y-0.5">
+            <a [routerLink]="[routeName]" [queryParams]="{ page: currentPage + 1 }" class="px-4 w-full h-full flex flex-col justify-center content-center">
+                <svg class="fill-primary-light-1 group-hover:fill-primary-hover" width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.376577 0.376569C0.87868 -0.125533 1.69275 -0.125533 2.19485 0.376569L6.30305 4.48476C7.13988 5.3216 7.13988 6.67838 6.30305 7.51522L2.19485 11.6234C1.69275 12.1255 0.87868 12.1255 0.376577 11.6234C-0.125526 11.1213 -0.125526 10.3072 0.376577 9.80514L4.18173 5.99999L0.376577 2.19484C-0.125526 1.69274 -0.125526 0.878672 0.376577 0.376569Z" />
+                </svg>
+            </a>
+        </li>
+    </ul>
+</nav>
