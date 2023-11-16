@@ -9,28 +9,23 @@ import { DateFormattingService } from 'src/app/services/date-formatting.service'
 })
 export class SettingsComponent {
   formattedDate: string | null;
-  control: any;
-  newPasswordForm!: FormGroup;
-  isPasswordVisible: boolean = false;
+  showError: boolean = false;
 
-
-
-  constructor(private fb: FormBuilder, private dateFormattingService: DateFormattingService) {
+  constructor(private dateFormattingService: DateFormattingService) {
       this.formattedDate = this.dateFormattingService.format(new Date());
-      this.newPasswordForm = this.fb.group({
-        newPassword: ['', [Validators.required, Validators.minLength(6)]],
-        validation: ['', [Validators.required, Validators.minLength(6)]],
-    });
   }
 
-  get oldPasswordControl(): FormControl {
-    return this.newPasswordForm.get('oldPassword') as FormControl;
-}
+  resetError() {
+    this.showError = false; // Réinitialise showError à false lorsque l'utilisateur entre dans le champ
+  }
 
-get newPasswordControl(): FormControl {
-    return this.newPasswordForm.get('newPassword') as FormControl;
-}
-get confirmationPasswordControl(): FormControl {
-  return this.newPasswordForm.get('confirmation') as FormControl;
-}
+  checkLength(value: string) {
+    if (value.length < 8 ) {
+      this.showError = true; // Affiche l'erreur si la longueur est inférieure à 8
+    }
+  }
+
+  checkSameInput(value: string) {
+    // TODO A codé avec une fois accès à l'api 
+  }
 }

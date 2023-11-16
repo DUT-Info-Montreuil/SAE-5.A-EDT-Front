@@ -16,22 +16,36 @@
         </form>
     </div>
     <div  class="flex flex-col w-full p-5 rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
-        <form class="space-y-4">
-            <div>
-                <h3 class="text-body">Ancien mot de passe</h3>
-                <input id="motDePasse" type="password" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Nouveau mot de passe">
-            </div>
-            <div>
-                <h3 class="text-body">Nouveau mot de passe</h3>
-                <input id="motDePasse" type="password" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Nouveau mot de passe">
-            </div>
-            <div>
-                <h3 class="text-body">Confirmation</h3>
-                <input id="motDePasse" type="password" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Nouveau mot de passe">
-            </div>
-            <div>
-                <button type="submit" class="bg-blue-500 text-white rounded-md px-4 py-2">Enregistrer</button>
-            </div>
-        </form>
+        
+        <h3 class="text-body">Ancien mot de passe</h3>    
+        <input #oldPassword 
+            class="border border-gray-300 rounded-md px-3 py-2 w-full"
+            placeholder="Ancien mot de passe" 
+            (focus)="resetError()" 
+            (blur)="null">
+
+        <h3 class="text-body">Nouveau mot de passe</h3>
+        <input #newPassword
+            class="border border-gray-300 rounded-md px-3 py-2 w-full" 
+            placeholder="Nouveau mot de passe" 
+            (focus)="resetError()" 
+            (blur)="checkLength(newPassword.value)">
+        <div *ngIf="showError" style="color: red;" class="flex flex-col w-full p-5 rounded-xl bg-light dark:bg-dark gap-y-6 justify-between">
+            Your password must conform to the following constraints :
+            <ul class="mg-2">
+                <li>    Minimum length: 8</li>
+                <li>    Maximum length: 15</li>
+                <li>                    Your new password may not be the same as your old password</li>
+              </ul>              
+        </div>
+        <h3 class="text-body">Confirmation</h3>
+            <input #confimation 
+            class="border border-gray-300 rounded-md px-3 py-2 w-full"
+            placeholder="Confirmez le nouveau mot de passe"
+            (focus)="resetError()" 
+            (blur)="null">
+ >
+
+        <button type="submit" class="bg-blue-500 text-white rounded-md px-4 py-2">Enregistrer</button>
     </div>
 </div>
