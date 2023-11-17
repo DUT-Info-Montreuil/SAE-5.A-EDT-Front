@@ -19,7 +19,7 @@ const routes: Routes = [
         path: 'app',
         component: AppLayoutComponent,
         children: [
-            { path: '', pathMatch: 'full', redirectTo: 'settings' },
+            { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
             { path: 'dashboard', component: DashboardComponent },
             { path: 'calendar', component: CalendarComponent },
             { path: 'gestion', component: GestionComponent },

@@ -41,9 +41,6 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 registerLocaleData(localeFr);
 
 @NgModule({
-<<<<<<< Updated upstream
-    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent, SettingsComponent, LabelFieldComponent],
-=======
     declarations: [
         AuthLayoutComponent,
         AppLayoutComponent,
@@ -63,12 +60,13 @@ registerLocaleData(localeFr);
         DragToScrollDirective,
         EventCardComponent,
         PaginationComponent,
+        SettingsComponent,
+        LabelFieldComponent,
         ModalComponent,
         CreateReminderModalComponent,
         EditReminderModalComponent,
         LabeledDateInputComponent,
     ],
->>>>>>> Stashed changes
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe],
     bootstrap: [RootComponent],
