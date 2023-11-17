@@ -27,6 +27,8 @@ import { CalendarItemComponent } from './components/calendar-item/calendar-item.
 import { DragToScrollDirective } from './directives/drag-to-scroll.directive';
 import { EventCardComponent } from './components/event-card/event-card.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { SettingsComponent } from './views/settings/settings.component';
+import { LabelFieldComponent } from './components/label-field/label-field.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout'], rehydrate: true })(reducer);
@@ -35,7 +37,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 registerLocaleData(localeFr);
 
 @NgModule({
-    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent],
+    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent, SettingsComponent, LabelFieldComponent],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe],
     bootstrap: [RootComponent],
