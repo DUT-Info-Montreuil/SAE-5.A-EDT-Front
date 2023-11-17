@@ -1,8 +1,11 @@
 <div class="flex flex-col gap-y-1">
-    <label class="font-aileron text-body dark:text-white font-semibold">{{ label }}</label>
+    <div class="flex gap-x-2">
+        <label class="font-aileron text-body dark:text-white font-semibold">{{ label }}</label>
+        <ng-content name="popever"></ng-content>
+    </div>
     <div class="group">
         <div class="flex relative w-full" [ngClass]="{ 'items-start': typeInput === 'textarea', 'items-center': typeInput !== 'textarea' }">
-            <div *ngIf="hasIcon" class="absolute flex h-full justify-center items-center content-center rounded-l-md aspect-square">
+            <div *ngIf="hasIcon" class="absolute flex h-10 justify-center items-center content-center rounded-l-md aspect-square">
                 <ng-content select="[icon]"></ng-content>
             </div>
             <textarea
