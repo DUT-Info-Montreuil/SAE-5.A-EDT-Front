@@ -27,6 +27,10 @@ import { CalendarItemComponent } from './components/calendar-item/calendar-item.
 import { DragToScrollDirective } from './directives/drag-to-scroll.directive';
 import { EventCardComponent } from './components/event-card/event-card.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { CreateReminderModalComponent } from './components/create-reminder-modal/create-reminder-modal.component';
+import { EditReminderModalComponent } from './components/edit-reminder-modal/edit-reminder-modal.component';
+import { LabeledDateInputComponent } from './components/labeled-date-input/labeled-date-input.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout'], rehydrate: true })(reducer);
@@ -35,7 +39,30 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 registerLocaleData(localeFr);
 
 @NgModule({
-    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent],
+    declarations: [
+        AuthLayoutComponent,
+        AppLayoutComponent,
+        LoginComponent,
+        LogoutComponent,
+        ButtonComponent,
+        RootComponent,
+        LabeledIconInputComponent,
+        SidebarComponent,
+        SidebarItemComponent,
+        DashboardComponent,
+        CalendarComponent,
+        GestionComponent,
+        SidebarMobileComponent,
+        ThemeToggleButtonComponent,
+        CalendarItemComponent,
+        DragToScrollDirective,
+        EventCardComponent,
+        PaginationComponent,
+        ModalComponent,
+        CreateReminderModalComponent,
+        EditReminderModalComponent,
+        LabeledDateInputComponent,
+    ],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe],
     bootstrap: [RootComponent],
