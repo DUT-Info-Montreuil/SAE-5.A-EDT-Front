@@ -1,0 +1,10 @@
+<div class="relative z-50" (click)="close()">
+    <div class="fixed inset-0 bg-black bg-opacity-30 dark:bg-opacity-40" *ngIf="isOpen" [@fadeInOut]></div>
+    <div class="fixed inset-0 overflow-y-auto" *ngIf="isOpen" [@fadeInOut]>
+        <div class="flex min-h-full items-center justify-center text-center" [ngClass]="padding">
+            <div class="modal-content relative w-full bg-white dark:bg-light-dark shadow-card text-left" (click)="$event.stopPropagation()" [ngClass]="[maxWidth, height, rounded]" [@scaleInOut]>
+                <ng-content></ng-content>
+            </div>
+        </div>
+    </div>
+</div>

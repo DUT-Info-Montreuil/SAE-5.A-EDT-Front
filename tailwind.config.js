@@ -30,6 +30,7 @@ module.exports = {
             body: "#131336",
             medium: "#A5A5A5",
             subtitle: "#E9E9EF",
+            "subtitle-hover": "#D8D8DC",
             light: "#F5F5FB",
 
             // Custom - Dark Mode
@@ -92,9 +93,6 @@ module.exports = {
                 18: "4.5rem",
             },
             minWidth: {
-                18: "18rem",
-            },
-            minHeight: {
                 18: "18rem",
             },
             width: {

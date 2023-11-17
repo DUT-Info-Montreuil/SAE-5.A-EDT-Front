@@ -23,6 +23,7 @@
                         "stylePreprocessorOptions": {
                             "includePaths": ["node_modules"]
                         },
+                        "allowedCommonJsDependencies": ["lodash"],
                         "scripts": []
                     },
                     "configurations": {

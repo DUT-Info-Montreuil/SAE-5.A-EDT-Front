@@ -1,4 +1,4 @@
-<div [ngClass]="background" class="flex flex-col md:flex-row rounded-lg dark:bg-grey-dark justify-between">
+<div [ngClass]="background" class="flex flex-col md:flex-row rounded-lg dark:bg-grey-dark justify-between relative font-aileron">
     <div class="flex py-3 px-4 overflow-hidden">
         <p class="xs:text-sm font-semibold truncate">{{ label }}</p>
     </div>
@@ -20,6 +20,20 @@
                 />
             </svg>
             <p class="text-xxs text-medium dark:text-medium font-normal leading-none text-right">{{ time }}</p>
+        </div>
+    </div>
+    <div *ngIf="warn || success" class="absolute -top-1 -right-1">
+        <svg *ngIf="warn && !success" #item class="w-4 h-4 fill-danger focus:outline-none cursor-pointer" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 0.5C7.45001 0.5 0.5 7.45001 0.5 16C0.5 24.55 7.45001 31.5 16 31.5C24.55 31.5 31.5 24.55 31.5 16C31.5 7.45001 24.55 0.5 16 0.5ZM14.5 23.5V22.41C14.5 21.5799 15.17 20.91 16 20.91C16.83 20.91 17.5 21.5799 17.5 22.41V23.5C17.5 24.33 16.83 25 16 25C15.17 25 14.5 24.33 14.5 23.5ZM17.5 18.04C17.5 18.86 16.83 19.54 16 19.54C15.17 19.54 14.5 18.86 14.5 18.04V8.5C14.5 7.66998 15.17 7 16 7C16.83 7 17.5 7.66998 17.5 8.5V18.04Z" />
+        </svg>
+        <svg *ngIf="success && !warn" #item class="w-4 h-4 fill-success focus:outline-none cursor-pointer" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
+        </svg>
+
+        <div #tooltip class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-bold text-white bg-danger rounded-lg shadow-sm opacity-0 tooltip" [ngClass]="{ 'bg-success': success, 'bg-danger': warn }">
+            <span *ngIf="warn && !success" class="whitespace-nowrap">Non justifiée</span>
+            <span *ngIf="success && !warn" class="whitespace-nowrap">Justifiée</span>
+            <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
     </div>
 </div>
