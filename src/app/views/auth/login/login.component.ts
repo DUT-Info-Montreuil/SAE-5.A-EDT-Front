@@ -13,6 +13,8 @@ export class LoginComponent {
     public routes = RoutePaths;
     loginForm: FormGroup;
     isPasswordVisible: boolean = false;
+    
+
     isLoading: boolean = false;
 
     constructor(private fb: FormBuilder, private router: Router, private darkModeService: DarkModeService) {

@@ -9,23 +9,60 @@ import { DateFormattingService } from 'src/app/services/date-formatting.service'
 })
 export class SettingsComponent {
   formattedDate: string | null;
-  showError: boolean = false;
+  isOldPasswordVisible: boolean = false;
+  isNewPasswordVisible: boolean = false;
+  isConfirmPasswordVisible: boolean = false;
+  passwordForm: FormGroup;
 
-  constructor(private dateFormattingService: DateFormattingService) {
+  constructor(private fb: FormBuilder, private dateFormattingService: DateFormattingService) {
+    this.passwordForm = this.fb.group({
+      newPassword: ['', [Validators.required , Validators.minLength(8) , Validators.maxLength(15)]] ,
+      oldPassword:['', [Validators.required , Validators.minLength(8) , Validators.maxLength(15) ]] ,
+      confirmPassword: ['', Validators.required]
+    }, { validator: [ this.passwordMatchValidator , this.passwordNotMatchValidator ]  });
+  
       this.formattedDate = this.dateFormattingService.format(new Date());
   }
 
-  resetError() {
-    this.showError = false; // Réinitialise showError à false lorsque l'utilisateur entre dans le champ
+  get oldPasswordControl(): FormControl {
+    return this.passwordForm.get('oldPassword') as FormControl;
+  }
+  get newPasswordControl(): FormControl {
+    return this.passwordForm.get('newPassword') as FormControl;
   }
 
-  checkLength(value: string) {
-    if (value.length < 8 ) {
-      this.showError = true; // Affiche l'erreur si la longueur est inférieure à 8
+  get confirmationControl(): FormControl {
+    return this.passwordForm.get('confirmPassword') as FormControl;
+  }
+ 
+  passwordMatchValidator(fg: FormGroup) {
+    const newPasswordControl = fg.get('newPassword');
+    const confirmPasswordControl = fg.get('confirmPassword');
+  
+    if (newPasswordControl && confirmPasswordControl ) {
+      const newPassword = newPasswordControl.value;
+      const confirmPassword = confirmPasswordControl.value;  
+      if (newPassword === confirmPassword ) {
+        confirmPasswordControl.setErrors(null);
+      } else {
+        confirmPasswordControl.setErrors({ passwordsNotMatch: true });
+      }
     }
   }
 
-  checkSameInput(value: string) {
-    // TODO A codé avec une fois accès à l'api 
+  passwordNotMatchValidator(fg: FormGroup) {
+    const newPasswordControl = fg.get('newPassword');
+    const oldPasswordControl = fg.get('oldPassword');
+  
+    if (newPasswordControl && oldPasswordControl ) {
+      const newPassword = newPasswordControl.value;
+      const oldPassword = oldPasswordControl.value;  
+
+      if (newPassword === oldPassword ) {
+        newPasswordControl.setErrors({ passwordsMatch: true });
+      } else {
+        newPasswordControl.setErrors(null);
+      }
+    }
   }
 }

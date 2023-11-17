@@ -3,49 +3,90 @@
         <h3 class="text-body">Paramêtres</h3>
         <h3 class="font-normal text-medium dark:text-medium text-right">{{ formattedDate }}</h3>
     </div>
-    <div  class="flex flex-col w-full p-5 rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
-        <form class="space-y-4">
-            <div>
-                <h3 class="text-body">Identifiant</h3>
-                <input id="nom" type="text" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Votre nom">
-            </div>
-            <div>
-                <h3 class="text-body">Email</h3>
-                <input id="email" type="email" class="border border-gray-300 rounded-md px-3 py-2 w-full" placeholder="Votre email">
-            </div>
-        </form>
-    </div>
-    <div  class="flex flex-col w-full p-5 rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
-        
-        <h3 class="text-body">Ancien mot de passe</h3>    
-        <input #oldPassword 
-            class="border border-gray-300 rounded-md px-3 py-2 w-full"
-            placeholder="Ancien mot de passe" 
-            (focus)="resetError()" 
-            (blur)="null">
-
-        <h3 class="text-body">Nouveau mot de passe</h3>
-        <input #newPassword
-            class="border border-gray-300 rounded-md px-3 py-2 w-full" 
-            placeholder="Nouveau mot de passe" 
-            (focus)="resetError()" 
-            (blur)="checkLength(newPassword.value)">
-        <div *ngIf="showError" style="color: red;" class="flex flex-col w-full p-5 rounded-xl bg-light dark:bg-dark gap-y-6 justify-between">
-            Your password must conform to the following constraints :
-            <ul class="mg-2">
-                <li>    Minimum length: 8</li>
-                <li>    Maximum length: 15</li>
-                <li>                    Your new password may not be the same as your old password</li>
-              </ul>              
+    <div class="flex flex-col gap-y-4 md:flex-row  gap-x-8">
+        <div  class="flex flex-col w-full h-fit p-5 rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
+            <form class="space-y-4">
+                <div>
+                    <h2 class="text-secondary dark:text-white font-bold">Identifiant</h2>
+                    <app-label-field affichage="aclaude" ></app-label-field>
+                </div>
+                <div>
+                    <h3 class="text-secondary dark:text-white font-bold">Email</h3>
+                    <app-label-field affichage="aclaude@iut.uni v-paris8.fr" ></app-label-field>
+                </div>
+            </form>
         </div>
-        <h3 class="text-body">Confirmation</h3>
-            <input #confimation 
-            class="border border-gray-300 rounded-md px-3 py-2 w-full"
-            placeholder="Confirmez le nouveau mot de passe"
-            (focus)="resetError()" 
-            (blur)="null">
- >
+        <div [formGroup]="passwordForm" class="flex flex-col w-full p-5 rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
+            <div class="flex flex-col w-full p-5 rounded-xl bg-light dark:bg-dark gap-y-6 justify-between">
+                <h3 class="text-body">Mot de passe oublié ?  ( lien cliquable )</h3>
+                
+            </div>
+            <app-labeled-icon-input [control]="oldPasswordControl" model="oldPassword"label="Ancien mot de passe" placeholder="Entrez votre mot de passe" [typeInput]="isOldPasswordVisible ? 'text' : 'password'">
+                <ng-container icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="19" viewBox="0 0 15 19" fill="none">
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M7.5 0.5C9.98529 0.5 12 2.51471 12 5V7.25H13.5C14.3284 7.25 15 7.92163 15 8.75V17C15 17.8284 14.3284 18.5 13.5 18.5H1.5C0.671585 18.5 0 17.8284 0 17V8.75C0 7.92163 0.671585 7.25 1.5 7.25H3V5C3 2.51471 5.01471 0.5 7.5 0.5ZM10.5 5V7.25H4.5V5C4.5 3.34308 5.84312 2 7.5 2C9.15688 2 10.5 3.34308 10.5 5ZM1.5 8.75V17H13.5V8.75H1.5ZM8.93587 11.65C8.93587 12.1532 8.67027 12.5945 8.27165 12.8413L8.58687 14.2062C8.6954 14.6762 8.33844 15.125 7.85609 15.125H7.14391C6.66156 15.125 6.3046 14.6762 6.41313 14.2062L6.73782 12.8005C6.37399 12.5476 6.13586 12.1266 6.13586 11.65C6.13586 10.8768 6.76268 10.25 7.53584 10.25C8.30905 10.25 8.93587 10.8768 8.93587 11.65Z"
+                            fill="#5E81F4"
+                        />
+                    </svg>
+                </ng-container>
+                <ng-container action>
+                    <span class="absolute inset-y-0 right-2 flex items-center pl-2">
+                        <button class="p-1 focus:outline-none focus:shadow-outline" (click)="isOldPasswordVisible = !isOldPasswordVisible">
+                            <img *ngIf="isOldPasswordVisible; else elseBlock" src="../../../assets/icons/eye-close.svg" />
+                            <ng-template #elseBlock><img src="../../../assets/icons/eye-open.svg" /></ng-template>
+                        </button>
+                    </span>
+                </ng-container>
+            </app-labeled-icon-input>
 
-        <button type="submit" class="bg-blue-500 text-white rounded-md px-4 py-2">Enregistrer</button>
+            <app-labeled-icon-input [control]="newPasswordControl" model="newPassword" label="Nouveau mot de passe" placeholder="Entrez votre nouveau mot de passe" [typeInput]="isNewPasswordVisible ? 'text' : 'password'">
+                <ng-container icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="19" viewBox="0 0 15 19" fill="none">
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M7.5 0.5C9.98529 0.5 12 2.51471 12 5V7.25H13.5C14.3284 7.25 15 7.92163 15 8.75V17C15 17.8284 14.3284 18.5 13.5 18.5H1.5C0.671585 18.5 0 17.8284 0 17V8.75C0 7.92163 0.671585 7.25 1.5 7.25H3V5C3 2.51471 5.01471 0.5 7.5 0.5ZM10.5 5V7.25H4.5V5C4.5 3.34308 5.84312 2 7.5 2C9.15688 2 10.5 3.34308 10.5 5ZM1.5 8.75V17H13.5V8.75H1.5ZM8.93587 11.65C8.93587 12.1532 8.67027 12.5945 8.27165 12.8413L8.58687 14.2062C8.6954 14.6762 8.33844 15.125 7.85609 15.125H7.14391C6.66156 15.125 6.3046 14.6762 6.41313 14.2062L6.73782 12.8005C6.37399 12.5476 6.13586 12.1266 6.13586 11.65C6.13586 10.8768 6.76268 10.25 7.53584 10.25C8.30905 10.25 8.93587 10.8768 8.93587 11.65Z"
+                            fill="#5E81F4"
+                        />
+                    </svg>
+                </ng-container>
+                <ng-container action>
+                    <span class="absolute inset-y-0 right-2 flex items-center pl-2">
+                        <button class="p-1 focus:outline-none focus:shadow-outline" (click)="isNewPasswordVisible = !isNewPasswordVisible">
+                            <img *ngIf="isNewPasswordVisible; else elseBlock" src="../../../assets/icons/eye-close.svg" />
+                            <ng-template #elseBlock><img src="../../../assets/icons/eye-open.svg" /></ng-template>
+                        </button>
+                    </span>
+                </ng-container>
+            </app-labeled-icon-input>
+
+            <app-labeled-icon-input [control]="confirmationControl" model="confirmPassword" label="Confimez le mot de passe" placeholder="Entrez votre nouveau mot de passe" [typeInput]="isConfirmPasswordVisible ? 'text' : 'password'">
+                <ng-container icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="19" viewBox="0 0 15 19" fill="none">
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M7.5 0.5C9.98529 0.5 12 2.51471 12 5V7.25H13.5C14.3284 7.25 15 7.92163 15 8.75V17C15 17.8284 14.3284 18.5 13.5 18.5H1.5C0.671585 18.5 0 17.8284 0 17V8.75C0 7.92163 0.671585 7.25 1.5 7.25H3V5C3 2.51471 5.01471 0.5 7.5 0.5ZM10.5 5V7.25H4.5V5C4.5 3.34308 5.84312 2 7.5 2C9.15688 2 10.5 3.34308 10.5 5ZM1.5 8.75V17H13.5V8.75H1.5ZM8.93587 11.65C8.93587 12.1532 8.67027 12.5945 8.27165 12.8413L8.58687 14.2062C8.6954 14.6762 8.33844 15.125 7.85609 15.125H7.14391C6.66156 15.125 6.3046 14.6762 6.41313 14.2062L6.73782 12.8005C6.37399 12.5476 6.13586 12.1266 6.13586 11.65C6.13586 10.8768 6.76268 10.25 7.53584 10.25C8.30905 10.25 8.93587 10.8768 8.93587 11.65Z"
+                            fill="#5E81F4"
+                        />
+                    </svg>
+                </ng-container>
+                <ng-container action>
+                    <span class="absolute inset-y-0 right-2 flex items-center pl-2">
+                        <button class="p-1 focus:outline-none focus:shadow-outline" (click)="isConfirmPasswordVisible = !isConfirmPasswordVisible">
+                            <img *ngIf="isConfirmPasswordVisible; else elseBlock" src="../../../assets/icons/eye-close.svg" />
+                            <ng-template #elseBlock><img src="../../../assets/icons/eye-open.svg" /></ng-template>
+                        </button>
+                    </span>
+                </ng-container>
+            </app-labeled-icon-input>
+            
+            <div class="justify-center flex">
+                <app-button label="Enregistrer" type="primary"></app-button>
+            </div>
+        </div>
     </div>
 </div>
