@@ -15,7 +15,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { layoutReducer } from './store/layout';
 import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { CalendarComponent } from './views/calendar/calendar.component';
+import { CalendarViewComponent } from './views/calendar-view/calendar-view.component';
 import { GestionComponent } from './views/gestion/gestion.component';
 import { SidebarMobileComponent } from './components/sidebar-mobile/sidebar-mobile.component';
 import { ThemeToggleButtonComponent } from './components/theme-toggle-button/theme-toggle-button.component';
@@ -29,6 +29,9 @@ import { EventCardComponent } from './components/event-card/event-card.component
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SettingsComponent } from './views/settings/settings.component';
 import { LabelFieldComponent } from './components/label-field/label-field.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout'], rehydrate: true })(reducer);
@@ -37,8 +40,8 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 registerLocaleData(localeFr);
 
 @NgModule({
-    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent, SettingsComponent, LabelFieldComponent],
-    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers })],
+    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarViewComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent, SettingsComponent, LabelFieldComponent, CalendarComponent],
+    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe],
     bootstrap: [RootComponent],
 })

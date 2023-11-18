@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 
+
 @Component({
     selector: 'app-calendar-item',
     templateUrl: './calendar-item.component.html',
@@ -12,4 +13,5 @@ export class CalendarItemComponent {
     @Input() personal: string = 'Non renseigné';
     @Input() course: string = 'Non renseigné';
     @Input() room: string = 'Non renseigné';
+   
 }
