@@ -20,7 +20,12 @@
             [excludeDays]="excludeDays"
             [dayStartHour]="dayStartHour"
             [dayEndHour]="dayEndHour"
-            [hourSegments]="hourSegments">
+            [hourSegments]="hourSegments"
+            locale="fr"
+            (eventTimesChanged)="eventTimesChanged($event)"
+            (eventClicked)="eventClicked($event)"
+            [refresh]="refresh"
+            >
         </mwl-calendar-week-view>
         <mwl-calendar-day-view *ngSwitchCase="calendarView.Day" 
             [viewDate]="viewDate" 
@@ -28,6 +33,11 @@
             [dayStartHour]="dayStartHour"
             [dayEndHour]="dayEndHour"
             [hourSegments]="hourSegments"
+            locale="fr"
+            (eventTimesChanged)="eventTimesChanged($event)"
+            (eventClicked)="eventClicked($event)"
+            [refresh]="refresh"
+
             >
         </mwl-calendar-day-view>
     </span>

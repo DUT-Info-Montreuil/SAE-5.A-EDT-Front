@@ -29,7 +29,7 @@ import { EventCardComponent } from './components/event-card/event-card.component
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SettingsComponent } from './views/settings/settings.component';
 import { LabelFieldComponent } from './components/label-field/label-field.component';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './components/calendar/calendar.component';
 
@@ -39,10 +39,19 @@ export function localStorageSyncReducer(reducer: any): any {
 const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 registerLocaleData(localeFr);
 
+class CustomDateFormatter extends CalendarNativeDateFormatter {
+    public override dayViewHour({ date, locale }: DateFormatterParams): string {
+      return new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: 'numeric'}).format(date);
+    }
+    public override weekViewHour({ date, locale }: DateFormatterParams): string {
+      return new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: 'numeric'}).format(date);
+    }
+  }
+  
 @NgModule({
     declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarViewComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent, SettingsComponent, LabelFieldComponent, CalendarComponent],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
-    providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe],
+    providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, {provide: CalendarDateFormatter,useClass: CustomDateFormatter}],
     bootstrap: [RootComponent],
 })
 export class AppModule {}
