@@ -1,0 +1,5 @@
+/* Réduire la taille des heures dans le calendrier */
+.calendar-hour-segment {
+    margin-bottom: 5px; /* Ajustez cette valeur pour modifier l'espace entre les heures */
+  }
+  
