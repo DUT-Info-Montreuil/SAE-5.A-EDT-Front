@@ -39,8 +39,7 @@ export class CalendarComponent {
   dayStartHour: number = 8; // Demarre à 8h
   dayEndHour: number = 18;  // Termine à 19h
   hourSegments: number = 4; // une ligne tout les quart d'heure
-  
-
+  isCreationModalOpen: boolean = false;
   refresh = new Subject<void>;
 
   constructor() {
@@ -86,5 +85,12 @@ export class CalendarComponent {
     this.refresh.next();
   }
 
-  
+  openErrorModal() {
+    this.isCreationModalOpen = true;
+  }
+
+  closeErrorModal() {
+    this.isCreationModalOpen = false;
+  }
 }
+  
