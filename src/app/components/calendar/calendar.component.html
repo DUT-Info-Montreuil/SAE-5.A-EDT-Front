@@ -23,13 +23,14 @@
              </button>
             
         </div>
-    </div>
-    <app-button label="Show error" (click)="openErrorModal()"></app-button>
-    
+    </div>  
 
   <app-button label="show classes creation" (click)="openCreationModal">Créer un cour </app-button>
-  <app-mo
-    <span [ngSwitch]="view">
+    <app-modal-create-classes
+    *ngIf="isCreationModalOpen"
+    
+    ></app-modal-create-classes>
+  <span [ngSwitch]="view">
         
         <mwl-calendar-week-view class="max-h-32 h-32"
             *ngSwitchCase="calendarView.Week" 

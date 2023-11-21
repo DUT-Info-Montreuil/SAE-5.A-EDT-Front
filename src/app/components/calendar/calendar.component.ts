@@ -85,11 +85,11 @@ export class CalendarComponent {
     this.refresh.next();
   }
 
-  openErrorModal() {
+  openCreationModal() {
     this.isCreationModalOpen = true;
   }
 
-  closeErrorModal() {
+  closeCreationModal() {
     this.isCreationModalOpen = false;
   }
 }

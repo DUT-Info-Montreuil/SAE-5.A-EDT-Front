@@ -32,6 +32,7 @@ import { LabelFieldComponent } from './components/label-field/label-field.compon
 import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { ModalCreateClassesComponent } from './components/modal-create-classes/modal-create-classes.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout'], rehydrate: true })(reducer);
@@ -49,7 +50,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
   }
   
 @NgModule({
-    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarViewComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent, SettingsComponent, LabelFieldComponent, CalendarComponent],
+    declarations: [AuthLayoutComponent,ModalCreateClassesComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarViewComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent, SettingsComponent, LabelFieldComponent, CalendarComponent],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, {provide: CalendarDateFormatter,useClass: CustomDateFormatter}],
     bootstrap: [RootComponent],
