@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DateFormattingService } from 'src/app/services/date-formatting.service';
+import { DateFormattingService } from '../../services/date-formatting.service';
 
 @Component({
     selector: 'app-settings',
