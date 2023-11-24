@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-y-1">
     <div class="flex gap-x-2">
-        <label class="font-aileron text-body dark:text-white font-semibold">{{ label }}</label>
+        <label class="font-aileron text-body dark:text-white font-semibold text-sm md:text-base">{{ label }}</label>
         <ng-content name="popever"></ng-content>
     </div>
     <div class="group">
@@ -57,7 +57,6 @@
                 <span *ngIf="control.errors?.['maxlength']">La longueur maximal est de {{ control.errors?.['maxlength'].requiredLength }}</span>
                 <span *ngIf="control.errors?.['passwordsNotMatch']"> Le mot de passe dois être identique au nouveau mot de passe</span>
                 <span *ngIf="control.errors?.['passwordsMatch']"> Le mot de passe dois être différent de votre ancien mot de passe</span>
-
             </div>
         </div>
     </div>
