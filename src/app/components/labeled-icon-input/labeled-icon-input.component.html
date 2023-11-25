@@ -55,8 +55,8 @@
                 <span *ngIf="control.errors?.['required']">Ce champ est obligatoire</span>
                 <span *ngIf="control.errors?.['minlength']">La longueur minimale est de {{ control.errors?.['minlength'].requiredLength }}</span>
                 <span *ngIf="control.errors?.['maxlength']">La longueur maximal est de {{ control.errors?.['maxlength'].requiredLength }}</span>
-                <span *ngIf="control.errors?.['passwordsNotMatch']"> Le mot de passe dois être identique au nouveau mot de passe</span>
-                <span *ngIf="control.errors?.['passwordsMatch']"> Le mot de passe dois être différent de votre ancien mot de passe</span>
+                <span *ngIf="control.errors?.['passwordsNotMatch']"> Le mot de passe doit être identique au nouveau mot de passe</span>
+                <span *ngIf="control.errors?.['passwordsMatch']"> Le mot de passe doit être différent de votre ancien mot de passe</span>
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { DateFormattingService } from 'src/app/services/date-formatting.service';
+import { DateFormattingService } from '../../services/date-formatting.service';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { NumberSymbol } from '@angular/common';
 
