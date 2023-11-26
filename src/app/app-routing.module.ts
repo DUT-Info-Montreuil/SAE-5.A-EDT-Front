@@ -40,8 +40,9 @@ const routes: Routes = [
     },
 ];
 
+// Ajout du useHash pour que lorsque le projet est conteneurisé il reconaisse le répertoire app
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { useHash: true})],
     exports: [RouterModule],
 })
 export class AppRoutingModule {}
