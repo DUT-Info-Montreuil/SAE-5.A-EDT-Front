@@ -21,18 +21,49 @@
                     />
                 </svg>
              </button>
-            
         </div>
     </div>  
+    <div class="flex flex-col sm:flex-row justify-between items-stretch h-12">
+        <!-- Liste pour la salle -->
+        <div class="w-full sm:w-auto mb-2 sm:mb-0">
+            <select class="w-full border rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+                <option value="">----</option>
+                <option value="A2-05">A2-05</option>
+                <option value="A2-04">A2-04</option>
+                <option value="F1-03">F1-03</option>
+                <option value="B1-10">B1-10</option>
+            </select>          
+        </div>
+      
+        <div class="w-full sm:w-auto mb-2 sm:mb-0 ml-0 sm:ml-2">
+            <select class="w-full border rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+                <option value="">----</option>
+                <option value="AGo">AGo</option>
+                <option value="AB">AB</option>
+                <option value="GG">GG</option>
+                <option value="JEMi">JEMi</option>
+            </select>
+        </div>
+      
+        <div class="w-full sm:w-auto mb-2 sm:mb-0 ml-0 sm:ml-2">
+            <select class="w-full border rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+                <option value="">----</option>
+                <option value="BUT INFO">BUT INFO</option>
+                <option value="BUT INFOCOM">BUT INFOCOM</option>
+                <option value="BUT GACO">BUT GACO</option>    
+            </select>
+        </div>
+      
+        <div class="ml-auto">
+      <!--  <button (click)="openCreationModal()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ajouter cours</button>-->  
+        </div>
+      </div>
+      
+   
 
-  <app-button label="Ajouter un cours" (click)="openCreationModal()"></app-button>
-    <app-modal-create-classes
-    *ngIf="isCreationModalOpen"
-    (closeModal)="closeCreationModal()"
-    ></app-modal-create-classes>
-  <span [ngSwitch]="view" class="max-h64">
-        
-        <mwl-calendar-week-view class="w-25 h-25"
+      
+  <span [ngSwitch]="view" class="max-h64">        
+        <mwl-calendar-week-view class="" 
             *ngSwitchCase="calendarView.Week" 
             [viewDate]="viewDate" 
             [events]="events"
@@ -42,14 +73,35 @@
             [hourSegments]="hourSegments"
             locale="fr"
             (eventTimesChanged)="eventTimesChanged($event)"
-            (eventClicked)="eventClicked()"
+            (eventClicked)="showEventDetails($event)"
             (dayHeaderClicked)="changeDay($event.day.date)"
             [refresh]="refresh"
+            [eventTemplate]="customEWeekViewTemplate"
             
-            >        
+            >    
+                <ng-template #customEWeekViewTemplate let-WeekEvent="event">
+                    <div class="titre bg-danger h-full flex flex-col justify-between    ">
+                                <div class="item-center text-center">
+                                    {{ WeekEvent ? WeekEvent.title : "BDD" }}
+                                </div>
+                            
+                                <div class="flex justify-between">
+                                    <div class="max-w-min inline-block">
+                                    {{ WeekEvent ? WeekEvent.meta.location : "Là" }}
+                                    </div>
+                            
+                                    <div class="max-w-min inline-block">
+                                    {{ WeekEvent ? WeekEvent.meta.organizer : "AC" }}
+                                    </div>
+                    </div>
+                    </div>
+                </ng-template>
+              
+              
         </mwl-calendar-week-view>
 
-        <mwl-calendar-day-view *ngSwitchCase="calendarView.Day" 
+        <mwl-calendar-day-view class=""
+            *ngSwitchCase="calendarView.Day" 
             [viewDate]="viewDate" 
             [events]="events"
             [dayStartHour]="dayStartHour"

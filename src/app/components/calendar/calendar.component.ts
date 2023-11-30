@@ -1,65 +1,81 @@
 import { registerLocaleData } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
 import localeFr from '@angular/common/locales/fr'
 import { Subject } from 'rxjs';
 
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  }
+const jsonData = {
+  "edt": [
+    {
+        "endtime": "2023-11-30T12:30",
+        "starttime": "2023-11-30T10:30",
+        "title": "Modélisations",
+        "description":"jsp au nom",
+        "location": "A2-05",
+        "organizer": "PB",
+    },
+    {
+        "endtime": "2023-11-30T12:30",
+        "starttime": "2023-11-30T09:30",
+        "title": "Anglais",
+        "description":"jsp au nomo",
+        "location": "A2-05",
+        "organizer": "AGo",
+    },
+    {
+        "endtime": "2023-11-30T12:30",
+        "starttime": "2023-11-30T10:30",
+        "title": "jsp au nom",
+        "description":"jsp au nom",
+        "location": "A2-05",
+        "organizer": "Lui",
+    },
+    {
+
+        "endtime": "2023-11-30T14:30",
+        "starttime": "2023-11-30T13:00",
+        "title": "Initiation",
+        "description":"test",
+        "location": "A2-05",
+        "organizer": "JEMi",
+    }
+]
 };
 
 registerLocaleData(localeFr, 'fr');
 
 @Component({
   selector: 'app-calendar',
+  encapsulation : ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
 })
 
 
+  
 export class CalendarComponent {
   view: CalendarView = CalendarView.Week;
   viewDate: Date = new Date();
   calendarView = CalendarView;
   excludeDays: number[] = [0, 6]; // Exclue dimanche et samedi
-  events: CalendarEvent[] = [];
+  events: any [] = [];
   dayStartHour: number = 8; // Demarre à 8h
   dayEndHour: number = 18;  // Termine à 19h
-  hourSegments: number = 4; // une ligne tout les quart d'heure
+  hourSegments: number = 2; // une ligne tout les quart d'heure
   isCreationModalOpen: boolean = false;
   refresh = new Subject<void>;
+  eventDetails: any = null; 
 
   constructor() {
-    const event0 ={
-      title: "Anglais",
-      start: new Date("2023-11-23T12:30"),
-      end: new Date("2023-11-23T14:00"),
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      }
-    } 
-    this.events.push( event0 );
+  this.convertToCalendarEvents(jsonData);
+
   }
 
   setView(view: CalendarView) {
     this.view = view;
   }
-
   
   eventClicked() {
     if (this.view === this.calendarView.Day ){
@@ -91,6 +107,43 @@ export class CalendarComponent {
 
   closeCreationModal() {
     this.isCreationModalOpen = false;
+  }
+
+  convertToCalendarEvents(jsonData: any): CalendarEvent[] {
+    const events: CalendarEvent[] = [];
+  
+    if (jsonData && jsonData.edt) {
+      jsonData.edt.forEach((item: any) => {
+        const event: CalendarEvent = {
+          title: item.title, 
+          start: new Date(item.starttime), 
+          end: new Date(item.endtime),
+          draggable: true,
+          resizable: {
+            beforeStart: true, 
+            afterEnd: true,
+          },         
+          cssClass: './calendar.component.css',
+          meta: {
+            location: item.location,
+            organizer: item.oragnizer,
+            description: item.description
+          }        };
+        this.events.push(event);
+      });
+    }
+  
+    return events;
+  }
+  
+  showEventDetails(event: any) {
+    this.eventDetails = event;
+  }
+  closeEventDetails() {
+    this.eventDetails = null;
+  }
+  debug(s: any) {
+    console.log(s)
   }
 }
   
