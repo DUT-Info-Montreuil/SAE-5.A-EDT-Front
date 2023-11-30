@@ -13,14 +13,13 @@ export class LoginComponent {
     public routes = RoutePaths;
     loginForm: FormGroup;
     isPasswordVisible: boolean = false;
-    
 
     isLoading: boolean = false;
 
     constructor(private fb: FormBuilder, private router: Router, private darkModeService: DarkModeService) {
         this.loginForm = this.fb.group({
             username: ['', [Validators.required, Validators.minLength(3)]],
-            password: ['', [Validators.required, Validators.minLength(6)]],
+            password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
             rememberMe: [false],
         });
     }
