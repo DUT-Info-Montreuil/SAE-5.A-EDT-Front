@@ -1,6 +1,6 @@
 {
   "name": "sae-5.a-edt-front",
-  "version": "0.0.10",
+  "version": "0.0.11-snapshot.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -25,7 +25,6 @@
     "flatpickr": "^4.6.13",
     "angular-calendar": "^0.31.0",
     "angular-input-mask": "^0.0.7",
-    "axios": "^1.6.2",
     "date-fns": "^2.29.3",
     "flowbite": "^2.0.0",
     "moment": "^2.29.4",
