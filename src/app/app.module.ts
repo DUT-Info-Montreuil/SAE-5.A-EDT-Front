@@ -15,7 +15,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { layoutReducer } from './store/layout';
 import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { CalendarComponent } from './views/calendar/calendar.component';
+import { CalendarViewComponent } from './views/calendar-view/calendar-view.component';
 import { GestionComponent } from './views/gestion/gestion.component';
 import { SidebarMobileComponent } from './components/sidebar-mobile/sidebar-mobile.component';
 import { ThemeToggleButtonComponent } from './components/theme-toggle-button/theme-toggle-button.component';
@@ -33,6 +33,10 @@ import { ModalComponent } from './components/modal/modal.component';
 import { CreateReminderModalComponent } from './components/create-reminder-modal/create-reminder-modal.component';
 import { EditReminderModalComponent } from './components/edit-reminder-modal/edit-reminder-modal.component';
 import { LabeledDateInputComponent } from './components/labeled-date-input/labeled-date-input.component';
+import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { ModalCreateClassesComponent } from './components/modal-create-classes/modal-create-classes.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout'], rehydrate: true })(reducer);
@@ -40,33 +44,17 @@ export function localStorageSyncReducer(reducer: any): any {
 const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 registerLocaleData(localeFr);
 
+class CustomDateFormatter extends CalendarNativeDateFormatter {
+    public override dayViewHour({ date, locale }: DateFormatterParams): string {
+      return new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: 'numeric'}).format(date);
+    }
+    public override weekViewHour({ date, locale }: DateFormatterParams): string {
+      return new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: 'numeric'}).format(date);
+    }
+  }
+  
 @NgModule({
-    declarations: [
-        AuthLayoutComponent,
-        AppLayoutComponent,
-        LoginComponent,
-        LogoutComponent,
-        ButtonComponent,
-        RootComponent,
-        LabeledIconInputComponent,
-        SidebarComponent,
-        SidebarItemComponent,
-        DashboardComponent,
-        CalendarComponent,
-        GestionComponent,
-        SidebarMobileComponent,
-        ThemeToggleButtonComponent,
-        CalendarItemComponent,
-        DragToScrollDirective,
-        EventCardComponent,
-        PaginationComponent,
-        SettingsComponent,
-        LabelFieldComponent,
-        ModalComponent,
-        CreateReminderModalComponent,
-        EditReminderModalComponent,
-        LabeledDateInputComponent,
-    ],
+    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent, SettingsComponent, LabelFieldComponent],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe],
     bootstrap: [RootComponent],

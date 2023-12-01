@@ -1,0 +1,98 @@
+<!-- app-modal-create-event.component.html -->
+<form (ngSubmit)="submitForm()">
+  <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white p-6 rounded-lg shadow-md grid grid-cols-2 gap-4">
+        <div class ="col-span-1">
+            <div class="mb-4">
+              <label for="titreCours" class="block text-gray-700 font-bold mb-2">Choix du cours :</label>
+              <select [(ngModel)]="titreCours" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+                <option value="BDD">BDD</option>
+                <option value="Anglais">Anglais</option>
+                <option value="SAE">SAE</option>
+                <option value="QualitéAlgo">QualitéAlgo</option>
+              </select>    
+            </div>
+
+            <div class="mb-4">
+              <label for="profCours" class="block text-gray-700 font-bold mb-2">Professeur :</label>
+              <select [(ngModel)]="profCours" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+                <option value="JEMI">JEMI</option>
+                <option value="GG">GG</option>
+                <option value="MH">MH</option>
+                <option value="AGo">AGo</option>
+              </select>   
+            </div>
+
+            <div class="mb-4">
+              <label for="salleCours" class="block text-gray-700 font-bold mb-2">Salle :</label>
+              <select [(ngModel)]="salleCours" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+                <option value="BDD">A1-03</option>
+                <option value="Anglais">A2-05</option>
+                <option value="SAE">B1-10</option>
+                <option value="QualitéAlgo">B1-14</option>
+              </select>        
+            </div>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Créer le cours</button>
+
+          </div>
+          <div class="col-span-1">
+            <div class="mb-4">
+              <label for="dateCours" class="block text-gray-700 font-bold mb-2">Date du cours :</label>
+              <input type="date" [(ngModel)]="dateCours" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+            </div>
+
+            <div class="mb-4">
+              <label for="StartingTime" class="block text-gray-700 font-bold mb-2">Heure de début :</label>
+              <input
+              [(ngModel)]="debutCours"
+              type="text"
+              mask="99h99"
+              (input)="validateTime($event,0)"
+              placeholder="hh'h'mm"
+              class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+              >
+              <div *ngIf="timeInputInvalid[0]" class="py-1 text-danger font-aileron text-sm">
+                <div class="flex gap-x-1 items-center content-center">
+                    <svg width="15" height="15" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20ZM10.25 4C10.9404 4 11.5 4.52855 11.5 5.18056V11.3194C11.5 11.9714 10.9404 12.5 10.25 12.5C9.55964 12.5 9 11.9714 9 11.3194V5.18056C9 4.52855 9.55964 4 10.25 4ZM10.25 16C10.9404 16 11.5 15.4404 11.5 14.75C11.5 14.0596 10.9404 13.5 10.25 13.5C9.55964 13.5 9 14.0596 9 14.75C9 15.4404 9.55964 16 10.25 16Z"
+                            fill="currentColor"
+                          />
+                      </svg>
+                      <span >Format incorecte ( Exemple : 09h30 )</span>
+                  </div>
+              </div>      
+            </div>    
+
+            <div class="mb-4">
+              <label for="EndingTime" class="block text-gray-700 font-bold mb-2">Heure de fin :</label>
+              <input
+              [(ngModel)]="finCours"
+              type="text"
+              mask="99h99"
+              (input)="validateTime($event,1)"
+              placeholder="hh'h'mm"
+              class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+              >
+              <div *ngIf="timeInputInvalid[1]" class="py-1 text-danger font-aileron text-sm">
+                <div class="flex gap-x-1 items-center content-center">
+                    <svg width="15" height="15" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20ZM10.25 4C10.9404 4 11.5 4.52855 11.5 5.18056V11.3194C11.5 11.9714 10.9404 12.5 10.25 12.5C9.55964 12.5 9 11.9714 9 11.3194V5.18056C9 4.52855 9.55964 4 10.25 4ZM10.25 16C10.9404 16 11.5 15.4404 11.5 14.75C11.5 14.0596 10.9404 13.5 10.25 13.5C9.55964 13.5 9 14.0596 9 14.75C9 15.4404 9.55964 16 10.25 16Z"
+                            fill="currentColor"
+                          />
+                      </svg>
+                      <span >Format incorecte ( Exemple : 09h30 )</span>
+                  </div>
+              </div>      
+            </div>
+            <button type="button" (click)="onClose()" class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Annuler</button>
+        
+          </div>        
+    </div>
+  </div>
+</form>
