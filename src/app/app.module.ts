@@ -54,9 +54,35 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
   }
   
 @NgModule({
-    declarations: [AuthLayoutComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent, SettingsComponent, LabelFieldComponent],
-    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers })],
-    providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe],
+    declarations: [
+        AuthLayoutComponent,
+        AppLayoutComponent,
+        LoginComponent,
+        LogoutComponent,
+        ButtonComponent,
+        RootComponent,
+        LabeledIconInputComponent,
+        SidebarComponent,
+        SidebarItemComponent,
+        DashboardComponent,
+        CalendarComponent,
+        GestionComponent,
+        SidebarMobileComponent,
+        ThemeToggleButtonComponent,
+        CalendarItemComponent,
+        DragToScrollDirective,
+        EventCardComponent,
+        PaginationComponent,
+        SettingsComponent,
+        LabelFieldComponent,
+        ModalComponent,
+        CreateReminderModalComponent,
+        EditReminderModalComponent,
+        LabeledDateInputComponent,
+        CalendarViewComponent
+    ],
+    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
+    providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, {provide: CalendarDateFormatter,useClass: CustomDateFormatter}],
     bootstrap: [RootComponent],
 })
 export class AppModule {}
