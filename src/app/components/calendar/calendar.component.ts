@@ -60,14 +60,14 @@ export class CalendarComponent {
   viewDate: Date = new Date();
   calendarView = CalendarView;
   excludeDays: number[] = [0, 6]; // Exclue dimanche et samedi
-  events: any [] = [];
+  events: CalendarEvent [] = [];
   dayStartHour: number = 8; // Demarre à 8h
   dayEndHour: number = 18;  // Termine à 19h
-  hourSegments: number = 2; // une ligne tout les quart d'heure
+  hourSegments: number = 4; // une ligne tout les quart d'heure
   isCreationModalOpen: boolean = false;
   refresh = new Subject<void>;
   eventDetails: any = null; 
-
+  
   constructor() {
   this.convertToCalendarEvents(jsonData);
 
@@ -109,9 +109,8 @@ export class CalendarComponent {
     this.isCreationModalOpen = false;
   }
 
-  convertToCalendarEvents(jsonData: any): CalendarEvent[] {
+  convertToCalendarEvents(jsonData: any): void{
     const events: CalendarEvent[] = [];
-  
     if (jsonData && jsonData.edt) {
       jsonData.edt.forEach((item: any) => {
         const event: CalendarEvent = {
@@ -126,14 +125,12 @@ export class CalendarComponent {
           cssClass: './calendar.component.css',
           meta: {
             location: item.location,
-            organizer: item.oragnizer,
+            organizer: item.organizer,
             description: item.description
           }        };
         this.events.push(event);
       });
     }
-  
-    return events;
   }
   
   showEventDetails(event: any) {

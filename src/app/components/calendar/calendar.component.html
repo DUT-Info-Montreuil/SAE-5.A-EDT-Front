@@ -76,30 +76,33 @@
             (eventClicked)="showEventDetails($event)"
             (dayHeaderClicked)="changeDay($event.day.date)"
             [refresh]="refresh"
+            [hourSegmentHeight]="15" 
             [eventTemplate]="customEWeekViewTemplate"
-            
             >    
-                <ng-template #customEWeekViewTemplate let-WeekEvent="event">
-                    <div class="titre bg-danger h-full flex flex-col justify-between    ">
-                                <div class="item-center text-center">
-                                    {{ WeekEvent ? WeekEvent.title : "BDD" }}
-                                </div>
-                            
-                                <div class="flex justify-between">
-                                    <div class="max-w-min inline-block">
-                                    {{ WeekEvent ? WeekEvent.meta.location : "Là" }}
-                                    </div>
-                            
-                                    <div class="max-w-min inline-block">
-                                    {{ WeekEvent ? WeekEvent.meta.organizer : "AC" }}
-                                    </div>
+            
+                    
+           
+                  <ng-template #customEWeekViewTemplate let-event="events" >
+                    <div class="titre bg-danger h-full flex flex-col justify-between">
+                      <div class="item-center text-center" (click)="debug(event)">
+                        {{ event ? event.title : "BDD" }}
+                      </div>
+                      <div class="flex justify-between">
+                        <div class="max-w-min inline-block" (click)="debug(event)">
+                          {{ event ? event.meta.location : "Là" }}
+                        </div>
+                        <div class="max-w-min inline-block">
+                          {{ event ? event.meta.organizer : "AC" }}
+                        </div>
+                      </div>
                     </div>
-                    </div>
-                </ng-template>
-              
-              
+                  </ng-template>
+                 
+
         </mwl-calendar-week-view>
 
+        
+             
         <mwl-calendar-day-view class=""
             *ngSwitchCase="calendarView.Day" 
             [viewDate]="viewDate" 
@@ -112,7 +115,7 @@
             (eventTimesChanged)="eventTimesChanged($event)"
             (eventClicked)="eventClicked()"
             [refresh]="refresh"
-            
+            [hourSegmentHeight]="15"                       
             >
         </mwl-calendar-day-view>
     </span>
