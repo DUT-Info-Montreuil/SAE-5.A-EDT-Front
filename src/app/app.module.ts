@@ -37,22 +37,25 @@ import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, Dat
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { ModalCreateClassesComponent } from './components/modal-create-classes/modal-create-classes.component';
+import { userReducer } from './store/user';
+import { AlertComponent } from './components/alert/alert.component';
 
 export function localStorageSyncReducer(reducer: any): any {
-    return localStorageSync({ keys: ['layout'], rehydrate: true })(reducer);
+    return localStorageSync({ keys: ['layout', 'user'], rehydrate: true })(reducer);
 }
+
 const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 registerLocaleData(localeFr);
 
 class CustomDateFormatter extends CalendarNativeDateFormatter {
     public override dayViewHour({ date, locale }: DateFormatterParams): string {
-      return new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: 'numeric'}).format(date);
+        return new Intl.DateTimeFormat(locale, { hour: 'numeric', minute: 'numeric' }).format(date);
     }
     public override weekViewHour({ date, locale }: DateFormatterParams): string {
-      return new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: 'numeric'}).format(date);
+        return new Intl.DateTimeFormat(locale, { hour: 'numeric', minute: 'numeric' }).format(date);
     }
-  }
-  
+}
+
 @NgModule({
     declarations: [
         AuthLayoutComponent,
@@ -79,10 +82,11 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         CreateReminderModalComponent,
         EditReminderModalComponent,
         LabeledDateInputComponent,
-        CalendarViewComponent
+        CalendarViewComponent,
+        AlertComponent,
     ],
-    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
-    providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, {provide: CalendarDateFormatter,useClass: CustomDateFormatter}],
+    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
+    providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, { provide: CalendarDateFormatter, useClass: CustomDateFormatter }],
     bootstrap: [RootComponent],
 })
 export class AppModule {}

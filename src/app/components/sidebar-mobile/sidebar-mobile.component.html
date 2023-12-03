@@ -78,9 +78,9 @@
                             </svg>
                         </ng-container>
                     </app-sidebar-item>
-                    <app-sidebar-item (click)="toggleDrawer()" label="Se déconnecter" [routePath]="routes.AUTH" [active]="isRouteActive(routes.AUTH_LOGOUT)">
+                    <app-sidebar-item (click)="toggleDrawer()" label="Se déconnecter" [routePath]="routes.AUTH_LOGOUT" [active]="isRouteActive(routes.AUTH_LOGOUT)">
                         <ng-container icon>
-                            <svg class="w-5 h-5" [ngClass]="{ 'stroke-primary': isRouteActive(routes.AUTH), 'stroke-grey dark:stroke-body-light': !isRouteActive(routes.AUTH) }" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="w-5 h-5" [ngClass]="{ 'stroke-primary': isRouteActive(routes.AUTH_LOGOUT), 'stroke-grey dark:stroke-body-light': !isRouteActive(routes.AUTH_LOGOUT) }" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M146.011 58L188 100L146.011 142" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M76 100H187.971" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M76 188H20C17.8783 188 15.8434 187.157 14.3431 185.657C12.8429 184.157 12 182.122 12 180V20C12 17.8783 12.8429 15.8434 14.3431 14.3431C15.8434 12.8429 17.8783 12 20 12H76" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" />
