@@ -37,9 +37,9 @@
             </svg>
         </div>
     </div>
-    <div class="box flex flex-col rounded-md px-4 py-3 ml-8 pl-7 bg-white dark:bg-light-dark">
+    <div class="box flex flex-col rounded-md px-4 py-3 ml-8 pl-7 bg-white dark:bg-light-dark font-aileron">
         <span class="text-body dark:text-white font-bold text-lg leading-5">{{ title }}</span>
-        <span class="text-body dark:text-white font-normal leading-5">{{ message }}</span>
+        <span class="text-body dark:text-light font-normal text-sm leading-5">{{ message }}</span>
     </div>
     <button *ngIf="closable" class="absolute top-1 right-1" (click)="dismiss()">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

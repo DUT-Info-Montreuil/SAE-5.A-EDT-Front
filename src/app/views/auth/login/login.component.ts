@@ -48,7 +48,6 @@ export class LoginComponent {
 
     submit() {
         if (this.loginForm.valid) {
-            console.log('Form Submitted', this.loginForm.value);
             this.isLoading = true;
 
             this.authService
