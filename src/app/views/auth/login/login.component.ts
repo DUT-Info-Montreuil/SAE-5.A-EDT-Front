@@ -5,6 +5,7 @@ import { User } from 'src/app/models/entities';
 import { RoutePaths } from 'src/app/routes';
 import { AuthService } from 'src/app/services/auth.service';
 import { DarkModeService } from 'src/app/services/dark-mode.service';
+import { AlertColor } from 'src/app/models/enums';
 
 @Component({
     selector: 'app-login',
@@ -17,6 +18,8 @@ export class LoginComponent {
     isPasswordVisible: boolean = false;
     user: User | null = null;
     rememberMe: boolean = false;
+    alertColor = AlertColor;
+    apiError?: string;
 
     isLoading: boolean = false;
 
@@ -56,7 +59,8 @@ export class LoginComponent {
                     this.router.navigate([RoutePaths.APP]);
                 })
                 .catch((error) => {
-                    console.error(error);
+                    this.isLoading = false;
+                    this.apiError = error.response?.data?.msg || "Une erreur s'est produite lors de la connexion.";
                 });
         } else {
             this.loginForm.markAllAsTouched();

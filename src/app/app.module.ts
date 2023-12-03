@@ -38,6 +38,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { ModalCreateClassesComponent } from './components/modal-create-classes/modal-create-classes.component';
 import { userReducer } from './store/user';
+import { AlertComponent } from './components/alert/alert.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout', 'user'], rehydrate: true })(reducer);
@@ -82,6 +83,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         EditReminderModalComponent,
         LabeledDateInputComponent,
         CalendarViewComponent,
+        AlertComponent,
     ],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, { provide: CalendarDateFormatter, useClass: CustomDateFormatter }],
