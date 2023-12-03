@@ -16,6 +16,7 @@ export class LoginComponent {
     loginForm: FormGroup;
     isPasswordVisible: boolean = false;
     user: User | null = null;
+    rememberMe: boolean = false;
 
     isLoading: boolean = false;
 
@@ -23,7 +24,6 @@ export class LoginComponent {
         this.loginForm = this.fb.group({
             username: ['', [Validators.required, Validators.minLength(3)]],
             password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
-            rememberMe: [false],
         });
     }
 
@@ -39,13 +39,17 @@ export class LoginComponent {
         return this.loginForm.get('password') as FormControl;
     }
 
+    toggleRememberMe(event: Event): void {
+        this.rememberMe = (event.target as HTMLInputElement).checked;
+    }
+
     submit() {
         if (this.loginForm.valid) {
             console.log('Form Submitted', this.loginForm.value);
             this.isLoading = true;
 
             this.authService
-                .login(this.loginForm)
+                .login(this.loginForm, this.rememberMe)
                 .then((response) => {
                     this.isLoading = false;
                     this.user = new User(response.data);

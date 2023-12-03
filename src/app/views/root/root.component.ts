@@ -14,6 +14,8 @@ export class RootComponent implements OnInit {
     constructor(private authService: AuthService, private router: Router, private store: Store<fromRoot.LayoutState>) {}
 
     ngOnInit(): void {
+        this.authService.checkAuthentication();
+
         this.store.pipe(select(fromRoot.selectDarkMode)).subscribe((darkMode) => {
             if (darkMode) {
                 document.documentElement.classList.add('dark');
@@ -22,7 +24,7 @@ export class RootComponent implements OnInit {
             }
         });
 
-        if (this.authService.isAuthenticated()) {
+        if (this.authService.getAuthenticationStatus()) {
             this.router.navigate([RoutePaths.APP]);
         } else {
             this.router.navigate([RoutePaths.AUTH]);

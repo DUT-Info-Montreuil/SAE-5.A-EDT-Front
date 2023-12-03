@@ -39,7 +39,7 @@
                         </ng-container>
                     </app-labeled-icon-input>
                     <div class="flex items-center gap-x-3">
-                        <input type="checkbox" class="w-5 h-5 rounded-[5px] bg-light checked:bg-secondary dark:checked:bg-secondary focus:shadow-none focus:ring-0" />
+                        <input type="checkbox" class="w-5 h-5 rounded-[5px] bg-light checked:bg-secondary dark:checked:bg-secondary focus:shadow-none focus:ring-0" (change)="toggleRememberMe($event)" />
                         <label for="" class="font-aileron text-grey dark:text-medium text-base">Se souvenir de moi</label>
                     </div>
                 </div>
