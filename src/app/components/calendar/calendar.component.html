@@ -26,17 +26,16 @@
   <div class="flex flex-col sm:flex-row justify-between items-stretch h-12">
       <!-- Liste pour la salle -->
       <div class="w-full sm:w-auto mb-2 sm:mb-0">
-          <select class="w-full border rounded py-2 px-3 focus:outline-none focus:border-blue-500">
-              <option value="">----</option>
-              <option value="A2-05">A2-05</option>
-              <option value="A2-04">A2-04</option>
-              <option value="F1-03">F1-03</option>
-              <option value="B1-10">B1-10</option>
+          <select class="w-full selectPromo border rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+            <option value="">----</option>
+            <ng-container *ngFor="let promo of mapIdNomPromo">
+              <option [value]="promo">{{ promo }}</option>
+            </ng-container>
           </select>          
       </div>
     
       <div class="w-full sm:w-auto mb-2 sm:mb-0 ml-0 sm:ml-2">
-          <select class="w-full selectProf border rounded py-2 px-3 focus:outline-none focus:border-blue-500" (change)="onSelectChange($event)">
+          <select class="w-full selectProf border rounded py-2 px-3 focus:outline-none focus:border-blue-500" (change)="onSelectProfChange($event)">
             <option value="">----</option>
             <ng-container *ngFor="let nom of mapIdNomProfs">
               <option [value]="nom">{{ nom }}</option>
@@ -79,29 +78,23 @@
           [hourSegmentHeight]="15" 
           [eventTemplate]="customEWeekViewTemplate"
           >    
-          
-                  
-         
-                <ng-template #customEWeekViewTemplate let-event="events" >
-                  <div class="titre bg-danger h-full flex flex-col justify-between">
-                    <div class="item-center text-center" (click)="debug(event)">
-                      {{ event ? event.title : "BDD" }}
-                    </div>
-                    <div class="flex justify-between">
-                      <div class="max-w-min inline-block" (click)="debug(event)">
-                        {{ event ? event.meta.location : "Là" }}
-                      </div>
-                      <div class="max-w-min inline-block">
-                        {{ event ? event.meta.organizer : "AC" }}
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-               
-
       </mwl-calendar-week-view>
 
-      
+      <ng-template #customEWeekViewTemplate let-event="events" >
+        <div class="titre bg-danger h-full flex flex-col justify-between">
+          <div class="item-center text-center" >
+            {{ event ? event.title : "BDD" }}
+          </div>
+          <div class="flex justify-between">
+            <div class="max-w-min inline-block" >
+              {{ event ? event.meta.location : "Là" }}
+            </div>
+            <div class="max-w-min inline-block">
+              {{ event ? event.meta.organizer : "AC" }}
+            </div>
+          </div>
+        </div>
+      </ng-template>
            
       <mwl-calendar-day-view class=""
           *ngSwitchCase="calendarView.Day" 
@@ -113,9 +106,10 @@
           locale="fr"
           (click)="dayViewClick()"
           (eventTimesChanged)="eventTimesChanged($event)"
-          (eventClicked)="eventClicked()"
+          (eventClicked)="calendarClicked()"
           [refresh]="refresh"
-          [hourSegmentHeight]="15"                       
+          [hourSegmentHeight]="15"      
+          [eventTemplate]="customEWeekViewTemplate"                 
           >
       </mwl-calendar-day-view>
   </span>
