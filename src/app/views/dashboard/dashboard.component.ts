@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { DateFormattingService } from 'src/app/services/date-formatting.service';
+import { DateFormattingService } from '../../services/date-formatting.service';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { NumberSymbol } from '@angular/common';
 
@@ -13,6 +13,7 @@ export class DashboardComponent {
     formattedDate: string | null;
     scrollProgress = 0;
     scrollAmount = 0;
+    reminderModalOpened: boolean = false;
 
     constructor(private dateFormattingService: DateFormattingService) {
         this.formattedDate = this.dateFormattingService.format(new Date());
@@ -64,5 +65,11 @@ export class DashboardComponent {
         });
     }
 
-    submit() {}
+    openDeleteBankLoanModal() {
+        this.reminderModalOpened = true;
+    }
+
+    closedReminderModal(reload?: boolean) {
+        this.reminderModalOpened = false;
+    }
 }

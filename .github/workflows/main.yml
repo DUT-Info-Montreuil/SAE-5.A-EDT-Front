@@ -69,38 +69,3 @@ jobs:
                   fi
 
                   git push origin $BRANCH_NAME --tags
-
-    deploy_release:
-        needs: package
-        runs-on: ubuntu-latest
-        environment:
-            name: Release Deployment
-        permissions:
-            packages: write
-            contents: write
-
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
-
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-
-            - name: Set Git Bot
-              run: |
-                  git config user.name "Adil Bot"
-                  git config user.email "onizuka9361@gmail.com"
-
-            - name: Update local branch
-              run: |
-                  git checkout develop
-                  git pull origin develop --rebase
-
-            - name: Create Release Branch
-              run: |
-                  VERSION=$(node -p "require('./package.json').version")
-                  RELEASE_BRANCH="release/$VERSION"
-                  git checkout -b $RELEASE_BRANCH develop
-                  git push origin $RELEASE_BRANCH --tags

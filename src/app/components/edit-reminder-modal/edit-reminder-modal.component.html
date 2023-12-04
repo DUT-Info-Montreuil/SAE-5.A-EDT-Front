@@ -1,0 +1,9 @@
+<app-modal [isOpen]="isOpen" (closed)="close($event)">
+    <div class="p-5">
+        <h3 class="text-body text-center">Rappel</h3>
+    </div>
+    <div class="flex justify-center items-center p-6 space-x-2 border-gray-200 rounded-b">
+        <app-button label="Ajouter" type="primary" [loading]="isLoading" (click)="submit()"></app-button>
+        <app-button label="Annuler" type="grey" (click)="close(false)"></app-button>
+    </div>
+</app-modal>

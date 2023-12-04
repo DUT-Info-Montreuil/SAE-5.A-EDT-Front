@@ -29,6 +29,10 @@ import { EventCardComponent } from './components/event-card/event-card.component
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SettingsComponent } from './views/settings/settings.component';
 import { LabelFieldComponent } from './components/label-field/label-field.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { CreateReminderModalComponent } from './components/create-reminder-modal/create-reminder-modal.component';
+import { EditReminderModalComponent } from './components/edit-reminder-modal/edit-reminder-modal.component';
+import { LabeledDateInputComponent } from './components/labeled-date-input/labeled-date-input.component';
 import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './components/calendar/calendar.component';
@@ -50,7 +54,33 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
   }
   
 @NgModule({
-    declarations: [AuthLayoutComponent,ModalCreateClassesComponent, AppLayoutComponent, LoginComponent, LogoutComponent, ButtonComponent, RootComponent, LabeledIconInputComponent, SidebarComponent, SidebarItemComponent, DashboardComponent, CalendarViewComponent, GestionComponent, SidebarMobileComponent, ThemeToggleButtonComponent, CalendarItemComponent, DragToScrollDirective, EventCardComponent, PaginationComponent, SettingsComponent, LabelFieldComponent, CalendarComponent],
+    declarations: [
+        AuthLayoutComponent,
+        AppLayoutComponent,
+        LoginComponent,
+        LogoutComponent,
+        ButtonComponent,
+        RootComponent,
+        LabeledIconInputComponent,
+        SidebarComponent,
+        SidebarItemComponent,
+        DashboardComponent,
+        CalendarComponent,
+        GestionComponent,
+        SidebarMobileComponent,
+        ThemeToggleButtonComponent,
+        CalendarItemComponent,
+        DragToScrollDirective,
+        EventCardComponent,
+        PaginationComponent,
+        SettingsComponent,
+        LabelFieldComponent,
+        ModalComponent,
+        CreateReminderModalComponent,
+        EditReminderModalComponent,
+        LabeledDateInputComponent,
+        CalendarViewComponent
+    ],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, {provide: CalendarDateFormatter,useClass: CustomDateFormatter}],
     bootstrap: [RootComponent],

@@ -1,112 +1,124 @@
-<div class="p-4 md:p-8 flex flex-col gap-y-8">
-    <div class="w-full flex justify-between items-center">
-        <h3 class="text-body">Tableau de bord</h3>
-        <h3 class="font-normal text-medium dark:text-medium text-right">{{ formattedDate }}</h3>
-    </div>
-    <div class="lg:mt-6 2xl:mt-8 w-full bg-purple p-4 rounded-xl flex bg-primary-dark dark:bg-light-dark relative">
-        <div class="flex flex-col lg:basis-1/2">
-            <h1 class="text-white dark:text-white">Salut, [Prénom] !</h1>
-            <p class="text-medium text-xs md:text-sm">Nous sommes ravis de vous retrouver sur notre plateforme. Profitez de tous les avantages de notre environnement numérique de travail.</p>
+<div class="p-4 md:p-8">
+    <div class="flex flex-col gap-y-8">
+        <div class="w-full flex justify-between items-center">
+            <h3 class="text-body">Tableau de bord</h3>
+            <h3 class="font-normal text-medium dark:text-medium text-right">{{ formattedDate }}</h3>
         </div>
-        <div class="hidden lg:flex absolute mr-20 right-0 bottom-0">
-            <img class="w-52 select-none" src="../../../assets/illustrations/dashboard/dashboard-first.svg" alt="ENT - Dashboard" />
-        </div>
-    </div>
-    <div class="flex flex-col">
-        <div class="flex flex-row justify-between items-end">
-            <h3 class="text-body">Prochains cours</h3>
-            <div class="flex gap-x-2">
-                <button (click)="scrollLeft()" class="hidden md:flex aspect-square">
-                    <svg class="fill-body dark:fill-white w-5 h-4" viewBox="0 0 11 20" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M10.6337 0.292192C10.4361 0.104594 10.1741 0 9.90168 0C9.62925 0 9.36722 0.104594 9.16968 0.292192L0.606677 8.55619C0.414997 8.73835 0.262371 8.9576 0.158076 9.20059C0.0537822 9.44359 0 9.70526 0 9.96969C0 10.2341 0.0537822 10.4958 0.158076 10.7388C0.262371 10.9818 0.414997 11.201 0.606677 11.3832L9.23168 19.7082C9.63168 20.0932 10.2797 20.0982 10.6857 19.7182C10.784 19.6277 10.8626 19.5179 10.9167 19.3957C10.9708 19.2735 10.9992 19.1415 11.0001 19.0079C11.0011 18.8742 10.9745 18.7418 10.9222 18.6189C10.8698 18.496 10.7927 18.3851 10.6957 18.2932L2.80268 10.6762C2.70676 10.5851 2.63038 10.4755 2.57819 10.3539C2.52599 10.2324 2.49908 10.1015 2.49908 9.96919C2.49908 9.83691 2.52599 9.70602 2.57819 9.58448C2.63038 9.46293 2.70676 9.35328 2.80268 9.26219L10.6327 1.70519C10.7286 1.61419 10.8049 1.50462 10.8571 1.38316C10.9093 1.2617 10.9362 1.13089 10.9362 0.998692C10.9362 0.866496 10.9093 0.735683 10.8571 0.614221C10.8049 0.49276 10.7296 0.383192 10.6337 0.292192Z"
-                        />
-                    </svg>
-                </button>
-                <button (click)="scrollRight()" class="hidden md:flex aspect-square">
-                    <svg class="fill-body dark:fill-white w-5 h-4" viewBox="0 0 11 20" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M0.36652 19.7085C0.77152 20.0985 1.42652 20.0985 1.83052 19.7085L10.3935 11.4445C10.5852 11.2623 10.7378 11.0431 10.8421 10.8001C10.9464 10.5571 11.0002 10.2954 11.0002 10.031C11.0002 9.76658 10.9464 9.50491 10.8421 9.26191C10.7378 9.01892 10.5852 8.79967 10.3935 8.61751L1.76852 0.292509C1.57277 0.106456 1.31355 0.00188248 1.0435 2.51689e-05C0.773443 -0.00183215 0.512807 0.0991663 0.31452 0.282509C0.216291 0.373049 0.137696 0.482791 0.0836001 0.604938C0.0295044 0.727085 0.00106027 0.859038 2.90802e-05 0.992624C-0.00100211 1.12621 0.0254016 1.25859 0.0776052 1.38155C0.129809 1.50452 0.206701 1.61546 0.30352 1.70751L8.19752 9.32451C8.29344 9.4156 8.36982 9.52525 8.42201 9.64679C8.47421 9.76834 8.50112 9.89923 8.50112 10.0315C8.50112 10.1638 8.47421 10.2947 8.42201 10.4162C8.36982 10.5378 8.29344 10.6474 8.19752 10.7385L0.36652 18.2955C0.27063 18.3865 0.194268 18.4961 0.142085 18.6175C0.089903 18.739 0.0629923 18.8698 0.0629923 19.002C0.0629923 19.1342 0.089903 19.265 0.142085 19.3865C0.194268 19.5079 0.27063 19.6175 0.36652 19.7085Z"
-                        />
-                    </svg>
-                </button>
+        <div class="lg:mt-6 2xl:mt-8 w-full bg-purple p-4 rounded-xl flex bg-primary-dark dark:bg-light-dark relative">
+            <div class="flex flex-col lg:basis-1/2">
+                <h1 class="text-white dark:text-white">Salut, [Prénom] !</h1>
+                <p class="text-medium text-xs md:text-sm">Nous sommes ravis de vous retrouver sur notre plateforme. Profitez de tous les avantages de notre environnement numérique de travail.</p>
+            </div>
+            <div class="hidden lg:flex absolute mr-20 right-0 bottom-0">
+                <img class="w-52 select-none" src="../../../assets/illustrations/dashboard/dashboard-first.svg" alt="ENT - Dashboard" />
             </div>
         </div>
-        <div #menu appDragToScroll class="flex overflow-x-scroll scrollbar-hide max-w-full py-4 cursor-pointer" (scroll)="updateProgressBar()">
-            <div class="flex flex-nowrap gap-x-4">
-                <app-calendar-item color="bg-calendar-purple shadow-purple" personal="AGo" timeStart="9h30" timeEnd="11h30" course="Anglais" room="B0-06"></app-calendar-item>
-                <app-calendar-item color="bg-calendar-pink shadow-pink"></app-calendar-item>
-                <app-calendar-item color="bg-calendar-red shadow-red"></app-calendar-item>
-                <app-calendar-item color="bg-calendar-blue shadow-blue"></app-calendar-item>
-                <app-calendar-item color="bg-calendar-purple shadow-purple"></app-calendar-item>
-                <app-calendar-item color="bg-calendar-pink shadow-pink"></app-calendar-item>
-                <app-calendar-item color="bg-calendar-red shadow-red"></app-calendar-item>
-                <app-calendar-item color="bg-calendar-blue shadow-blue"></app-calendar-item>
-            </div>
-        </div>
-        <div class="w-32 bg-subtitle dark:bg-light-dark h-1 mx-auto rounded-md relative">
-            <div class="w-8 h-1 bg-primary rounded-md absolute top-0 left-0" [style.left.%]="scrollProgress"></div>
-        </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="flex flex-col w-full p-5 rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
-            <div class="flex flex-col gap-y-6">
-                <div class="w-full flex justify-between items-center">
-                    <h3 class="text-body">Absences</h3>
-                    <svg class="fill-primary w-5 h-5" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M25 3.95996H23.5V3C23.5 2.44775 23.0527 2 22.5 2C21.9473 2 21.5 2.44775 21.5 3V3.95996H10.5V3C10.5 2.44775 10.0527 2 9.5 2C8.94727 2 8.5 2.44775 8.5 3V3.95996H7C4.24316 3.95996 2 6.20312 2 8.95996V25C2 27.7568 4.24316 30 7 30H25C27.7568 30 30 27.7568 30 25V8.95996C30 6.20312 27.7568 3.95996 25 3.95996ZM4 8.95996C4 7.30566 5.3457 5.95996 7 5.95996H8.5V6.91943C8.5 7.47168 8.94727 7.91943 9.5 7.91943C10.0527 7.91943 10.5 7.47168 10.5 6.91943V5.95996H21.5V6.91943C21.5 7.47168 21.9473 7.91943 22.5 7.91943C23.0527 7.91943 23.5 7.47168 23.5 6.91943V5.95996H25C26.6543 5.95996 28 7.30566 28 8.95996V9.96973H4V8.95996ZM25 28H7C5.3457 28 4 26.6543 4 25V11.9697H28V25C28 26.6543 26.6543 28 25 28Z"
-                        />
-                        <path d="M16 13.4849C12.416 13.4849 9.5 16.4009 9.5 19.9849C9.5 23.5688 12.416 26.4849 16 26.4849C19.584 26.4849 22.5 23.5688 22.5 19.9849C22.5 16.4009 19.584 13.4849 16 13.4849ZM16 24.4849C13.5186 24.4849 11.5 22.4663 11.5 19.9849C11.5 17.5034 13.5186 15.4849 16 15.4849C18.4814 15.4849 20.5 17.5034 20.5 19.9849C20.5 22.4663 18.4814 24.4849 16 24.4849Z" />
-                        <path d="M17.8193 18.9849H17V18.0854C17 17.5332 16.5527 17.0854 16 17.0854C15.4473 17.0854 15 17.5332 15 18.0854V19.9849C15 20.5371 15.4473 20.9849 16 20.9849H17.8193C18.3721 20.9849 18.8193 20.5371 18.8193 19.9849C18.8193 19.4326 18.3721 18.9849 17.8193 18.9849Z" />
-                    </svg>
-                </div>
-                <div class="flex flex-col gap-y-3">
-                    <app-event-card label="R5.09 Anglais" date="10/09" time="10h30 - 12h00" />
-                    <app-event-card label="R5.06 Qualité algo" date="12/09" time="09h00 - 10h00" />
-                </div>
-            </div>
-            <app-pagination [currentPage]="1" [totalPage]="5" />
-        </div>
-        <div class="w-full p-5 rounded-xl flex flex-col gap-y-6 bg-white dark:bg-light-dark justify-between">
-            <div class="flex flex-col gap-y-6">
-                <div class="w-full flex justify-between items-center">
-                    <h3 class="text-body">Rappels</h3>
-                    <svg class="fill-primary w-5 h-5" viewBox="0 0 21 20" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M3.82261 20H16.3715C17.1493 19.9978 17.8944 19.6873 18.4434 19.1367C18.9924 18.586 19.3003 17.8402 19.2996 17.0629V10.7614C19.2996 10.5397 19.2115 10.327 19.0546 10.1702C18.8977 10.0135 18.6849 9.92537 18.463 9.92537C18.2411 9.92537 18.0284 10.0135 17.8715 10.1702C17.7146 10.327 17.6264 10.5397 17.6264 10.7614V17.0629C17.6275 17.3969 17.496 17.7176 17.2608 17.9548C17.0255 18.1919 16.7057 18.3261 16.3715 18.3279H3.82261C3.48846 18.3261 3.16865 18.1919 2.93338 17.9548C2.69812 17.7176 2.56661 17.3969 2.56772 17.0629V4.54357C2.56661 4.20962 2.69812 3.88886 2.93338 3.65171C3.16865 3.41455 3.48846 3.28036 3.82261 3.27859H10.0971C10.319 3.27859 10.5317 3.1905 10.6886 3.03371C10.8455 2.87692 10.9337 2.66426 10.9337 2.44252C10.9337 2.22078 10.8455 2.00812 10.6886 1.85133C10.5317 1.69453 10.319 1.60645 10.0971 1.60645H3.82261C3.04483 1.60866 2.29971 1.91916 1.75075 2.46981C1.2018 3.02046 0.893864 3.76627 0.894532 4.54357V17.0629C0.893864 17.8402 1.2018 18.586 1.75075 19.1367C2.29971 19.6873 3.04483 19.9978 3.82261 20Z"
-                        />
-                        <path
-                            d="M8.80474 8.7499L8.14466 11.7715C8.11479 11.9085 8.11989 12.0509 8.15951 12.1854C8.19913 12.32 8.27199 12.4425 8.37138 12.5415C8.47214 12.638 8.5947 12.7089 8.72868 12.748C8.86266 12.7872 9.00411 12.7935 9.14105 12.7664L12.1578 12.1051C12.3144 12.0707 12.4579 11.992 12.5711 11.8785L20.1958 4.25852C20.4289 4.02561 20.6138 3.74908 20.74 3.44474C20.8661 3.14041 20.9311 2.81421 20.9311 2.48479C20.9311 2.15537 20.8661 1.82918 20.74 1.52484C20.6138 1.2205 20.4289 0.94398 20.1958 0.711065C19.7179 0.254683 19.0824 0 18.4214 0C17.7604 0 17.1249 0.254683 16.647 0.711065L9.03396 8.33856C8.9197 8.45089 8.84014 8.59367 8.80474 8.7499ZM17.8299 1.89411C17.9891 1.74173 18.201 1.65666 18.4214 1.65666C18.6418 1.65666 18.8537 1.74173 19.0129 1.89411C19.1676 2.05182 19.2543 2.2639 19.2543 2.48479C19.2543 2.70569 19.1676 2.91777 19.0129 3.07548L18.4214 3.66658L17.2384 2.48438L17.8299 1.89411ZM10.3842 9.34686L16.0513 3.66909L17.2226 4.84544L11.5529 10.5249L10.0513 10.8543L10.3842 9.34686Z"
-                        />
-                    </svg>
-                </div>
-                <div class="flex flex-col gap-y-3">
-                    <app-event-card label="Finir oral d’Anglais" date="Pour le 10/09" />
-                    <app-event-card label="Rendre TP Qualité Algo" date="Pour le 12/09" />
-                    <app-event-card label="Dormir" date="Pour le 14/09" />
-                </div>
-            </div>
-            <div class="flex flex-col-reverse xl:flex-row justify-between gap-6 xl:items-end">
-                <app-pagination [currentPage]="1" [totalPage]="5" />
-                <app-button label="Ajouter" type="primary" (click)="submit()">
-                    <ng-container left-icon>
-                        <svg class="w-4 h-4" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="flex flex-col">
+            <div class="flex flex-row justify-between items-end">
+                <h3 class="text-body">Prochains cours</h3>
+                <div class="flex gap-x-2">
+                    <button (click)="scrollLeft()" class="hidden md:flex aspect-square">
+                        <svg class="fill-body dark:fill-white w-5 h-4" viewBox="0 0 11 20" xmlns="http://www.w3.org/2000/svg">
                             <path
-                                d="M10.3785 0.655518C8.40073 0.655518 6.46733 1.24201 4.82284 2.34082C3.17835 3.43963 1.89663 5.00142 1.13975 6.82868C0.382873 8.65594 0.18484 10.6666 0.570692 12.6064C0.956544 14.5462 1.90895 16.3281 3.30748 17.7266C4.706 19.1251 6.48783 20.0775 8.42764 20.4634C10.3674 20.8492 12.3781 20.6512 14.2054 19.8943C16.0326 19.1374 17.5944 17.8557 18.6932 16.2112C19.792 14.5667 20.3785 12.6333 20.3785 10.6555C20.3785 9.3423 20.1199 8.04194 19.6173 6.82868C19.1148 5.61543 18.3782 4.51303 17.4496 3.58445C16.521 2.65586 15.4186 1.91927 14.2054 1.41672C12.9921 0.914175 11.6918 0.655518 10.3785 0.655518ZM10.3785 18.6555C8.79629 18.6555 7.24957 18.1863 5.93398 17.3073C4.61839 16.4282 3.59301 15.1788 2.98751 13.717C2.38201 12.2552 2.22358 10.6466 2.53226 9.09479C2.84094 7.54294 3.60287 6.11748 4.72169 4.99866C5.84051 3.87984 7.26597 3.11792 8.81782 2.80923C10.3697 2.50055 11.9782 2.65898 13.44 3.26448C14.9018 3.86998 16.1512 4.89536 17.0303 6.21095C17.9093 7.52655 18.3785 9.07326 18.3785 10.6555C18.3785 12.7772 17.5357 14.8121 16.0354 16.3124C14.5351 17.8127 12.5003 18.6555 10.3785 18.6555ZM14.3785 9.65551H11.3785V6.65552C11.3785 6.3903 11.2732 6.13595 11.0856 5.94841C10.8981 5.76087 10.6438 5.65552 10.3785 5.65552C10.1133 5.65552 9.85897 5.76087 9.67144 5.94841C9.4839 6.13595 9.37854 6.3903 9.37854 6.65552V9.65551H6.37854C6.11333 9.65551 5.85897 9.76087 5.67144 9.94841C5.4839 10.1359 5.37854 10.3903 5.37854 10.6555C5.37854 10.9207 5.4839 11.1751 5.67144 11.3626C5.85897 11.5502 6.11333 11.6555 6.37854 11.6555H9.37854V14.6555C9.37854 14.9207 9.4839 15.1751 9.67144 15.3626C9.85897 15.5502 10.1133 15.6555 10.3785 15.6555C10.6438 15.6555 10.8981 15.5502 11.0856 15.3626C11.2732 15.1751 11.3785 14.9207 11.3785 14.6555V11.6555H14.3785C14.6438 11.6555 14.8981 11.5502 15.0856 11.3626C15.2732 11.1751 15.3785 10.9207 15.3785 10.6555C15.3785 10.3903 15.2732 10.1359 15.0856 9.94841C14.8981 9.76087 14.6438 9.65551 14.3785 9.65551Z"
-                                fill="white"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M10.6337 0.292192C10.4361 0.104594 10.1741 0 9.90168 0C9.62925 0 9.36722 0.104594 9.16968 0.292192L0.606677 8.55619C0.414997 8.73835 0.262371 8.9576 0.158076 9.20059C0.0537822 9.44359 0 9.70526 0 9.96969C0 10.2341 0.0537822 10.4958 0.158076 10.7388C0.262371 10.9818 0.414997 11.201 0.606677 11.3832L9.23168 19.7082C9.63168 20.0932 10.2797 20.0982 10.6857 19.7182C10.784 19.6277 10.8626 19.5179 10.9167 19.3957C10.9708 19.2735 10.9992 19.1415 11.0001 19.0079C11.0011 18.8742 10.9745 18.7418 10.9222 18.6189C10.8698 18.496 10.7927 18.3851 10.6957 18.2932L2.80268 10.6762C2.70676 10.5851 2.63038 10.4755 2.57819 10.3539C2.52599 10.2324 2.49908 10.1015 2.49908 9.96919C2.49908 9.83691 2.52599 9.70602 2.57819 9.58448C2.63038 9.46293 2.70676 9.35328 2.80268 9.26219L10.6327 1.70519C10.7286 1.61419 10.8049 1.50462 10.8571 1.38316C10.9093 1.2617 10.9362 1.13089 10.9362 0.998692C10.9362 0.866496 10.9093 0.735683 10.8571 0.614221C10.8049 0.49276 10.7296 0.383192 10.6337 0.292192Z"
                             />
                         </svg>
-                    </ng-container>
-                </app-button>
+                    </button>
+                    <button (click)="scrollRight()" class="hidden md:flex aspect-square">
+                        <svg class="fill-body dark:fill-white w-5 h-4" viewBox="0 0 11 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M0.36652 19.7085C0.77152 20.0985 1.42652 20.0985 1.83052 19.7085L10.3935 11.4445C10.5852 11.2623 10.7378 11.0431 10.8421 10.8001C10.9464 10.5571 11.0002 10.2954 11.0002 10.031C11.0002 9.76658 10.9464 9.50491 10.8421 9.26191C10.7378 9.01892 10.5852 8.79967 10.3935 8.61751L1.76852 0.292509C1.57277 0.106456 1.31355 0.00188248 1.0435 2.51689e-05C0.773443 -0.00183215 0.512807 0.0991663 0.31452 0.282509C0.216291 0.373049 0.137696 0.482791 0.0836001 0.604938C0.0295044 0.727085 0.00106027 0.859038 2.90802e-05 0.992624C-0.00100211 1.12621 0.0254016 1.25859 0.0776052 1.38155C0.129809 1.50452 0.206701 1.61546 0.30352 1.70751L8.19752 9.32451C8.29344 9.4156 8.36982 9.52525 8.42201 9.64679C8.47421 9.76834 8.50112 9.89923 8.50112 10.0315C8.50112 10.1638 8.47421 10.2947 8.42201 10.4162C8.36982 10.5378 8.29344 10.6474 8.19752 10.7385L0.36652 18.2955C0.27063 18.3865 0.194268 18.4961 0.142085 18.6175C0.089903 18.739 0.0629923 18.8698 0.0629923 19.002C0.0629923 19.1342 0.089903 19.265 0.142085 19.3865C0.194268 19.5079 0.27063 19.6175 0.36652 19.7085Z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div #menu appDragToScroll class="flex overflow-x-scroll scrollbar-hide max-w-full py-4 cursor-pointer" (scroll)="updateProgressBar()">
+                <div class="flex flex-nowrap gap-x-4">
+                    <app-calendar-item color="bg-calendar-purple shadow-purple" personal="AGo" timeStart="9h30" timeEnd="11h30" course="Anglais" room="B0-06"></app-calendar-item>
+                    <app-calendar-item color="bg-calendar-pink shadow-pink"></app-calendar-item>
+                    <app-calendar-item color="bg-calendar-red shadow-red"></app-calendar-item>
+                    <app-calendar-item color="bg-calendar-blue shadow-blue"></app-calendar-item>
+                    <app-calendar-item color="bg-calendar-purple shadow-purple"></app-calendar-item>
+                    <app-calendar-item color="bg-calendar-pink shadow-pink"></app-calendar-item>
+                    <app-calendar-item color="bg-calendar-red shadow-red"></app-calendar-item>
+                    <app-calendar-item color="bg-calendar-blue shadow-blue"></app-calendar-item>
+                </div>
+            </div>
+            <div class="w-32 bg-subtitle dark:bg-light-dark h-1 mx-auto rounded-md relative">
+                <div class="w-8 h-1 bg-primary rounded-md absolute top-0 left-0" [style.left.%]="scrollProgress"></div>
             </div>
         </div>
-    </div>
-    <!--
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="flex flex-col w-full p-5 rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
+                <div class="flex flex-col gap-y-6">
+                    <div class="w-full flex justify-between items-center">
+                        <h3 class="text-body">Absences</h3>
+                        <svg class="fill-primary w-5 h-5" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M25 3.95996H23.5V3C23.5 2.44775 23.0527 2 22.5 2C21.9473 2 21.5 2.44775 21.5 3V3.95996H10.5V3C10.5 2.44775 10.0527 2 9.5 2C8.94727 2 8.5 2.44775 8.5 3V3.95996H7C4.24316 3.95996 2 6.20312 2 8.95996V25C2 27.7568 4.24316 30 7 30H25C27.7568 30 30 27.7568 30 25V8.95996C30 6.20312 27.7568 3.95996 25 3.95996ZM4 8.95996C4 7.30566 5.3457 5.95996 7 5.95996H8.5V6.91943C8.5 7.47168 8.94727 7.91943 9.5 7.91943C10.0527 7.91943 10.5 7.47168 10.5 6.91943V5.95996H21.5V6.91943C21.5 7.47168 21.9473 7.91943 22.5 7.91943C23.0527 7.91943 23.5 7.47168 23.5 6.91943V5.95996H25C26.6543 5.95996 28 7.30566 28 8.95996V9.96973H4V8.95996ZM25 28H7C5.3457 28 4 26.6543 4 25V11.9697H28V25C28 26.6543 26.6543 28 25 28Z"
+                            />
+                            <path d="M16 13.4849C12.416 13.4849 9.5 16.4009 9.5 19.9849C9.5 23.5688 12.416 26.4849 16 26.4849C19.584 26.4849 22.5 23.5688 22.5 19.9849C22.5 16.4009 19.584 13.4849 16 13.4849ZM16 24.4849C13.5186 24.4849 11.5 22.4663 11.5 19.9849C11.5 17.5034 13.5186 15.4849 16 15.4849C18.4814 15.4849 20.5 17.5034 20.5 19.9849C20.5 22.4663 18.4814 24.4849 16 24.4849Z" />
+                            <path d="M17.8193 18.9849H17V18.0854C17 17.5332 16.5527 17.0854 16 17.0854C15.4473 17.0854 15 17.5332 15 18.0854V19.9849C15 20.5371 15.4473 20.9849 16 20.9849H17.8193C18.3721 20.9849 18.8193 20.5371 18.8193 19.9849C18.8193 19.4326 18.3721 18.9849 17.8193 18.9849Z" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col gap-y-3">
+                        <app-event-card label="R5.09 Anglais" date="19/11" time="10h30 - 12h00" [warn]="true" />
+                        <app-event-card label="R5.06 Qualité algo" date="19/11" time="09h00 - 10h00" [success]="true" />
+                        <app-event-card label="R5.13 Communication" date="16/11" time="09h00 - 12h00" [warn]="true" />
+                        <app-event-card label="R5.04 Qualité dev" date="10/11" time="14h00 - 17h00" [warn]="true" />
+                    </div>
+                </div>
+                <div class="flex flex-col-reverse xl:flex-row justify-between gap-6 xl:items-center gap-x-12">
+                    <app-pagination [currentPage]="1" [totalPage]="5" />
+                    <div class="flex items-start gap-x-2">
+                        <p class="text-xs text-medium dark:text-medium">Total semestriel :</p>
+                        <div class="flex flex-row md:flex-col gap-x-1">
+                            <p class="text-xs text-medium dark:text-medium">7h non justifiées,</p>
+                            <p class="text-xs text-medium dark:text-medium">1h justifiées</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full p-5 rounded-xl flex flex-col gap-y-6 bg-white dark:bg-light-dark justify-between">
+                <div class="flex flex-col gap-y-6">
+                    <div class="w-full flex justify-between items-center">
+                        <h3 class="text-body">Rappels</h3>
+                        <svg class="fill-primary w-5 h-5" viewBox="0 0 21 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M3.82261 20H16.3715C17.1493 19.9978 17.8944 19.6873 18.4434 19.1367C18.9924 18.586 19.3003 17.8402 19.2996 17.0629V10.7614C19.2996 10.5397 19.2115 10.327 19.0546 10.1702C18.8977 10.0135 18.6849 9.92537 18.463 9.92537C18.2411 9.92537 18.0284 10.0135 17.8715 10.1702C17.7146 10.327 17.6264 10.5397 17.6264 10.7614V17.0629C17.6275 17.3969 17.496 17.7176 17.2608 17.9548C17.0255 18.1919 16.7057 18.3261 16.3715 18.3279H3.82261C3.48846 18.3261 3.16865 18.1919 2.93338 17.9548C2.69812 17.7176 2.56661 17.3969 2.56772 17.0629V4.54357C2.56661 4.20962 2.69812 3.88886 2.93338 3.65171C3.16865 3.41455 3.48846 3.28036 3.82261 3.27859H10.0971C10.319 3.27859 10.5317 3.1905 10.6886 3.03371C10.8455 2.87692 10.9337 2.66426 10.9337 2.44252C10.9337 2.22078 10.8455 2.00812 10.6886 1.85133C10.5317 1.69453 10.319 1.60645 10.0971 1.60645H3.82261C3.04483 1.60866 2.29971 1.91916 1.75075 2.46981C1.2018 3.02046 0.893864 3.76627 0.894532 4.54357V17.0629C0.893864 17.8402 1.2018 18.586 1.75075 19.1367C2.29971 19.6873 3.04483 19.9978 3.82261 20Z"
+                            />
+                            <path
+                                d="M8.80474 8.7499L8.14466 11.7715C8.11479 11.9085 8.11989 12.0509 8.15951 12.1854C8.19913 12.32 8.27199 12.4425 8.37138 12.5415C8.47214 12.638 8.5947 12.7089 8.72868 12.748C8.86266 12.7872 9.00411 12.7935 9.14105 12.7664L12.1578 12.1051C12.3144 12.0707 12.4579 11.992 12.5711 11.8785L20.1958 4.25852C20.4289 4.02561 20.6138 3.74908 20.74 3.44474C20.8661 3.14041 20.9311 2.81421 20.9311 2.48479C20.9311 2.15537 20.8661 1.82918 20.74 1.52484C20.6138 1.2205 20.4289 0.94398 20.1958 0.711065C19.7179 0.254683 19.0824 0 18.4214 0C17.7604 0 17.1249 0.254683 16.647 0.711065L9.03396 8.33856C8.9197 8.45089 8.84014 8.59367 8.80474 8.7499ZM17.8299 1.89411C17.9891 1.74173 18.201 1.65666 18.4214 1.65666C18.6418 1.65666 18.8537 1.74173 19.0129 1.89411C19.1676 2.05182 19.2543 2.2639 19.2543 2.48479C19.2543 2.70569 19.1676 2.91777 19.0129 3.07548L18.4214 3.66658L17.2384 2.48438L17.8299 1.89411ZM10.3842 9.34686L16.0513 3.66909L17.2226 4.84544L11.5529 10.5249L10.0513 10.8543L10.3842 9.34686Z"
+                            />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col gap-y-3">
+                        <app-event-card label="Finir oral d’Anglais" date="Pour le 10/09" />
+                        <app-event-card label="Rendre TP Qualité Algo" date="Pour le 12/09" />
+                        <app-event-card label="Dormir" date="Pour le 14/09" />
+                    </div>
+                </div>
+                <div class="flex flex-col-reverse xl:flex-row justify-between gap-6 xl:items-end">
+                    <app-pagination [currentPage]="1" [totalPage]="5" />
+                    <app-button label="Ajouter" type="primary" (click)="openDeleteBankLoanModal()">
+                        <ng-container left-icon>
+                            <svg class="w-4 h-4" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M10.3785 0.655518C8.40073 0.655518 6.46733 1.24201 4.82284 2.34082C3.17835 3.43963 1.89663 5.00142 1.13975 6.82868C0.382873 8.65594 0.18484 10.6666 0.570692 12.6064C0.956544 14.5462 1.90895 16.3281 3.30748 17.7266C4.706 19.1251 6.48783 20.0775 8.42764 20.4634C10.3674 20.8492 12.3781 20.6512 14.2054 19.8943C16.0326 19.1374 17.5944 17.8557 18.6932 16.2112C19.792 14.5667 20.3785 12.6333 20.3785 10.6555C20.3785 9.3423 20.1199 8.04194 19.6173 6.82868C19.1148 5.61543 18.3782 4.51303 17.4496 3.58445C16.521 2.65586 15.4186 1.91927 14.2054 1.41672C12.9921 0.914175 11.6918 0.655518 10.3785 0.655518ZM10.3785 18.6555C8.79629 18.6555 7.24957 18.1863 5.93398 17.3073C4.61839 16.4282 3.59301 15.1788 2.98751 13.717C2.38201 12.2552 2.22358 10.6466 2.53226 9.09479C2.84094 7.54294 3.60287 6.11748 4.72169 4.99866C5.84051 3.87984 7.26597 3.11792 8.81782 2.80923C10.3697 2.50055 11.9782 2.65898 13.44 3.26448C14.9018 3.86998 16.1512 4.89536 17.0303 6.21095C17.9093 7.52655 18.3785 9.07326 18.3785 10.6555C18.3785 12.7772 17.5357 14.8121 16.0354 16.3124C14.5351 17.8127 12.5003 18.6555 10.3785 18.6555ZM14.3785 9.65551H11.3785V6.65552C11.3785 6.3903 11.2732 6.13595 11.0856 5.94841C10.8981 5.76087 10.6438 5.65552 10.3785 5.65552C10.1133 5.65552 9.85897 5.76087 9.67144 5.94841C9.4839 6.13595 9.37854 6.3903 9.37854 6.65552V9.65551H6.37854C6.11333 9.65551 5.85897 9.76087 5.67144 9.94841C5.4839 10.1359 5.37854 10.3903 5.37854 10.6555C5.37854 10.9207 5.4839 11.1751 5.67144 11.3626C5.85897 11.5502 6.11333 11.6555 6.37854 11.6555H9.37854V14.6555C9.37854 14.9207 9.4839 15.1751 9.67144 15.3626C9.85897 15.5502 10.1133 15.6555 10.3785 15.6555C10.6438 15.6555 10.8981 15.5502 11.0856 15.3626C11.2732 15.1751 11.3785 14.9207 11.3785 14.6555V11.6555H14.3785C14.6438 11.6555 14.8981 11.5502 15.0856 11.3626C15.2732 11.1751 15.3785 10.9207 15.3785 10.6555C15.3785 10.3903 15.2732 10.1359 15.0856 9.94841C14.8981 9.76087 14.6438 9.65551 14.3785 9.65551Z"
+                                    fill="white"
+                                />
+                            </svg>
+                        </ng-container>
+                    </app-button>
+                </div>
+            </div>
+        </div>
+        <!--
     <div class="w-full p-5 rounded-xl flex flex-col gap-y-6 bg-white dark:bg-light-dark">
         <h3 class="text-body">Mes outils</h3>
         <div class="w-full grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
@@ -201,5 +213,6 @@
             </a>
         </div>
     </div>
-    -->
+    --></div>
+    <app-create-reminder-modal [isOpen]="reminderModalOpened" (closed)="closedReminderModal()"></app-create-reminder-modal>
 </div>

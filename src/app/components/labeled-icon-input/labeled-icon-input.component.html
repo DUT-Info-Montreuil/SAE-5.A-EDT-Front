@@ -1,11 +1,30 @@
 <div class="flex flex-col gap-y-1">
-    <label class="font-aileron text-body dark:text-white font-semibold">{{ label }}</label>
+    <div class="flex gap-x-2">
+        <label class="font-aileron text-body dark:text-white font-semibold text-sm md:text-base">{{ label }}</label>
+        <ng-content name="popever"></ng-content>
+    </div>
     <div class="group">
-        <div class="flex relative w-full items-center">
-            <div *ngIf="hasIcon" class="absolute flex justify-center items-center content-center rounded-l-md aspect-square h-10">
+        <div class="flex relative w-full" [ngClass]="{ 'items-start': typeInput === 'textarea', 'items-center': typeInput !== 'textarea' }">
+            <div *ngIf="hasIcon" class="absolute flex h-10 justify-center items-center content-center rounded-l-md aspect-square">
                 <ng-content select="[icon]"></ng-content>
             </div>
+            <textarea
+                *ngIf="typeInput === 'textarea'"
+                class="w-full bg-subtitle font-aileron text-grey placeholder:text-grey dark:text-body-light placeholder:dark:text-body-light dark:bg-grey-dark border-1 border-transparent rounded-lg focus:ring-primary"
+                rows="3"
+                [ngClass]="{
+                'pr-8': !hasAction,
+                'pr-2': !hasAction,
+                'pl-12': hasIcon,
+                'pl-4': !hasIcon,
+                'border-2 border-danger focus:border-danger focus:ring-transparent' : (control.touched && control.invalid),
+            }"
+                value=""
+                [placeholder]="placeholder"
+                [formControl]="control"
+            ></textarea>
             <input
+                *ngIf="typeInput !== 'textarea'"
                 class="w-full bg-subtitle font-aileron text-grey placeholder:text-grey dark:text-body-light placeholder:dark:text-body-light dark:bg-grey-dark border-1 border-transparent rounded-lg focus:ring-primary"
                 [ngClass]="{
                     'pr-8': !hasAction,
@@ -38,7 +57,6 @@
                 <span *ngIf="control.errors?.['maxlength']">La longueur maximal est de {{ control.errors?.['maxlength'].requiredLength }}</span>
                 <span *ngIf="control.errors?.['passwordsNotMatch']"> Le mot de passe doit être identique au nouveau mot de passe</span>
                 <span *ngIf="control.errors?.['passwordsMatch']"> Le mot de passe doit être différent de votre ancien mot de passe</span>
-                
             </div>
         </div>
     </div>

@@ -1,20 +1,29 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { TooltipOptions, Tooltip } from 'flowbite';
 
 @Component({
     selector: 'app-sidebar-item',
     templateUrl: './sidebar-item.component.html',
     styleUrls: ['./sidebar-item.component.css'],
 })
-export class SidebarItemComponent {
+export class SidebarItemComponent implements AfterViewInit {
     @Input() label!: string;
     @Input() routePath!: string;
     @Input() active: boolean = false;
     @Input() collapse!: boolean;
 
-    @ViewChild('menuItem') menuItem!: ElementRef;
-    @ViewChild('tooltip') tooltip!: ElementRef;
+    @ViewChild('tooltip') tooltipElement!: ElementRef;
+    @ViewChild('menuItem') menuItemElement!: ElementRef;
 
-    handleClick(): void {}
+    ngAfterViewInit() {
+        if (this.tooltipElement && this.menuItemElement) {
+            const options: TooltipOptions = {
+                placement: 'right',
+                triggerType: 'hover',
+            };
+            new Tooltip(this.tooltipElement.nativeElement, this.menuItemElement.nativeElement, options);
+        }
+    }
 }
