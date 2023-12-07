@@ -5,7 +5,7 @@ import localeFr from '@angular/common/locales/fr'
 import { Subject } from 'rxjs';
 import axios from 'axios';
 import { environment } from 'src/environments/environment';
-import { endOfWeek, format, startOfWeek } from 'date-fns';
+import { endOfDay, endOfWeek, format, startOfDay, startOfWeek } from 'date-fns';
 
 
 registerLocaleData(localeFr, 'fr');
@@ -85,8 +85,6 @@ export class CalendarComponent {
   
   convertToCalendarEvents(dataValues: any[] ): void{
     this.events = [];
-    console.log(dataValues)
-    console.log("0"+dataValues[0])
     for (const course of dataValues[0]) {
       const event: CalendarEvent =     {        
         title: course.teaching_title,
@@ -109,26 +107,83 @@ export class CalendarComponent {
     this.refresh.next();
   }
 
+  getColorForEvent(event: any) {
+    console.log("event : "+event)
+    console.log("event.target : "+event.target)
+    console.log("event.target.value : "+event.targer.value)
+
+  }
+
+  getCurrentTimeDisplay(): string[] {
+    let currentWeek: string[] = [];
+    if (this.view = this.calendarView.Week) {
+
+      currentWeek[0] = format(new Date(startOfWeek(this.viewDate)), 'yyyy-MM-dd');
+      currentWeek[1] = format(new Date(endOfWeek(this.viewDate)), 'yyyy-MM-dd');
+    } else {
+      currentWeek[0] = format(startOfDay(this.viewDate), 'yyyy-MM-dd');
+      currentWeek[1] = format(endOfDay(this.viewDate), 'yyyy-MM-dd');
+    }
+    return currentWeek;
+  }
+
   async onSelectProfChange(event: any) {
-      let startOfCurrentWeek: string = "";
-      let endOfCurrentWeek: string = "";
-      if (this.view === CalendarView.Week) { 
-        endOfCurrentWeek = format(new Date(endOfWeek(this.viewDate)), 'yyyy-MM-dd');
-        startOfCurrentWeek = format(new Date(startOfWeek(this.viewDate)), 'yyyy-MM-dd');
-      }
+      let currentWeek: string[] = [];
+      currentWeek = this.getCurrentTimeDisplay();
+      
       const data = {
         "personnal_id": this.mapIdNomProfs.get(event.target.value)?.toString(),
-        "week_date_start": startOfCurrentWeek,
-        "week_date_end": endOfCurrentWeek
+        "week_date_start": currentWeek[0],
+        "week_date_end": currentWeek[1]
       }
+      console.log(format(startOfDay(this.viewDate), 'yyyy-MM-dd'));
       let response1 = await axios.post(`${environment.apiUrl}/timetable/get/byteacher`, data);
       const dataValues = Object.values(response1.data);
       this.convertToCalendarEvents(dataValues)
     }
     
-  
+    async onSelectSalleChange(event: any) {
+      let currentWeek: string[] = [];
+      currentWeek = this.getCurrentTimeDisplay();
+      const data = {
+        "room_id": this.mapIdNomSalle.get(event.target.value)?.toString(),
+        "week_date_start": currentWeek[0],
+        "week_date_end": currentWeek[1]
+      }
+      let response1 = await axios.post(`${environment.apiUrl}/timetable/get/byroom`, data);
+      const dataValues = Object.values(response1.data);
+      this.convertToCalendarEvents(dataValues)
+    }
+    
+    async onSelectPromoChange(event: any) {
+      let currentWeek: string[] = [];
+      currentWeek = this.getCurrentTimeDisplay();
+      const data = {
+        "promotion_id": this.mapIdNomPromo.get(event.target.value)?.toString(),
+        "week_date_start": currentWeek[0],
+        "week_date_end": currentWeek[1]
+      }
+      let response1 = await axios.post(`${environment.apiUrl}/timetable/get/byprom`, data);
+      const dataValues = Object.values(response1.data);
+      this.convertToCalendarEvents(dataValues)
+    }
   
   async initSelectFields () {
+    let response2 = await axios.get(`${environment.apiUrl}/specializations/get`, {});
+    let selectElement3 = document.querySelector('.selectPromo');
+    let data3 = response2.data.map((promo: any) => [promo.code, promo.id]);
+    data3.forEach((tab: string[]) => {
+      this.mapIdNomPromo.set(tab[0], tab[1]);
+    });
+    let promos = Array.from(this.mapIdNomPromo.keys());
+
+    promos.forEach(promo => {
+      let option = document.createElement('option');
+      option.value = promo;
+      option.text = promo;
+      selectElement3?.appendChild(option);
+    });
+
     const response = await axios.get(`${environment.apiUrl}/personals/get`, {});
     let data = response.data.map((person: any) => [person.personal_code, person.id]);
     data.forEach((tab: string[]) => {
@@ -156,22 +211,6 @@ export class CalendarComponent {
       option.text = nomSalle;
       selectElement2?.appendChild(option);
     });
-
-    let response2 = await axios.get(`${environment.apiUrl}/specializations/get`, {});
-    let selectElement3 = document.querySelector('.selectPromo');
-    let data3 = response2.data.map((promo: any) => [promo.code, promo.id]);
-    data3.forEach((tab: string[]) => {
-      this.mapIdNomPromo.set(tab[0], tab[1]);
-    });
-    let promos = Array.from(this.mapIdNomPromo.keys());
-
-    promos.forEach(promo => {
-      let option = document.createElement('option');
-      option.value = promo;
-      option.text = promo;
-      selectElement3?.appendChild(option);
-    });
-    
   }
 }
   

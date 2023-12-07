@@ -26,7 +26,7 @@
   <div class="flex flex-col sm:flex-row justify-between items-stretch h-12">
       <!-- Liste pour la salle -->
       <div class="w-full sm:w-auto mb-2 sm:mb-0">
-          <select class="w-full selectPromo border rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+          <select class="w-full selectPromo border rounded py-2 px-3 focus:outline-none focus:border-blue-500" (change)="onSelectPromoChange($event)">
             <option value="">----</option>
             <ng-container *ngFor="let promo of mapIdNomPromo">
               <option [value]="promo">{{ promo }}</option>
@@ -45,7 +45,7 @@
       </div>
     
       <div class="w-full sm:w-auto mb-2 sm:mb-0 ml-0 sm:ml-2">
-          <select class="w-full selectSalle border rounded py-2 px-3 focus:outline-none focus:border-blue-500" >
+          <select class="w-full selectSalle border rounded py-2 px-3 focus:outline-none focus:border-blue-500" (change)="onSelectSalleChange($event)">
               <option value="">----</option>
               <ng-container *ngFor="let salle of mapIdNomSalle">
                 <option [value]="salle">{{ salle }}</option>
@@ -81,16 +81,18 @@
       </mwl-calendar-week-view>
 
       <ng-template #customEWeekViewTemplate let-event="events" >
-        <div class="titre bg-danger h-full flex flex-col justify-between">
-          <div class="item-center text-center" >
-            {{ event ? event.title : "BDD" }}
-          </div>
-          <div class="flex justify-between">
-            <div class="max-w-min inline-block" >
-              {{ event ? event.meta.location : "Là" }}
+        <div class="titre bg-danger h-full flex flex-col justify-between" >
+          <div class="item-center text-center">
+            <div class="item-center text-center" >
+              {{ event ? event.title : "BDD" }}
             </div>
-            <div class="max-w-min inline-block">
-              {{ event ? event.meta.organizer : "AC" }}
+            <div class="flex justify-between">
+              <div class="max-w-min inline-block" >
+                {{ event ? event.meta.location : "Là" }}
+              </div>
+              <div class="max-w-min inline-block">
+                {{ event ? event.meta.organizer : "AC" }}
+              </div>
             </div>
           </div>
         </div>
