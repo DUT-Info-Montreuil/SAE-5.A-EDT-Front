@@ -39,6 +39,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { ModalCreateClassesComponent } from './components/modal-create-classes/modal-create-classes.component';
 import { userReducer } from './store/user';
 import { AlertComponent } from './components/alert/alert.component';
+import { GestionAdminComponent } from './views/gestion-admin/gestion-admin.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout', 'user'], rehydrate: true })(reducer);
@@ -84,6 +85,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         LabeledDateInputComponent,
         CalendarViewComponent,
         AlertComponent,
+        GestionAdminComponent,
     ],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, { provide: CalendarDateFormatter, useClass: CustomDateFormatter }],
