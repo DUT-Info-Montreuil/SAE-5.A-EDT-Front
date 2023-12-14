@@ -1,45 +1,149 @@
 <div class="p-4 md:p-8 flex flex-col gap-y-8">
+    <!-- Div stylisée avec background gris et arrondie -->
     <div class="w-full flex justify-between items-center">
-        <h3 class="text-body">Gestion admin</h3>
+        <h3 class="text-body">Gestion EDT</h3>
         <h3 class="font-normal text-medium dark:text-medium text-right">{{ formattedDate }}</h3>
     </div>
-    <div id="calendar-container" class="">
-        <form>
-            <div class="relative">
-                <button (click)="searchIsOpen = !searchIsOpen" id="dropdown-button" [attr.aria-expanded]="searchIsOpen ? 'true' : 'false'" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600">
-                    All categories 
-                    <svg class="w-2.5 h-2.5 ms-2.5" [class.rotate-180]="searchIsOpen" [class.rotate-0]="!searchIsOpen" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                    </svg>
-                </button>
-                <div *ngIf="searchIsOpen" id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
-                        </li>
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Templates</button>
-                        </li>
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Design</button>
-                        </li>
-                        <li>
-                            <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logos</button>
-                        </li>
-                    </ul>
-                </div>
-                <div class="relative w-full">
-                    <input type="search" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Mockups, Logos, Design Templates..." required>
-                    <button type="submit" class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                        </svg>
-                        <span class="sr-only">Search</span>
-                    </button>
-                </div>
+    <div>
+        <!-- Les 4 boutons -->
+        <div class="w-full flex justify-center items-center">
+            <div class="flex flex-row p-5 rounded-xl bg-white dark:bg-light-dark gap-12 justify-center items-center">
+                <button class="w-max" (click)="initEleveMap()" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Élèves</button>
+                <button (click)="initProfesseurMap()" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Professeurs</button>
+                <button (click)="initSalleMap()" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Salles</button>
+                <button (click)="initRessourceMap()" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Ressources</button>
             </div>
-        </form>
+        </div>
         
+    </div>
+    <app-add-eleve-modal [isOpen]="isAddEleveModalOpen" (closed)="closeAddEleveModal()"></app-add-eleve-modal>
 
+
+    <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col w-full p-5 h-auto rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
+            
+            <ng-container *ngIf="gestionActuelle === 'eleves'">
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="h-max rounded-xl border border-solid p-2 justify-center items-center">
+                        <button class=" w-full justify-center items-center"><p>Rechercher une cohorte</p></button>
+                    </div>
+                    <div class="h-max rounded-xl border border-solid p-2 justify-center items-center">
+                        <button (click)="afficherTousLesEleves()" class="w-full"><p>Charger tous les élèves</p></button>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="showAllStudents && gestionActuelle == 'eleves'">
+                    <h3>Tous les élèves</h3>
+
+                    <form>
+                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                </svg>
+                            </div>
+
+                            <input type="search" id="filter-search-box" 
+                            class="form-control w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-light-dark dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                            placeholder="Rechercher un étudiant" >
+
+                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Rechercher</button>
+                        </div>
+                    </form>
+
+                    <div *ngFor="let eleve of listeEleves.slice(0, limit)">
+                        <div class="rounded-xl bg-gray-100 dark:bg-grey-dark p-2" >
+                            <button class="float-right m-1 w-5 h-5" (click)="updateEleveModal(eleve)">
+                                <svg class="fill-primary h-max w-max" viewBox="0 0 21 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M3.82261 20H16.3715C17.1493 19.9978 17.8944 19.6873 18.4434 19.1367C18.9924 18.586 19.3003 17.8402 19.2996 17.0629V10.7614C19.2996 10.5397 19.2115 10.327 19.0546 10.1702C18.8977 10.0135 18.6849 9.92537 18.463 9.92537C18.2411 9.92537 18.0284 10.0135 17.8715 10.1702C17.7146 10.327 17.6264 10.5397 17.6264 10.7614V17.0629C17.6275 17.3969 17.496 17.7176 17.2608 17.9548C17.0255 18.1919 16.7057 18.3261 16.3715 18.3279H3.82261C3.48846 18.3261 3.16865 18.1919 2.93338 17.9548C2.69812 17.7176 2.56661 17.3969 2.56772 17.0629V4.54357C2.56661 4.20962 2.69812 3.88886 2.93338 3.65171C3.16865 3.41455 3.48846 3.28036 3.82261 3.27859H10.0971C10.319 3.27859 10.5317 3.1905 10.6886 3.03371C10.8455 2.87692 10.9337 2.66426 10.9337 2.44252C10.9337 2.22078 10.8455 2.00812 10.6886 1.85133C10.5317 1.69453 10.319 1.60645 10.0971 1.60645H3.82261C3.04483 1.60866 2.29971 1.91916 1.75075 2.46981C1.2018 3.02046 0.893864 3.76627 0.894532 4.54357V17.0629C0.893864 17.8402 1.2018 18.586 1.75075 19.1367C2.29971 19.6873 3.04483 19.9978 3.82261 20Z"
+                                    />
+                                    <path
+                                        d="M8.80474 8.7499L8.14466 11.7715C8.11479 11.9085 8.11989 12.0509 8.15951 12.1854C8.19913 12.32 8.27199 12.4425 8.37138 12.5415C8.47214 12.638 8.5947 12.7089 8.72868 12.748C8.86266 12.7872 9.00411 12.7935 9.14105 12.7664L12.1578 12.1051C12.3144 12.0707 12.4579 11.992 12.5711 11.8785L20.1958 4.25852C20.4289 4.02561 20.6138 3.74908 20.74 3.44474C20.8661 3.14041 20.9311 2.81421 20.9311 2.48479C20.9311 2.15537 20.8661 1.82918 20.74 1.52484C20.6138 1.2205 20.4289 0.94398 20.1958 0.711065C19.7179 0.254683 19.0824 0 18.4214 0C17.7604 0 17.1249 0.254683 16.647 0.711065L9.03396 8.33856C8.9197 8.45089 8.84014 8.59367 8.80474 8.7499ZM17.8299 1.89411C17.9891 1.74173 18.201 1.65666 18.4214 1.65666C18.6418 1.65666 18.8537 1.74173 19.0129 1.89411C19.1676 2.05182 19.2543 2.2639 19.2543 2.48479C19.2543 2.70569 19.1676 2.91777 19.0129 3.07548L18.4214 3.66658L17.2384 2.48438L17.8299 1.89411ZM10.3842 9.34686L16.0513 3.66909L17.2226 4.84544L11.5529 10.5249L10.0513 10.8543L10.3842 9.34686Z"
+                                    />
+                                </svg>
+                            </button>
+                            <div class="flex flex-row gap-4 ">
+                                <div>
+                                    <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
+                                        <p>Nom : {{ eleve[2] }} <br> 
+                                    </div>
+                                    <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
+                                        <p> Prénom : {{ eleve[3] }} </p>
+                                    </div>
+                                </div>
+                                 <div>
+                                    <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
+                                        <p>Identifiant : {{ eleve[1] }} <br> 
+                                    </div>
+                                    <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
+                                        <p>  Numéro étudiant : {{ eleve[0] }} </p>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button (click)="afficherPlus()"><h3>Afficher plus</h3></button>
+                        <button (click)="afficherMoins()"><h3>Afficher moins</h3></button>
+                    </div>
+            </ng-container>
+
+            <ng-container *ngIf="showAllCohorte && gestionActuelle == 'eleves'">
+                
+            </ng-container>
+            
+            <!-- Formulaire pour les professeurs -->
+            <ng-container *ngIf="gestionActuelle === 'professeurs'">
+                <h3>Formulaire pour les professeurs</h3>
+                <div *ngFor="let entry of mapIdNomProfs.entries()">
+                    <div>
+                        Clé : {{ entry[0] }} <!-- Affiche la clé -->
+                    </div>
+                    <div>
+                        Valeur : {{ entry[1] }} <!-- Affiche la valeur -->
+                    </div>
+                </div>
+            </ng-container>
+            
+            <!-- Formulaire pour les salles -->
+            <ng-container *ngIf="gestionActuelle === 'salles'">
+                <h3>Formulaire pour les salles</h3>
+                <div *ngFor="let entry of mapIdNomSalles.entries()">
+                    <div>
+                        Clé : {{ entry[0] }} <!-- Affiche la clé -->
+                    </div>
+                    <div>
+                        Valeur : {{ entry[1] }} <!-- Affiche la valeur -->
+                    </div>
+                </div>            </ng-container>
+            
+            <!-- Formulaire pour les ressources -->
+            <ng-container *ngIf="gestionActuelle === 'ressources'">
+                <h3>Formulaire pour les ressources</h3>
+                <div *ngFor="let entry of mapIdNomRessources.entries()">
+                    <div>
+                        Clé : {{ entry[0] }} <!-- Affiche la clé -->
+                    </div>
+                    <div>
+                        Valeur : {{ entry[1] }} <!-- Affiche la valeur -->
+                    </div>
+                </div>            
+            </ng-container>
+
+        </div>
+        <div class="flex flex-col w-full p-5 h-max rounded-xl bg-white dark:bg-light-dark gap-y-6 justify-between">
+            <app-button *ngIf="gestionActuelle == 'eleves'" label="Ajouter" type="primary" (click)="updateAddEleveModal()">
+                <ng-container left-icon>
+                    <svg class="w-4 h-4" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10.3785 0.655518C8.40073 0.655518 6.46733 1.24201 4.82284 2.34082C3.17835 3.43963 1.89663 5.00142 1.13975 6.82868C0.382873 8.65594 0.18484 10.6666 0.570692 12.6064C0.956544 14.5462 1.90895 16.3281 3.30748 17.7266C4.706 19.1251 6.48783 20.0775 8.42764 20.4634C10.3674 20.8492 12.3781 20.6512 14.2054 19.8943C16.0326 19.1374 17.5944 17.8557 18.6932 16.2112C19.792 14.5667 20.3785 12.6333 20.3785 10.6555C20.3785 9.3423 20.1199 8.04194 19.6173 6.82868C19.1148 5.61543 18.3782 4.51303 17.4496 3.58445C16.521 2.65586 15.4186 1.91927 14.2054 1.41672C12.9921 0.914175 11.6918 0.655518 10.3785 0.655518ZM10.3785 18.6555C8.79629 18.6555 7.24957 18.1863 5.93398 17.3073C4.61839 16.4282 3.59301 15.1788 2.98751 13.717C2.38201 12.2552 2.22358 10.6466 2.53226 9.09479C2.84094 7.54294 3.60287 6.11748 4.72169 4.99866C5.84051 3.87984 7.26597 3.11792 8.81782 2.80923C10.3697 2.50055 11.9782 2.65898 13.44 3.26448C14.9018 3.86998 16.1512 4.89536 17.0303 6.21095C17.9093 7.52655 18.3785 9.07326 18.3785 10.6555C18.3785 12.7772 17.5357 14.8121 16.0354 16.3124C14.5351 17.8127 12.5003 18.6555 10.3785 18.6555ZM14.3785 9.65551H11.3785V6.65552C11.3785 6.3903 11.2732 6.13595 11.0856 5.94841C10.8981 5.76087 10.6438 5.65552 10.3785 5.65552C10.1133 5.65552 9.85897 5.76087 9.67144 5.94841C9.4839 6.13595 9.37854 6.3903 9.37854 6.65552V9.65551H6.37854C6.11333 9.65551 5.85897 9.76087 5.67144 9.94841C5.4839 10.1359 5.37854 10.3903 5.37854 10.6555C5.37854 10.9207 5.4839 11.1751 5.67144 11.3626C5.85897 11.5502 6.11333 11.6555 6.37854 11.6555H9.37854V14.6555C9.37854 14.9207 9.4839 15.1751 9.67144 15.3626C9.85897 15.5502 10.1133 15.6555 10.3785 15.6555C10.6438 15.6555 10.8981 15.5502 11.0856 15.3626C11.2732 15.1751 11.3785 14.9207 11.3785 14.6555V11.6555H14.3785C14.6438 11.6555 14.8981 11.5502 15.0856 11.3626C15.2732 11.1751 15.3785 10.9207 15.3785 10.6555C15.3785 10.3903 15.2732 10.1359 15.0856 9.94841C14.8981 9.76087 14.6438 9.65551 14.3785 9.65551Z"
+                            fill="white"
+                        />
+                    </svg>
+                </ng-container>
+            </app-button>
+        </div>
     </div>
 </div>

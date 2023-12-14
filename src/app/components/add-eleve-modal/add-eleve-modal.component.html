@@ -1,0 +1,40 @@
+<app-modal [isOpen]="isOpen" (closed)="close($event)">
+    <div class="p-5 flex flex-col gap-y-6">
+        <h3 class="text-body text-center font-bold">Ajouter un élève</h3>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+            <div class="ml-2">
+              <p>Nom :</p>
+              <input  class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonEleve.last_name">
+            </div>
+            <div class="mr-2">
+              <p>Prénom :</p>
+              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonEleve.first_name">
+            </div>
+            <div class="ml-2">
+              <p>Mail :</p>
+              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="email" [(ngModel)]="jsonEleve.mail">
+            </div>
+            <div class="mr-2">
+              <p>Téléphone :</p>
+              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonEleve.phone_number">
+            </div>
+            <div class="ml-2">
+              <p>TP :</p>
+              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonEleve.subgroup_id">
+            </div>
+            <div class="mr-2">
+              <p>TD :</p>
+              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonEleve.group_id">
+            </div>
+            <div class="ml-2">
+              <p>Numéro Élève :</p>
+              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonEleve.student_number">
+            </div>          
+      </div>       
+          
+    <div class="flex justify-center items-center p-6 space-x-2 border-gray-200 rounded-b">
+        <app-button label="Valider" type="primary" (click)="submit()"></app-button>
+        <app-button label="Annuler" type="grey" (click)="close(false)"></app-button>
+    </div>
+</app-modal>
