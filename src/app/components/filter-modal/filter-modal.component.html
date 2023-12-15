@@ -1,0 +1,51 @@
+<app-modal [isOpen]="isOpen" (closed)="close($event)" maxWidth="max-w-5xl">
+    <div class="flex flex-col gap-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 md:divide-x-1 divide-subtitle dark:divide-grey h-96">
+            <div class="flex flex-col gap-y-6">
+                <div class="flex w-full justify-center gap-x-16 text-body bg-light dark:text-white dark:bg-grey-dark py-4 rounded-tr-xl rounded-tl-xl md:rounded-tr-none">
+                    <div><span>Promotions</span></div>
+                </div>
+                <div class="flex flex-col gap-y-4">
+                    <div class="w-full sm:w-auto mb-2 sm:mb-0">
+                        <select class="w-full selectPromo border rounded py-2 px-3 focus:outline-none focus:border-blue-500" (change)="onSelectPromoChange($event)">
+                            <option value=""></option>
+                            <ng-container *ngFor="let promo of mapIdNomPromo | keyvalue">
+                                <option [value]="promo.key">{{ promo.key }}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-y-6">
+                <div class="flex w-full justify-center gap-x-16 text-body bg-light dark:text-white dark:bg-grey-dark py-4">
+                    <div><span>Professeurs</span></div>
+                </div>
+                <div class="w-full sm:w-auto mb-2 sm:mb-0 ml-0 sm:ml-2">
+                    <select class="w-full selectProf border rounded py-2 px-3 focus:outline-none focus:border-blue-500" (change)="onSelectProfChange($event)">
+                        <option value=""></option>
+                        <ng-container *ngFor="let nom of mapIdNomProf | keyvalue">
+                            <option [value]="nom.key">{{ nom.key }}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="flex flex-col gap-y-6">
+                <div class="flex w-full justify-center gap-x-16 text-body bg-light dark:text-white dark:bg-grey-dark py-4 md:rounded-tr-xl">
+                    <div><span>Salles</span></div>
+                </div>
+                <div class="w-full sm:w-auto mb-2 sm:mb-0 ml-0 sm:ml-2">
+                    <select class="w-full selectSalle border rounded py-2 px-3 focus:outline-none focus:border-blue-500" (change)="onSelectSalleChange($event)">
+                        <option value=""></option>
+                        <ng-container *ngFor="let salle of mapIdNomSalle | keyvalue">
+                            <option [value]="salle.key">{{ salle.key }}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-center items-center p-6 space-x-2 border-gray-200 rounded-b">
+        <app-button label="Valider" type="primary" [loading]="isLoading" (click)="submit()"></app-button>
+        <app-button label="Annuler" type="grey" (click)="close(false)"></app-button>
+    </div>
+</app-modal>
