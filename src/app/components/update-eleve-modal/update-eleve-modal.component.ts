@@ -1,19 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-
 @Component({
-  selector: 'app-add-eleve-modal',
-  templateUrl: './add-eleve-modal.component.html',
-  styleUrls: ['./add-eleve-modal.component.css']
+  selector: 'app-update-eleve-modal',
+  templateUrl: './update-eleve-modal.component.html',
+  styleUrls: ['./update-eleve-modal.component.css']
 })
-export class AddEleveModalComponent {
+export class UpdateEleveModalComponent {
   @Input() isOpen!: boolean;
-  @Output() closed = new EventEmitter<boolean>();
-
-  updateEleveForm: FormGroup;
-
-  jsonEleve = {
+  @Input() eleve = {
+    department_id: '',
     last_name: '',
     first_name: '',
     mail: '',
@@ -23,13 +18,18 @@ export class AddEleveModalComponent {
     student_number: ''
   };  
 
+  @Output() closed = new EventEmitter<boolean>();
+
+  updateEleveForm: FormGroup;
+
+
   constructor(private fb: FormBuilder) {
     this.updateEleveForm = this.fb.group({
     });
-}
+  }
+
   async submit() {
-  //  let response = await axios.post(`${environment.apiUrl}/students/add`, this.jsonEleve);
-    console.log(this.jsonEleve)
+    console.log(this.eleve)
   }
 
   close(reload: boolean = false) {
