@@ -15,7 +15,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { layoutReducer } from './store/layout';
 import { SidebarItemComponent } from './components/sidebar-item/sidebar-item.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { CalendarViewComponent } from './views/calendar-view/calendar-view.component';
+import { CalendarComponent } from './views/calendar/calendar.component';
 import { GestionComponent } from './views/gestion/gestion.component';
 import { SidebarMobileComponent } from './components/sidebar-mobile/sidebar-mobile.component';
 import { ThemeToggleButtonComponent } from './components/theme-toggle-button/theme-toggle-button.component';
@@ -35,7 +35,7 @@ import { EditReminderModalComponent } from './components/edit-reminder-modal/edi
 import { LabeledDateInputComponent } from './components/labeled-date-input/labeled-date-input.component';
 import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { CalendarComponent } from './components/calendar/calendar.component';
+//import { CalendarComponent } from './components/calendar/calendar.component';
 import { ModalCreateClassesComponent } from './components/modal-create-classes/modal-create-classes.component';
 import { userReducer } from './store/user';
 import { AlertComponent } from './components/alert/alert.component';
@@ -45,6 +45,8 @@ import { DeleteEleveModalComponent } from './components/delete-eleve-modal/delet
 import { UpdateEleveModalComponent } from './components/update-eleve-modal/update-eleve-modal.component';
 import { FilterModalComponent } from './components/filter-modal/filter-modal.component';
 import { CustomEventCalendarComponent } from './components/custom-event-calendar/custom-event-calendar.component';
+import { SearchInputComponent } from './components/search-input/search-input.component';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout', 'user'], rehydrate: true })(reducer);
@@ -88,7 +90,6 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         CreateReminderModalComponent,
         EditReminderModalComponent,
         LabeledDateInputComponent,
-        CalendarViewComponent,
         AlertComponent,
         GestionAdminComponent,
         AddEleveModalComponent,
@@ -96,8 +97,9 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         UpdateEleveModalComponent,
         FilterModalComponent,
         CustomEventCalendarComponent,
+        SearchInputComponent,
     ],
-    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
+    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, ClickOutsideModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, { provide: CalendarDateFormatter, useClass: CustomDateFormatter }],
     bootstrap: [RootComponent],
 })

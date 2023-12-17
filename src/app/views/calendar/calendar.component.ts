@@ -3,10 +3,11 @@ import { ChangeDetectionStrategy, Component, SimpleChanges, ViewEncapsulation } 
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import localeFr from '@angular/common/locales/fr';
 import { Subject } from 'rxjs';
-import { endOfDay, endOfWeek, format, isSameDay, startOfDay, startOfWeek } from 'date-fns';
+import { isSameDay } from 'date-fns';
 import { TimetableService } from 'src/app/services/timetable.service';
 import { FilterType } from 'src/app/models/enums';
 import { Teacher, Promotion, Room } from 'src/app/models/entities';
+import { DateFormattingService } from 'src/app/services/date-formatting.service';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -35,8 +36,10 @@ export class CalendarComponent {
     filterModalOpened: boolean = false;
     currentFilterType!: FilterType;
     currentFilterValue: any;
+    formattedDate: string | null;
 
-    constructor(private timetableService: TimetableService) {
+    constructor(private timetableService: TimetableService, private dateFormattingService: DateFormattingService) {
+        this.formattedDate = this.dateFormattingService.format(new Date());
         this.initSelectFields();
     }
 
