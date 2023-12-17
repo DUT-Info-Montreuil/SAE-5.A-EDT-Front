@@ -46,7 +46,7 @@
                 </ng-template>
                 <span [ngSwitch]="view">
                     <mwl-calendar-week-view *ngSwitchCase="calendarView.Week" [viewDate]="viewDate" [events]="events" [excludeDays]="excludeDays" [dayStartHour]="dayStartHour" [dayEndHour]="dayEndHour" [hourSegments]="hourSegments" locale="fr" (eventClicked)="showEventDetails($event)" (dayHeaderClicked)="changeDay($event.day.date)" [refresh]="refresh" [hourSegmentHeight]="15" [eventTitleTemplate]="customEventTemplate"></mwl-calendar-week-view>
-                    <mwl-calendar-day-view *ngSwitchCase="calendarView.Day" [viewDate]="viewDate" [events]="events" [dayStartHour]="dayStartHour" [dayEndHour]="dayEndHour" [hourSegments]="hourSegments" locale="fr" (click)="dayViewClick()" (eventClicked)="calendarClicked()" [refresh]="refresh" [hourSegmentHeight]="15" [eventTitleTemplate]="customEventTemplate"> </mwl-calendar-day-view>
+                    <mwl-calendar-day-view *ngSwitchCase="calendarView.Day" [viewDate]="viewDate" [events]="events" [dayStartHour]="dayStartHour" [dayEndHour]="dayEndHour" [hourSegments]="hourSegments" locale="fr" (click)="dayViewClick()" (eventClicked)="showEventDetails($event)" [refresh]="refresh" [hourSegmentHeight]="15" [eventTitleTemplate]="customEventTemplate"> </mwl-calendar-day-view>
                 </span>
             </div>
             <app-filter-modal [isOpen]="filterModalOpened" (closed)="closedFilterModal()" [mapIdNomPromo]="mapIdNomPromo" [mapIdNomProf]="mapIdNomProfs" [mapIdNomRoom]="mapIdNomRoom" (filterChanged)="onFilterChanged($event)"></app-filter-modal>

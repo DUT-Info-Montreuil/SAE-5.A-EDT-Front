@@ -71,14 +71,6 @@ export class CalendarComponent {
         this.view = view;
     }
 
-    calendarClicked() {
-        if (this.view === this.calendarView.Day) {
-            this.setView(this.calendarView.Week);
-        } else {
-            this.setView(this.calendarView.Day);
-        }
-    }
-
     dayViewClick() {
         this.setView(this.calendarView.Week);
     }

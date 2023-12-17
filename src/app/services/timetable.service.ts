@@ -57,10 +57,10 @@ export class TimetableService {
             title: course?.teaching_title,
             start: new Date(course.starttime),
             end: new Date(course.endtime),
-            draggable: true,
+            draggable: false,
             resizable: {
-                beforeStart: true,
-                afterEnd: true,
+                beforeStart: false,
+                afterEnd: false,
             },
             cssClass: './calendar.component.css',
             meta: {
