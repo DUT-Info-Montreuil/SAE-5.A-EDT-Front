@@ -6,7 +6,7 @@ import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { RootComponent } from './views/root/root.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { CalendarViewComponent } from './views/calendar-view/calendar-view.component';
+import { CalendarComponent } from './views/calendar/calendar.component';
 import { GestionComponent } from './views/gestion/gestion.component';
 import { SettingsComponent } from './views/settings/settings.component';
 
@@ -21,7 +21,7 @@ const routes: Routes = [
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
             { path: 'dashboard', component: DashboardComponent },
-            { path: 'calendar', component: CalendarViewComponent },
+            { path: 'calendar', component: CalendarComponent },
             { path: 'gestion', component: GestionComponent },
             { path: 'settings', component: SettingsComponent },
 

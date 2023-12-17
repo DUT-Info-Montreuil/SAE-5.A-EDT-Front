@@ -19,7 +19,6 @@ export class ModalComponent implements OnInit, OnDestroy {
     @Output() closed = new EventEmitter<boolean>();
 
     constructor() {}
-
     ngOnInit(): void {}
 
     ngOnDestroy(): void {}
@@ -27,5 +26,9 @@ export class ModalComponent implements OnInit, OnDestroy {
     close(reload: boolean = false): void {
         this.closed.emit(reload);
         this.isOpen = false;
+    }
+
+    shouldStopPropagation(event: Event) {
+        event.stopPropagation();
     }
 }

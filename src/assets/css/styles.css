@@ -44,15 +44,11 @@
         scrollbar-width: none;
     }
     .date-picker > input {
-        @apply border-transparent;
-    }
-
-    .date-picker.has-errors > input {
-        @apply border-danger border-0;
+        @apply !ring-2 ring-transparent !border-0 !inner-border-0 rounded-lg focus:ring-primary;
     }
 
     .date-picker.has-errors > input:focus {
-        @apply border-danger border-2 ring-0 outline-none;
+        @apply border-2 focus:!ring-danger;
     }
 
     .flatpickr-calendar.open {
