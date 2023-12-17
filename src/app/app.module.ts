@@ -35,7 +35,6 @@ import { EditReminderModalComponent } from './components/edit-reminder-modal/edi
 import { LabeledDateInputComponent } from './components/labeled-date-input/labeled-date-input.component';
 import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-//import { CalendarComponent } from './components/calendar/calendar.component';
 import { ModalCreateClassesComponent } from './components/modal-create-classes/modal-create-classes.component';
 import { userReducer } from './store/user';
 import { AlertComponent } from './components/alert/alert.component';
