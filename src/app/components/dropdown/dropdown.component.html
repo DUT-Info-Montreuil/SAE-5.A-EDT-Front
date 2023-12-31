@@ -1,11 +1,16 @@
 <div class="font-aileron flex flex-col gap-y-1">
     <span class="text-body dark:text-white font-semibold text-sm md:text-base">{{ label }}</span>
     <div class="relative" (clickOutside)="close()">
-        <button class="w-full flex gap-x-2 text-left rounded-lg bg-subtitle text-body dark:bg-grey-dark dark:text-light px-4 py-2 focus:inner-border-2 inner-border-primary" [ngClass]="{ 'focus:!inner-border-danger': control.touched && control.invalid }" (click)="toggleDropdown()">
-            <div *ngIf="selectedOption?.color" class="h-6 w-6 rounded" [ngClass]="selectedOption?.color"></div>
-            {{ selectedOption?.label || placeholder }}
+        <button class="w-full flex justify-between items-center text-left rounded-lg bg-subtitle text-body dark:bg-grey-dark dark:text-light px-4 py-2 focus:inner-border-2 inner-border-primary" [ngClass]="{ 'focus:!inner-border-danger': control.touched && control.invalid }" (click)="toggleDropdown()">
+            <div class="flex gap-x-2">
+                <div *ngIf="selectedOption?.color" class="h-6 w-6 rounded" [ngClass]="selectedOption?.color"></div>
+                {{ selectedOption?.label || placeholder }}
+            </div>
+            <svg width="8" height="6" class="fill-dark dark:fill-light transition duration-300" [ngClass]="{ '-rotate-180': isOpen }" viewBox="0 0 8 6" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.90045 5.52964C4.45723 6.15679 3.54277 6.15679 3.09955 5.52964L0.461976 1.79756C-0.0680427 1.0476 0.45673 4.7877e-07 1.36243 4.18221e-07L6.63757 6.55635e-08C7.54327 5.01521e-09 8.06804 1.0476 7.53803 1.79756L4.90045 5.52964Z" />
+            </svg>
         </button>
-        <div *ngIf="isOpen" class="absolute mt-1 w-full rounded-md bg-light dark:bg-grey-dark shadow-card z-10">
+        <div @dropdownAnimation *ngIf="isOpen" class="absolute mt-1 w-full rounded-md bg-light dark:bg-grey-dark shadow-card z-10">
             <ul class="max-h-60 overflow-auto">
                 <li *ngFor="let option of options; let i = index" (click)="selectOption(option)" [ngClass]="{ 'rounded-t-lg': i === 0, 'rounded-b-lg': i === options.length - 1 }" class="flex items-center px-4 py-2 text-body dark:text-light hover:bg-subtitle hover:dark:bg-subtitle-dark cursor-pointer transition-all duration-200">
                     <img *ngIf="option.icon" [src]="option?.icon" class="h-6 w-6 mr-2" />

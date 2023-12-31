@@ -29,8 +29,4 @@ export class ModalComponent implements OnInit, OnDestroy {
         this.closed.emit(reload);
         this.isOpen = false;
     }
-
-    // shouldStopPropagation(event: Event) {
-    //     event.stopPropagation();
-    // }
 }

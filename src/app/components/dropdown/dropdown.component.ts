@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
     selector: 'app-dropdown',
     templateUrl: './dropdown.component.html',
     styleUrls: ['./dropdown.component.css'],
-    animations: [trigger('fade', [state('void', style({ opacity: 0 })), transition(':enter, :leave', [animate('0.5s ease')])])],
+    animations: [trigger('fade', [state('void', style({ opacity: 0 })), transition(':enter, :leave', [animate('0.5s ease')])]), trigger('dropdownAnimation', [transition(':enter', [style({ opacity: 0, transform: 'scale(0.95)' }), animate('300ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))]), transition(':leave', [style({ opacity: 1, transform: 'scale(1)' }), animate('200ms ease-in', style({ opacity: 0, transform: 'scale(0.95)' }))])])],
 })
 export class DropdownComponent {
     @Input() options: { value: string; label: string; icon?: string; color?: string }[] = [];
