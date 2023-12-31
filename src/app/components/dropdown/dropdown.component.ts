@@ -19,6 +19,17 @@ export class DropdownComponent {
 
     constructor() {}
 
+    ngOnInit() {
+        this.initializeSelectedOption();
+    }
+
+    initializeSelectedOption() {
+        if (this.control.value) {
+            const matchingOption = this.options.find((option) => option.value === this.control.value);
+            this.selectedOption = matchingOption ? matchingOption : undefined;
+        }
+    }
+
     toggleDropdown() {
         this.isOpen = !this.isOpen;
     }

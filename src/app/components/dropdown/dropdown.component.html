@@ -1,13 +1,13 @@
-<div class="font-aileron flex flex-col gap-y-1" (clickOutside)="close()">
+<div class="font-aileron flex flex-col gap-y-1">
     <span class="text-body dark:text-white font-semibold text-sm md:text-base">{{ label }}</span>
-    <div class="relative">
+    <div class="relative" (clickOutside)="close()">
         <button class="w-full flex gap-x-2 text-left rounded-lg bg-subtitle text-body dark:bg-grey-dark dark:text-light px-4 py-2 focus:inner-border-2 inner-border-primary" [ngClass]="{ 'focus:!inner-border-danger': control.touched && control.invalid }" (click)="toggleDropdown()">
             <div *ngIf="selectedOption?.color" class="h-6 w-6 rounded" [ngClass]="selectedOption?.color"></div>
             {{ selectedOption?.label || placeholder }}
         </button>
         <div *ngIf="isOpen" class="absolute mt-1 w-full rounded-md bg-light dark:bg-grey-dark shadow-card z-10">
             <ul class="max-h-60 overflow-auto">
-                <li *ngFor="let option of options; let i = index" (click)="selectOption(option)" [ngClass]="{ 'rounded-t-lg': i === 0, 'rounded-b-lg': i === options.length - 1 }" class="flex items-center px-4 py-2 text-body dark:text-light hover:bg-subtitle hover:dark:bg-subtitle-dark cursor-pointer">
+                <li *ngFor="let option of options; let i = index" (click)="selectOption(option)" [ngClass]="{ 'rounded-t-lg': i === 0, 'rounded-b-lg': i === options.length - 1 }" class="flex items-center px-4 py-2 text-body dark:text-light hover:bg-subtitle hover:dark:bg-subtitle-dark cursor-pointer transition-all duration-200">
                     <img *ngIf="option.icon" [src]="option?.icon" class="h-6 w-6 mr-2" />
                     <div *ngIf="option.color" class="h-6 w-6 mr-2 rounded" [ngClass]="option.color"></div>
                     {{ option?.label }}

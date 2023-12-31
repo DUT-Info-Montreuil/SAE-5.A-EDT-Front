@@ -22,6 +22,7 @@ import { ThemeToggleButtonComponent } from './components/theme-toggle-button/the
 import { StoreModule, MetaReducer } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { DatePipe } from '@angular/common';
+import { ClickOutsideModule } from 'ng-click-outside';
 import localeFr from '@angular/common/locales/fr';
 import { CalendarItemComponent } from './components/calendar-item/calendar-item.component';
 import { DragToScrollDirective } from './directives/drag-to-scroll.directive';
@@ -45,7 +46,6 @@ import { UpdateEleveModalComponent } from './components/update-eleve-modal/updat
 import { FilterModalComponent } from './components/filter-modal/filter-modal.component';
 import { CustomEventCalendarComponent } from './components/custom-event-calendar/custom-event-calendar.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
-import { ClickOutsideModule } from 'ng-click-outside';
 import { GestionCalendarComponent } from './views/gestion-calendar/gestion-calendar.component';
 import { CourseModalComponent } from './components/course-modal/course-modal.component';
 import { SidebarToggleItemComponent } from './components/sidebar-toggle-item/sidebar-toggle-item.component';

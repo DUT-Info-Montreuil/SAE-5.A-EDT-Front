@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Teacher, Room, Course, Teaching } from 'src/app/models/entities';
-import { FilterType } from 'src/app/models/enums';
+import { CourseType, FilterType } from 'src/app/models/enums';
 import { CourseService } from 'src/app/services/course.service';
 
 @Component({
@@ -20,11 +20,7 @@ export class CourseModalComponent {
     courseForm: FormGroup;
     courseFilterForm: FormGroup;
     currentStep: number = 1;
-    course_types = [
-        { value: 'RCC', label: 'Ressource Théorique' },
-        { value: 'RT', label: 'Ressource Transversal' },
-        { value: 'SAE', label: 'Saé' },
-    ];
+    course_types = Object.keys(CourseType).map((key) => ({ value: key, label: CourseType[key as keyof typeof CourseType] }));
     color_types = [
         { value: 'PURPLE', label: 'Violet', color: 'bg-calendar-purple' },
         { value: 'PINK', label: 'Rose', color: 'bg-calendar-pink' },
@@ -54,7 +50,7 @@ export class CourseModalComponent {
         this.courseFilterForm = this.fb.group({
             teaching_id: ['', Validators.required],
             personal_id: ['', Validators.required],
-            room_id: ['', Validators.required],
+            rooms_id: ['', Validators.required],
         });
     }
 
@@ -163,23 +159,10 @@ export class CourseModalComponent {
     }
 
     submit() {
-        const courseData = this.courseForm.value;
-        const filterData = this.courseFilterForm.value;
         const { teaching_id } = this.courseFilterForm.value;
 
         if (this.courseForm.valid && teaching_id) {
-            let course: Course = new Course();
-            Object.assign(course, courseData);
-
-            if (filterData.teaching_id) {
-                course.teaching_id = filterData.teaching_id;
-            }
-            if (filterData.personal_id) {
-                course.personal_id = filterData.personal_id;
-            }
-            if (filterData.room_id) {
-                course.rooms_id = filterData.room_id;
-            }
+            let course: Course = this.courseService.createCourseEntity(this.courseForm, this.courseFilterForm);
             console.log(course);
             this.courseService
                 .addCourse(course)
