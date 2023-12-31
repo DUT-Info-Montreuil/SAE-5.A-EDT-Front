@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Course } from '../models/entities';
 import { FilterType } from '../models/enums';
 import { Subject } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root',
@@ -13,7 +14,7 @@ import { Subject } from 'rxjs';
 export class TimetableService {
     public refresh = new Subject<void>();
 
-    constructor() {}
+    constructor(private authService: AuthService) {}
 
     getCurrentTimeDisplay(viewDate: Date): string[] {
         return [format(startOfWeek(viewDate), 'yyyy-MM-dd'), format(endOfWeek(viewDate), 'yyyy-MM-dd')];
@@ -30,21 +31,24 @@ export class TimetableService {
 
         switch (filterType) {
             case FilterType.Teacher:
-                apiEndpoint = `${environment.apiUrl}/timetable/get/byteacher`;
-                data = { personnal_id: filterValue?.id, week_date_start: currentWeek[0], week_date_end: currentWeek[1] };
+                apiEndpoint = `${environment.apiUrl}/courses/timetable/by-teacher`;
+                data = { personal_id: filterValue?.id, week_date_start: currentWeek[0], week_date_end: currentWeek[1] };
                 break;
             case FilterType.Room:
-                apiEndpoint = `${environment.apiUrl}/timetable/get/byroom`;
+                apiEndpoint = `${environment.apiUrl}/courses/timetable/by-room`;
                 data = { room_id: filterValue?.id, week_date_start: currentWeek[0], week_date_end: currentWeek[1] };
                 break;
             case FilterType.Specialization:
-                apiEndpoint = `${environment.apiUrl}/timetable/get/byprom`;
-                data = { promotion_id: filterValue?.id, department_id: filterValue?.department_id, week_date_start: currentWeek[0], week_date_end: currentWeek[1] };
+                apiEndpoint = `${environment.apiUrl}/courses/timetable/by-department-and-promotion`;
+                data = { promotion: filterValue?.id, department_id: filterValue?.department_id, week_date_start: currentWeek[0], week_date_end: currentWeek[1] };
                 break;
         }
 
         try {
-            const response = await axios.post(apiEndpoint, data);
+            this.authService.checkAuthentication();
+            const token = this.authService.getToken();
+            const headers = token ? { Authorization: `Bearer ${token}` } : {};
+            const response = await axios.post(apiEndpoint, data, { headers });
             return this.convertToCalendarEvents(Object.values(response.data));
         } catch (error) {
             console.error('Error loading data', error);
@@ -72,14 +76,23 @@ export class TimetableService {
     }
 
     async getSpecializations() {
-        return await axios.get(`${environment.apiUrl}/specializations/get`);
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.get(`${environment.apiUrl}/specializations/get`, { headers });
     }
 
     async getPersonals() {
-        return await axios.get(`${environment.apiUrl}/personals/get`);
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.get(`${environment.apiUrl}/personals/get`, { headers });
     }
 
     async getRooms() {
-        return await axios.get(`${environment.apiUrl}/rooms/get`);
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.get(`${environment.apiUrl}/rooms/get`, { headers });
     }
 }

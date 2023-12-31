@@ -3,19 +3,26 @@ import axios from 'axios';
 import { environment } from 'src/environments/environment';
 import { Course } from '../models/entities';
 import { FormGroup } from '@angular/forms';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CourseService {
-    constructor() {}
+    constructor(private authService: AuthService) {}
 
     async addCourse(course: Course) {
-        return await axios.post(`${environment.apiUrl}/courses/add`, course);
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.put(`${environment.apiUrl}/courses/add`, course, { headers });
     }
 
     async getTeachings() {
-        return await axios.get(`${environment.apiUrl}/teachings/get`);
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.get(`${environment.apiUrl}/teachings/get`, { headers });
     }
 
     createCourseEntity(courseData: FormGroup, courseFilterData: FormGroup): Course {
