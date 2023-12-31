@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-button',
@@ -17,7 +17,6 @@ export class ButtonComponent {
     @Input() paddingY = 'py-2';
     @Input() hasText = true;
     @Input() shadow = true;
-    @Output() click = new EventEmitter<void>();
 
     get customClass(): string[] {
         let computedClass: string[] = [this.fontSize, this.paddingX, this.paddingY];

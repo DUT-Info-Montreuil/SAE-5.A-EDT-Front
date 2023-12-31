@@ -4,24 +4,26 @@ import { FormControl } from '@angular/forms';
 import flatpickr from 'flatpickr';
 
 @Component({
-    selector: 'app-labeled-date-input',
-    templateUrl: './labeled-date-input.component.html',
-    styleUrls: ['./labeled-date-input.component.css'],
+    selector: 'app-labeled-time-input',
+    templateUrl: './labeled-time-input.component.html',
+    styleUrls: ['./labeled-time-input.component.css'],
     animations: [trigger('fade', [state('void', style({ opacity: 0 })), transition(':enter, :leave', [animate('0.5s ease')])])],
 })
-export class LabeledDateInputComponent implements AfterViewInit {
+export class LabeledTimeInputComponent implements AfterViewInit {
     @Input() label!: string;
     @Input() placeholder: string = '';
     @Input() hasAction: boolean = false;
     @Input() control!: FormControl;
-    @ViewChild('dateInput') dateInput!: ElementRef;
+    @ViewChild('timeInput') timeInput!: ElementRef;
 
     ngAfterViewInit() {
-        flatpickr(this.dateInput.nativeElement, {
+        flatpickr(this.timeInput.nativeElement, {
             altInput: true,
             allowInput: true,
-            altFormat: 'd/m/Y',
-            dateFormat: 'Y-m-d',
+            enableTime: true,
+            noCalendar: true,
+            altFormat: 'H:i',
+            time_24hr: true,
         });
     }
 }

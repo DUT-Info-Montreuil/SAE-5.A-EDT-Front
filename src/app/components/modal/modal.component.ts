@@ -1,5 +1,5 @@
 import { trigger, transition, style, animate } from '@angular/animations';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-modal',
@@ -19,6 +19,7 @@ export class ModalComponent implements OnInit, OnDestroy {
     @Output() closed = new EventEmitter<boolean>();
 
     constructor() {}
+
     ngOnInit(): void {}
 
     ngOnDestroy(): void {}
@@ -28,7 +29,7 @@ export class ModalComponent implements OnInit, OnDestroy {
         this.isOpen = false;
     }
 
-    shouldStopPropagation(event: Event) {
-        event.stopPropagation();
-    }
+    // shouldStopPropagation(event: Event) {
+    //     event.stopPropagation();
+    // }
 }

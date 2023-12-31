@@ -1,24 +1,25 @@
 import { registerLocaleData } from '@angular/common';
-import { ChangeDetectionStrategy, Component, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import localeFr from '@angular/common/locales/fr';
 import { Subject } from 'rxjs';
 import { isSameDay } from 'date-fns';
 import { TimetableService } from 'src/app/services/timetable.service';
 import { FilterType } from 'src/app/models/enums';
-import { Teacher, Specialization, Room } from 'src/app/models/entities';
+import { Teacher, Specialization, Room, Teaching } from 'src/app/models/entities';
 import { DateFormattingService } from 'src/app/services/date-formatting.service';
+import { CourseService } from 'src/app/services/course.service';
 
 registerLocaleData(localeFr, 'fr');
 
 @Component({
-    selector: 'app-calendar',
+    selector: 'app-gestion-calendar',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './calendar.component.html',
-    styleUrls: ['./calendar.component.css'],
+    templateUrl: './gestion-calendar.component.html',
+    styleUrls: ['./gestion-calendar.component.css'],
 })
-export class CalendarComponent {
+export class GestionCalendarComponent {
     private _viewDate: Date = new Date();
     view: CalendarView = CalendarView.Week;
     calendarView = CalendarView;
@@ -27,18 +28,19 @@ export class CalendarComponent {
     dayStartHour: number = 8;
     dayEndHour: number = 18;
     hourSegments: number = 4;
-    isCreationModalOpen: boolean = false;
     refresh = new Subject<void>();
     eventDetails: any = null;
     mapTeachers = new Map<string, Teacher>();
     mapRooms = new Map<string, Room>();
     mapSpecializations = new Map<string, Specialization>();
+    mapTeachings = new Map<string, Teaching>();
     filterModalOpened: boolean = false;
+    courseModalOpened: boolean = false;
     currentFilterType!: FilterType;
     currentFilterValue: any;
     formattedDate: string | null;
 
-    constructor(private timetableService: TimetableService, private dateFormattingService: DateFormattingService) {
+    constructor(private timetableService: TimetableService, private courseService: CourseService, private dateFormattingService: DateFormattingService) {
         this.formattedDate = this.dateFormattingService.format(new Date());
         this.initSelectFields();
     }
@@ -95,9 +97,12 @@ export class CalendarComponent {
         try {
             const [specializations, personals, rooms] = await Promise.all([this.timetableService.getSpecializations(), this.timetableService.getPersonals(), this.timetableService.getRooms()]);
 
-            this.initializeSelect('selectPromo', specializations.data, this.mapSpecializations, FilterType.Specialization);
-            this.initializeSelect('selectProf', personals.data, this.mapTeachers, FilterType.Teacher);
-            this.initializeSelect('selectSalle', rooms.data, this.mapRooms, FilterType.Room);
+            const teachings = await this.courseService.getTeachings();
+
+            this.initializeSelect('selectSpecialization', specializations.data, this.mapSpecializations, FilterType.Specialization);
+            this.initializeSelect('selectTeacher', personals.data, this.mapTeachers, FilterType.Teacher);
+            this.initializeSelect('selectRoom', rooms.data, this.mapRooms, FilterType.Room);
+            this.initializeSelect('selectTeaching', teachings.data, this.mapTeachings, FilterType.Teaching);
         } catch (error) {
             console.error('Error loading select field data:', error);
         }
@@ -123,6 +128,8 @@ export class CalendarComponent {
                 return [item.code, new Room(item)];
             case FilterType.Specialization:
                 return [item.code, new Specialization(item)];
+            case FilterType.Teaching:
+                return [item.title, new Teaching(item)];
             default:
                 throw new Error(`Type de filtre non pris en charge: ${filterType}`);
         }
@@ -134,5 +141,13 @@ export class CalendarComponent {
 
     closedFilterModal(reload?: boolean) {
         this.filterModalOpened = false;
+    }
+
+    openCourseModal() {
+        this.courseModalOpened = true;
+    }
+
+    closedCourseModal(reload?: boolean) {
+        this.courseModalOpened = false;
     }
 }

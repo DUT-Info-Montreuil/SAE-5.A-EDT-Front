@@ -30,6 +30,7 @@ module.exports = {
             body: "#131336",
             medium: "#A5A5A5",
             subtitle: "#E9E9EF",
+            "subtitle-secondary": "#eeeef5",
             "subtitle-hover": "#D8D8DC",
             light: "#F5F5FB",
 

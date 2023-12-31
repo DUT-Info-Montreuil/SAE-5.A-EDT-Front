@@ -37,7 +37,7 @@ export class TimetableService {
                 apiEndpoint = `${environment.apiUrl}/timetable/get/byroom`;
                 data = { room_id: filterValue?.id, week_date_start: currentWeek[0], week_date_end: currentWeek[1] };
                 break;
-            case FilterType.Promotion:
+            case FilterType.Specialization:
                 apiEndpoint = `${environment.apiUrl}/timetable/get/byprom`;
                 data = { promotion_id: filterValue?.id, department_id: filterValue?.department_id, week_date_start: currentWeek[0], week_date_end: currentWeek[1] };
                 break;

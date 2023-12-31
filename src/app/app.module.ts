@@ -46,6 +46,11 @@ import { FilterModalComponent } from './components/filter-modal/filter-modal.com
 import { CustomEventCalendarComponent } from './components/custom-event-calendar/custom-event-calendar.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { GestionCalendarComponent } from './views/gestion-calendar/gestion-calendar.component';
+import { CourseModalComponent } from './components/course-modal/course-modal.component';
+import { SidebarToggleItemComponent } from './components/sidebar-toggle-item/sidebar-toggle-item.component';
+import { LabeledTimeInputComponent } from './components/labeled-time-input/labeled-time-input.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout', 'user'], rehydrate: true })(reducer);
@@ -97,6 +102,11 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         FilterModalComponent,
         CustomEventCalendarComponent,
         SearchInputComponent,
+        GestionCalendarComponent,
+        CourseModalComponent,
+        SidebarToggleItemComponent,
+        LabeledTimeInputComponent,
+        DropdownComponent,
     ],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, ClickOutsideModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, { provide: CalendarDateFormatter, useClass: CustomDateFormatter }],
