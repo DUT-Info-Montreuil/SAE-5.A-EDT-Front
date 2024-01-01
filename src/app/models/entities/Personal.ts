@@ -1,6 +1,6 @@
 import { AbstractModel } from './AbstractModel';
 
-export class Teacher extends AbstractModel {
+export class Personal extends AbstractModel {
     /**
      * Attributes
      */
@@ -10,8 +10,8 @@ export class Teacher extends AbstractModel {
     personnal_code?: string;
     phone_number?: string;
 
-    constructor(teacher?: Partial<Teacher>) {
-        super(teacher?.id);
-        Object.assign(this, teacher);
+    constructor(personal?: Partial<Personal>) {
+        super(personal?.id);
+        Object.assign(this, personal);
     }
 }

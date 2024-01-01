@@ -13,6 +13,7 @@
                     />
                 </svg>
                 <span *ngIf="control.errors?.['required']">Ce champ est obligatoire</span>
+                <span *ngIf="control.errors?.['startTimeBeforeEndTime']"> L'heure de fin doit être supérieure à l'heure de début. </span>
             </div>
         </div>
     </div>

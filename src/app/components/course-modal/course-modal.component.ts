@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Teacher, Room, Course, Teaching } from 'src/app/models/entities';
+import { FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Personal, Room, Course, Teaching, SubGroup } from 'src/app/models/entities';
 import { CourseType, FilterType } from 'src/app/models/enums';
 import { CourseService } from 'src/app/services/course.service';
 
@@ -10,15 +10,16 @@ import { CourseService } from 'src/app/services/course.service';
     styleUrls: ['./course-modal.component.css'],
 })
 export class CourseModalComponent {
-    @Input() mapTeachers!: Map<string, Teacher>;
+    @Input() mapPersonals!: Map<string, Personal>;
     @Input() mapRooms!: Map<string, Room>;
     @Input() mapTeachings!: Map<string, Teaching>;
+    @Input() mapSubGroups!: Map<string, SubGroup>;
     @Input() isOpen!: boolean;
     @Output() closed = new EventEmitter<boolean>();
     FilterType = FilterType;
     isLoading: boolean = false;
     courseForm: FormGroup;
-    courseFilterForm: FormGroup;
+    courseRelationForm: FormGroup;
     currentStep: number = 1;
     course_types = Object.keys(CourseType).map((key) => ({ value: key, label: CourseType[key as keyof typeof CourseType] }));
     color_types = [
@@ -27,30 +28,33 @@ export class CourseModalComponent {
         { value: 'RED', label: 'Rouge', color: 'bg-calendar-red' },
         { value: 'BLUE', label: 'Bleu', color: 'bg-calendar-blue' },
     ];
-    selectedTeacher?: Teacher;
-    selectedRoom?: Room;
     selectedTeaching?: Teaching;
     filterType?: FilterType = FilterType.Teaching;
     searchText: string = '';
     filteredTeachings: Array<{ key: string; value: Teaching }> = [];
-    filteredTeachers: Array<{ key: string; value: Teacher }> = [];
+    filteredPersonals: Array<{ key: string; value: Personal }> = [];
     filteredRooms: Array<{ key: string; value: Room }> = [];
+    filteredSubGroups: Array<{ key: string; value: SubGroup }> = [];
     numberOfResults: number = 0;
 
     constructor(private fb: FormBuilder, private courseService: CourseService) {
-        this.courseForm = this.fb.group({
-            description: ['', [Validators.required, Validators.minLength(3)]],
-            date: ['', Validators.required],
-            starttime: ['', Validators.required],
-            endtime: ['', Validators.required],
-            course_type: ['', Validators.required],
-            color_type: ['', Validators.required],
-        });
+        this.courseForm = this.fb.group(
+            {
+                description: ['', [Validators.required, Validators.minLength(3)]],
+                date: ['', Validators.required],
+                starttime: ['', Validators.required],
+                endtime: ['', Validators.required],
+                course_type: ['', Validators.required],
+                color_type: ['', Validators.required],
+            },
+            { validator: this.startTimeBeforeEndTimeValidator }
+        );
 
-        this.courseFilterForm = this.fb.group({
+        this.courseRelationForm = this.fb.group({
             teaching_id: ['', Validators.required],
-            personal_id: ['', Validators.required],
-            rooms_id: ['', Validators.required],
+            personals: this.fb.array([]),
+            rooms: this.fb.array([]),
+            subGroups: this.fb.array([]),
         });
     }
 
@@ -63,8 +67,9 @@ export class CourseModalComponent {
     onSearchChange(searchText: string): void {
         this.searchText = searchText.toLowerCase();
         this.filteredTeachings = this.filterMap(this.mapTeachings, this.searchText);
-        this.filteredTeachers = this.filterMap(this.mapTeachers, this.searchText);
+        this.filteredPersonals = this.filterMap(this.mapPersonals, this.searchText);
         this.filteredRooms = this.filterMap(this.mapRooms, this.searchText);
+        this.filteredSubGroups = this.filterMap(this.mapSubGroups, this.searchText);
 
         this.updateNumberOfResults();
     }
@@ -93,41 +98,55 @@ export class CourseModalComponent {
         return this.courseForm.get('color_type') as FormControl;
     }
 
-    isSelectedFilter(type: FilterType, value: any): boolean {
-        switch (type) {
-            case FilterType.Teacher:
-                return this.selectedTeacher === value;
-            case FilterType.Room:
-                return this.selectedRoom === value;
-            case FilterType.Teaching:
-                return this.selectedTeaching === value;
-            default:
-                return false;
-        }
-    }
-
     setActiveFilterType(filterType: FilterType) {
         this.filterType = filterType;
         this.updateNumberOfResults();
     }
 
-    selectFilter(type: FilterType, value: Teacher | Teaching | Room) {
-        if (this.courseFilterForm) {
-            switch (type) {
-                case FilterType.Teacher:
-                    this.selectedTeacher = value as Teacher;
-                    this.courseFilterForm.get('personal_id')?.setValue(this.selectedTeacher.id);
-                    break;
-                case FilterType.Room:
-                    this.selectedRoom = value as Room;
-                    this.courseFilterForm.get('room_id')?.setValue(this.selectedRoom.id);
-                    break;
-                case FilterType.Teaching:
-                    this.selectedTeaching = value as Teaching;
-                    this.courseFilterForm.get('teaching_id')?.setValue(this.selectedTeaching.id);
-                    break;
-            }
+    isSelectedTeaching(value: Teaching): boolean {
+        return this.selectedTeaching === value;
+    }
+
+    selectTeaching(value: Teaching) {
+        this.selectedTeaching = value;
+        this.courseRelationForm.get('teaching_id')?.setValue(value.id);
+    }
+
+    toggleSelection(item: Personal | Room | SubGroup): void {
+        let array: FormArray;
+
+        if (item instanceof Personal) {
+            array = this.courseRelationForm.get('personals') as FormArray;
+        } else if (item instanceof Room) {
+            array = this.courseRelationForm.get('rooms') as FormArray;
+        } else if (item instanceof SubGroup) {
+            array = this.courseRelationForm.get('subGroups') as FormArray;
+        } else {
+            throw new Error('Type non géré');
         }
+
+        if (this.isSelected(item)) {
+            const index = array.value.findIndex((x: any) => x.id === item.id);
+            array.removeAt(index);
+        } else {
+            array.push(new FormControl(item));
+        }
+    }
+
+    isSelected(item: Personal | Room | SubGroup): boolean {
+        let array: FormArray;
+
+        if (item instanceof Personal) {
+            array = this.courseRelationForm.get('personals') as FormArray;
+        } else if (item instanceof Room) {
+            array = this.courseRelationForm.get('rooms') as FormArray;
+        } else if (item instanceof SubGroup) {
+            array = this.courseRelationForm.get('subGroups') as FormArray;
+        } else {
+            throw new Error('Type non géré');
+        }
+
+        return array.value.some((x: any) => x.id === item.id);
     }
 
     onNextStep() {
@@ -150,8 +169,11 @@ export class CourseModalComponent {
             case FilterType.Room:
                 this.numberOfResults = this.filteredRooms.length;
                 break;
-            case FilterType.Teacher:
-                this.numberOfResults = this.filteredTeachers.length;
+            case FilterType.Personal:
+                this.numberOfResults = this.filteredPersonals.length;
+                break;
+            case FilterType.SubGroup:
+                this.numberOfResults = this.filteredSubGroups.length;
                 break;
             default:
                 this.numberOfResults = 0;
@@ -159,15 +181,17 @@ export class CourseModalComponent {
     }
 
     submit() {
-        const { teaching_id } = this.courseFilterForm.value;
+        const { teaching_id } = this.courseRelationForm.value;
 
         if (this.courseForm.valid && teaching_id) {
-            let course: Course = this.courseService.createCourseEntity(this.courseForm, this.courseFilterForm);
+            let course: Course = this.courseService.createCourseEntity(this.courseForm, this.courseRelationForm);
             console.log(course);
             this.courseService
                 .addCourse(course)
                 .then((response) => {
                     this.isLoading = false;
+                    this.resetForms();
+                    this.close();
                 })
                 .catch((error) => {
                     console.log(error);
@@ -187,5 +211,37 @@ export class CourseModalComponent {
             .filter(([key, value]) => !searchText || key.toLowerCase().includes(searchText))
             .map(([key, value]) => ({ key, value }));
         return filtered;
+    }
+
+    private resetForms() {
+        this.courseForm.reset();
+        this.courseRelationForm.reset();
+        (this.courseRelationForm.get('personals') as FormArray).clear();
+        (this.courseRelationForm.get('rooms') as FormArray).clear();
+        (this.courseRelationForm.get('subGroups') as FormArray).clear();
+    }
+
+    startTimeBeforeEndTimeValidator(fg: FormGroup) {
+        const startControl = fg.get('starttime');
+        const endControl = fg.get('endtime');
+
+        if (startControl && endControl) {
+            const start = startControl.value;
+            const end = endControl.value;
+            console.log(start);
+            console.log(end);
+
+            if (start && end) {
+                const isValid = start < end;
+                console.log(isValid);
+                if (!isValid) {
+                    endControl.setErrors({ startTimeBeforeEndTime: true });
+                } else {
+                    endControl.setErrors(null);
+                }
+            }
+        }
+
+        return null;
     }
 }

@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { isSameDay } from 'date-fns';
 import { TimetableService } from 'src/app/services/timetable.service';
 import { FilterType } from 'src/app/models/enums';
-import { Teacher, Specialization, Room } from 'src/app/models/entities';
+import { Specialization, Room, Personal } from 'src/app/models/entities';
 import { DateFormattingService } from 'src/app/services/date-formatting.service';
 
 registerLocaleData(localeFr, 'fr');
@@ -30,7 +30,7 @@ export class CalendarComponent {
     isCreationModalOpen: boolean = false;
     refresh = new Subject<void>();
     eventDetails: any = null;
-    mapTeachers = new Map<string, Teacher>();
+    mapPersonals = new Map<string, Personal>();
     mapRooms = new Map<string, Room>();
     mapSpecializations = new Map<string, Specialization>();
     filterModalOpened: boolean = false;
@@ -96,7 +96,7 @@ export class CalendarComponent {
             const [specializations, personals, rooms] = await Promise.all([this.timetableService.getSpecializations(), this.timetableService.getPersonals(), this.timetableService.getRooms()]);
 
             this.initializeSelect('selectPromo', specializations.data, this.mapSpecializations, FilterType.Specialization);
-            this.initializeSelect('selectProf', personals.data, this.mapTeachers, FilterType.Teacher);
+            this.initializeSelect('selectProf', personals.data, this.mapPersonals, FilterType.Personal);
             this.initializeSelect('selectSalle', rooms.data, this.mapRooms, FilterType.Room);
         } catch (error) {
             console.error('Error loading select field data:', error);
@@ -117,8 +117,8 @@ export class CalendarComponent {
 
     private extractKeyAndValue(item: any, filterType: FilterType): [string, any] {
         switch (filterType) {
-            case FilterType.Teacher:
-                return [item.personal_code, new Teacher(item)];
+            case FilterType.Personal:
+                return [item.personal_code, new Personal(item)];
             case FilterType.Room:
                 return [item.code, new Room(item)];
             case FilterType.Specialization:

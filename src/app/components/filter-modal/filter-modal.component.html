@@ -12,7 +12,7 @@
                     <a class="grow flex items-center py-2 px-3 mx-2 rounded-lg transition-all duration-100 hover:bg-subtitle dark:hover:bg-grey-dark cursor-pointer text-medium hover:text-body hover:dark:text-light" [ngClass]="{ '!text-body dark:!text-light bg-subtitle dark:bg-grey-dark': filterType === FilterType.Room }" (click)="setActiveFilterType(FilterType.Room)">
                         <span class="font-semibold uppercase text-sm">Salles</span>
                     </a>
-                    <a class="grow flex items-center py-2 px-3 mx-2 rounded-lg transition-all duration-100 hover:bg-subtitle dark:hover:bg-grey-dark cursor-pointer text-medium hover:text-body hover:dark:text-light" [ngClass]="{ '!text-body dark:!text-light bg-subtitle dark:bg-grey-dark': filterType === FilterType.Teacher }" (click)="setActiveFilterType(FilterType.Teacher)">
+                    <a class="grow flex items-center py-2 px-3 mx-2 rounded-lg transition-all duration-100 hover:bg-subtitle dark:hover:bg-grey-dark cursor-pointer text-medium hover:text-body hover:dark:text-light" [ngClass]="{ '!text-body dark:!text-light bg-subtitle dark:bg-grey-dark': filterType === FilterType.Personal }" (click)="setActiveFilterType(FilterType.Personal)">
                         <span class="font-semibold uppercase text-sm">Professeurs</span>
                     </a>
                 </div>
@@ -53,21 +53,21 @@
                 </button>
             </div>
 
-            <div *ngIf="filterType === FilterType.Teacher" class="flex flex-wrap content-start gap-4 p-4 sm:basis-2/3 overflow-y-auto overflow-x-hidden h-64 sm:h-auto">
+            <div *ngIf="filterType === FilterType.Personal" class="flex flex-wrap content-start gap-4 p-4 sm:basis-2/3 overflow-y-auto overflow-x-hidden h-64 sm:h-auto">
                 <button
-                    *ngFor="let teacher of filteredTeachers"
-                    (click)="selectFilter(FilterType.Teacher, teacher.value)"
+                    *ngFor="let personal of filteredPersonals"
+                    (click)="selectFilter(FilterType.Personal, personal.value)"
                     [ngClass]="{
-                        'bg-primary text-white': isSelectedFilter(FilterType.Teacher, teacher.value),
-                        'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelectedFilter(FilterType.Teacher, teacher.value)
+                        'bg-primary text-white': isSelectedFilter(FilterType.Personal, personal.value),
+                        'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelectedFilter(FilterType.Personal, personal.value)
                     }"
                     class="flex items-center justify-center px-4 py-1 border-1 border-subtitle dark:border-grey rounded-full transition-colors duration-300 focus:outline-none gap-x-2"
                 >
-                    <svg *ngIf="isSelectedFilter(FilterType.Teacher, teacher.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <svg *ngIf="isSelectedFilter(FilterType.Personal, personal.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
                     </svg>
-                    <div *ngIf="!isSelectedFilter(FilterType.Teacher, teacher.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
-                    <span class="whitespace-nowrap">{{ teacher.key }}</span>
+                    <div *ngIf="!isSelectedFilter(FilterType.Personal, personal.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
+                    <span class="whitespace-nowrap">{{ personal.key }}</span>
                 </button>
             </div>
         </div>

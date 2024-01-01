@@ -30,7 +30,7 @@ export class TimetableService {
         let data = {};
 
         switch (filterType) {
-            case FilterType.Teacher:
+            case FilterType.Personal:
                 apiEndpoint = `${environment.apiUrl}/courses/timetable/by-teacher`;
                 data = { personal_id: filterValue?.id, week_date_start: currentWeek[0], week_date_end: currentWeek[1] };
                 break;

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { Teacher, Specialization, Room } from 'src/app/models/entities';
+import { Personal, Specialization, Room } from 'src/app/models/entities';
 import { FilterType } from 'src/app/models/enums';
 
 @Component({
@@ -9,18 +9,18 @@ import { FilterType } from 'src/app/models/enums';
 })
 export class FilterModalComponent {
     @Input() isOpen!: boolean;
-    @Input() mapTeachers!: Map<string, Teacher>;
+    @Input() mapPersonals!: Map<string, Personal>;
     @Input() mapRooms!: Map<string, Room>;
     @Input() mapSpecializations!: Map<string, Specialization>;
     @Output() closed = new EventEmitter<boolean>();
     @Output() filterChanged = new EventEmitter<{ filterType: FilterType; filterValue: any }>();
     FilterType = FilterType;
     isLoading: boolean = false;
-    filterValue!: Teacher | Room | Specialization;
+    filterValue!: Personal | Room | Specialization;
     filterType?: FilterType;
     searchText: string = '';
     filteredSpecializations: Array<{ key: string; value: Specialization }> = [];
-    filteredTeachers: Array<{ key: string; value: Teacher }> = [];
+    filteredPersonals: Array<{ key: string; value: Personal }> = [];
     filteredRooms: Array<{ key: string; value: Room }> = [];
     numberOfResults: number = 0;
 
@@ -56,7 +56,7 @@ export class FilterModalComponent {
     onSearchChange(searchText: string): void {
         this.searchText = searchText.toLowerCase();
         this.filteredSpecializations = this.filterMap(this.mapSpecializations, this.searchText);
-        this.filteredTeachers = this.filterMap(this.mapTeachers, this.searchText);
+        this.filteredPersonals = this.filterMap(this.mapPersonals, this.searchText);
         this.filteredRooms = this.filterMap(this.mapRooms, this.searchText);
 
         this.updateNumberOfResults();
@@ -73,7 +73,7 @@ export class FilterModalComponent {
         return this.filterType === type && this.filterValue === value;
     }
 
-    selectFilter(type: FilterType, value: Teacher | Specialization | Room) {
+    selectFilter(type: FilterType, value: Personal | Specialization | Room) {
         this.filterType = type;
         this.filterValue = value;
     }
@@ -86,8 +86,8 @@ export class FilterModalComponent {
             case FilterType.Room:
                 this.numberOfResults = this.filteredRooms.length;
                 break;
-            case FilterType.Teacher:
-                this.numberOfResults = this.filteredTeachers.length;
+            case FilterType.Personal:
+                this.numberOfResults = this.filteredPersonals.length;
                 break;
             default:
                 this.numberOfResults = 0;

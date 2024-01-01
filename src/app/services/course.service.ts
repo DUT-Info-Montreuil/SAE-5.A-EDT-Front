@@ -25,9 +25,16 @@ export class CourseService {
         return await axios.get(`${environment.apiUrl}/teachings/get`, { headers });
     }
 
+    async getSubGroups() {
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.get(`${environment.apiUrl}/subgroups/get`, { headers });
+    }
+
     createCourseEntity(courseData: FormGroup, courseFilterData: FormGroup): Course {
         const { description, date, starttime, endtime, course_type } = courseData.value;
-        const { teaching_id, personal_id, rooms_id } = courseFilterData.value;
+        const { teaching_id, personals, rooms, subGroups } = courseFilterData.value;
 
         return new Course({
             description,
@@ -35,8 +42,9 @@ export class CourseService {
             endtime: this.formatDateTime(date, endtime),
             course_type,
             teaching_id: teaching_id.toString(),
-            personal_id: personal_id.toString(),
-            rooms_id: rooms_id.toString(),
+            personals,
+            rooms,
+            subGroups,
         });
     }
 

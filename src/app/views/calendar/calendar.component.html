@@ -49,7 +49,7 @@
                     <mwl-calendar-day-view *ngSwitchCase="calendarView.Day" [viewDate]="viewDate" [events]="events" [dayStartHour]="dayStartHour" [dayEndHour]="dayEndHour" [hourSegments]="hourSegments" locale="fr" (click)="dayViewClick()" (eventClicked)="showEventDetails($event)" [refresh]="refresh" [hourSegmentHeight]="15" [eventTitleTemplate]="customEventTemplate"> </mwl-calendar-day-view>
                 </span>
             </div>
-            <app-filter-modal [isOpen]="filterModalOpened" (closed)="closedFilterModal()" [mapSpecializations]="mapSpecializations" [mapTeachers]="mapTeachers" [mapRooms]="mapRooms" (filterChanged)="onFilterChanged($event)"></app-filter-modal>
+            <app-filter-modal [isOpen]="filterModalOpened" (closed)="closedFilterModal()" [mapSpecializations]="mapSpecializations" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" (filterChanged)="onFilterChanged($event)"></app-filter-modal>
         </div>
     </div>
 </div>
