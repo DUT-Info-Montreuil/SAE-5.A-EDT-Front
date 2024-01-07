@@ -21,9 +21,11 @@ export class AuthService {
             const user = new User(response.data.user);
 
             if (rememberMe) {
-                this.store.dispatch(fromUser.setUser({ user, token: response.data.token }));
                 localStorage.setItem('auth', JSON.stringify({ user, token: response.data.token }));
+            } else {
+                sessionStorage.setItem('auth', JSON.stringify({ user, token: response.data.token }));
             }
+            this.store.dispatch(fromUser.setUser({ user, token: response.data.token }));
 
             return response.data;
         } catch (error) {
@@ -34,13 +36,16 @@ export class AuthService {
     logout(): void {
         this.store.dispatch(fromUser.resetUser());
         localStorage.removeItem('auth');
+        sessionStorage.removeItem('auth');
     }
 
     checkAuthentication(): void {
-        const authData = localStorage.getItem('auth');
+        let authData = sessionStorage.getItem('auth') || localStorage.getItem('auth');
         if (authData) {
             const { user, token } = JSON.parse(authData);
             this.store.dispatch(fromUser.setUser({ user, token }));
+        } else {
+            this.store.dispatch(fromUser.resetUser());
         }
     }
 

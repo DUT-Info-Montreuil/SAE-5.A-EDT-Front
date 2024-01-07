@@ -43,6 +43,9 @@ import { GestionAdminComponent } from './views/gestion-admin/gestion-admin.compo
 import { AddEleveModalComponent } from './components/add-eleve-modal/add-eleve-modal.component';
 import { DeleteEleveModalComponent } from './components/delete-eleve-modal/delete-eleve-modal.component';
 import { UpdateEleveModalComponent } from './components/update-eleve-modal/update-eleve-modal.component';
+import { UpdateProfModalComponent } from './components/modals/update-prof-modal/update-prof-modal.component';
+import { UpdateSalleModalComponent } from './components/modals/update-salle-modal/update-salle-modal.component';
+import { UpdateRessourceModalComponent } from './components/modals/update-ressource-modal/update-ressource-modal.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout', 'user'], rehydrate: true })(reducer);
@@ -92,6 +95,9 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         AddEleveModalComponent,
         DeleteEleveModalComponent,
         UpdateEleveModalComponent,
+        UpdateProfModalComponent,
+        UpdateSalleModalComponent,
+        UpdateRessourceModalComponent,
     ],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, { provide: CalendarDateFormatter, useClass: CustomDateFormatter }],

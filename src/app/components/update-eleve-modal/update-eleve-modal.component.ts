@@ -17,7 +17,7 @@ export class UpdateEleveModalComponent {
     group_id: '',
     student_number: ''
   };  
-
+  @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
   @Output() closed = new EventEmitter<boolean>();
 
   updateEleveForm: FormGroup;
@@ -28,12 +28,23 @@ export class UpdateEleveModalComponent {
     });
   }
 
-  async submit() {
-    console.log(this.eleve)
-  }
-
   close(reload: boolean = false) {
       this.closed.emit(reload);
   }
 
+  submit() {
+    const updatedValues = {
+      lastName: this.eleve.last_name,
+      firstName: this.eleve.first_name,
+      department_id: this.eleve.department_id,
+      mail: this.eleve.mail,
+      phone_number: this.eleve.phone_number,
+      subgroup_id: this.eleve.subgroup_id,
+      group_id: this.eleve.group_id,
+      student_number: this.eleve.student_number
+    };
+
+    this.formSubmitted.emit(updatedValues);
+  }
+  
 }
