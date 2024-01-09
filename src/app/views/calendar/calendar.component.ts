@@ -118,11 +118,11 @@ export class CalendarComponent {
     private extractKeyAndValue(item: any, filterType: FilterType): [string, any] {
         switch (filterType) {
             case FilterType.Personal:
-                return [item.personal_code, new Personal(item)];
+                return [item.id, new Personal(item)];
             case FilterType.Room:
-                return [item.code, new Room(item)];
+                return [item.id, new Room(item)];
             case FilterType.Specialization:
-                return [item.code, new Specialization(item)];
+                return [item.id, new Specialization(item)];
             default:
                 throw new Error(`Type de filtre non pris en charge: ${filterType}`);
         }

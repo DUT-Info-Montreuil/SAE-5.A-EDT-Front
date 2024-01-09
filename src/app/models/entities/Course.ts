@@ -1,7 +1,5 @@
+import { Personal, Room, Subgroup, Teaching } from '.';
 import { AbstractModel } from './AbstractModel';
-import { Personal } from './Personal';
-import { Room } from './Room';
-import { SubGroup } from './SubGroup';
 
 export class Course extends AbstractModel {
     /**
@@ -12,12 +10,6 @@ export class Course extends AbstractModel {
     endtime!: string;
     duree?: string;
     course_type?: string;
-    personal_code?: string[];
-    personal_lastName?: string;
-    personal_firstName?: string;
-    teaching_title?: string;
-    room_name?: string[];
-    room_code?: string;
 
     /**
      * Relations Id
@@ -27,9 +19,10 @@ export class Course extends AbstractModel {
     /**
      * Relations
      */
+    teaching?: Teaching;
     personals?: Personal[];
     rooms?: Room[];
-    subGroups?: SubGroup[];
+    subgroups?: Subgroup[];
 
     constructor(course?: Partial<Course>) {
         super(course?.id);

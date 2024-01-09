@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Personal, Room, Course, Teaching, SubGroup } from 'src/app/models/entities';
+import { Personal, Room, Course, Teaching, Subgroup } from 'src/app/models/entities';
 import { CourseType, FilterType } from 'src/app/models/enums';
 import { CourseService } from 'src/app/services/course.service';
 import moment from 'moment';
@@ -11,14 +11,13 @@ import moment from 'moment';
     styleUrls: ['./edit-course-modal.component.css'],
 })
 export class EditCourseModalComponent {
-    @Input() courseId!: string;
+    @Input() course!: Course;
     @Input() mapPersonals!: Map<string, Personal>;
     @Input() mapRooms!: Map<string, Room>;
     @Input() mapTeachings!: Map<string, Teaching>;
-    @Input() mapSubGroups!: Map<string, SubGroup>;
+    @Input() mapSubGroups!: Map<string, Subgroup>;
     @Input() isOpen!: boolean;
     @Output() closed = new EventEmitter<boolean>();
-    course?: Course;
     FilterType = FilterType;
     isLoading: boolean = false;
     courseForm: FormGroup;
@@ -37,7 +36,7 @@ export class EditCourseModalComponent {
     filteredTeachings: Array<{ key: string; value: Teaching }> = [];
     filteredPersonals: Array<{ key: string; value: Personal }> = [];
     filteredRooms: Array<{ key: string; value: Room }> = [];
-    filteredSubGroups: Array<{ key: string; value: SubGroup }> = [];
+    filteredSubGroups: Array<{ key: string; value: Subgroup }> = [];
     numberOfResults: number = 0;
 
     constructor(private fb: FormBuilder, private courseService: CourseService) {
@@ -66,6 +65,7 @@ export class EditCourseModalComponent {
             this.onSearchChange(this.searchText);
         }
         if (changes['course'] && this.course) {
+            this.resetForms();
             this.fillFormWithCourseData(this.course);
         }
     }
@@ -110,7 +110,7 @@ export class EditCourseModalComponent {
     }
 
     isSelectedTeaching(value: Teaching): boolean {
-        return this.selectedTeaching === value;
+        return this.selectedTeaching?.id === value?.id;
     }
 
     selectTeaching(value: Teaching) {
@@ -118,15 +118,15 @@ export class EditCourseModalComponent {
         this.courseRelationForm.get('teaching_id')?.setValue(value.id);
     }
 
-    toggleSelection(item: Personal | Room | SubGroup): void {
+    toggleSelection(item: Personal | Room | Subgroup): void {
         let array: FormArray;
 
         if (item instanceof Personal) {
             array = this.courseRelationForm.get('personals') as FormArray;
         } else if (item instanceof Room) {
             array = this.courseRelationForm.get('rooms') as FormArray;
-        } else if (item instanceof SubGroup) {
-            array = this.courseRelationForm.get('subGroups') as FormArray;
+        } else if (item instanceof Subgroup) {
+            array = this.courseRelationForm.get('subgroups') as FormArray;
         } else {
             throw new Error('Type non géré');
         }
@@ -139,15 +139,15 @@ export class EditCourseModalComponent {
         }
     }
 
-    isSelected(item: Personal | Room | SubGroup): boolean {
+    isSelected(item: Personal | Room | Subgroup): boolean {
         let array: FormArray;
 
         if (item instanceof Personal) {
             array = this.courseRelationForm.get('personals') as FormArray;
         } else if (item instanceof Room) {
             array = this.courseRelationForm.get('rooms') as FormArray;
-        } else if (item instanceof SubGroup) {
-            array = this.courseRelationForm.get('subGroups') as FormArray;
+        } else if (item instanceof Subgroup) {
+            array = this.courseRelationForm.get('subgroups') as FormArray;
         } else {
             throw new Error('Type non géré');
         }
@@ -188,7 +188,7 @@ export class EditCourseModalComponent {
 
     deleteCourse() {
         this.courseService
-            .deleteCourse(this.courseId)
+            .deleteCourse(this.course?.id!)
             .then((response) => {
                 this.resetForms();
                 this.close(true);
@@ -235,9 +235,23 @@ export class EditCourseModalComponent {
     private resetForms() {
         this.courseForm.reset();
         this.courseRelationForm.reset();
-        (this.courseRelationForm.get('personals') as FormArray).clear();
-        (this.courseRelationForm.get('rooms') as FormArray).clear();
-        (this.courseRelationForm.get('subGroups') as FormArray).clear();
+
+        const personalsArray = this.courseRelationForm.get('personals') as FormArray;
+        const roomsArray = this.courseRelationForm.get('rooms') as FormArray;
+        const subgroupsArray = this.courseRelationForm.get('subgroups') as FormArray;
+
+        if (personalsArray) {
+            personalsArray.clear();
+        }
+
+        if (roomsArray) {
+            roomsArray.clear();
+        }
+
+        if (subgroupsArray) {
+            subgroupsArray.clear();
+        }
+
         this.currentStep = 0;
     }
 
@@ -252,8 +266,8 @@ export class EditCourseModalComponent {
 
         this.courseRelationForm.setControl('personals', this.fb.array(course.personals || []));
         this.courseRelationForm.setControl('rooms', this.fb.array(course.rooms || []));
-        this.courseRelationForm.setControl('subGroups', this.fb.array(course.subGroups || []));
-        this.courseRelationForm.get('teaching_id')?.setValue(course.teaching_id);
+        this.courseRelationForm.setControl('subgroups', this.fb.array(course.subgroups || []));
+        this.selectTeaching(course.teaching!);
     }
 
     private startTimeBeforeEndTimeValidator(fg: FormGroup) {

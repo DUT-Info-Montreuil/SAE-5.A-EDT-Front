@@ -48,7 +48,7 @@ export class CourseService {
 
     createCourseEntity(courseData: FormGroup, courseFilterData: FormGroup): Course {
         const { description, date, starttime, endtime, course_type } = courseData.value;
-        const { teaching_id, personals, rooms, subGroups } = courseFilterData.value;
+        const { teaching_id, personals, rooms, subgroups } = courseFilterData.value;
 
         return new Course({
             description,
@@ -58,7 +58,7 @@ export class CourseService {
             teaching_id: teaching_id.toString(),
             personals,
             rooms,
-            subGroups,
+            subgroups,
         });
     }
 

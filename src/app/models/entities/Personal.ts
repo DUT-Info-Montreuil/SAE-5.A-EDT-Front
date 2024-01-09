@@ -7,7 +7,7 @@ export class Personal extends AbstractModel {
     first_name?: string;
     last_name?: string;
     mail?: string;
-    personnal_code?: string;
+    personal_code?: string;
     phone_number?: string;
 
     constructor(personal?: Partial<Personal>) {

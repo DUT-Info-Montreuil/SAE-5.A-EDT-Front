@@ -1,6 +1,6 @@
 import { AbstractModel } from './AbstractModel';
 
-export class SubGroup extends AbstractModel {
+export class Subgroup extends AbstractModel {
     /**
      * Attributes
      */
@@ -11,8 +11,8 @@ export class SubGroup extends AbstractModel {
      */
     group_id?: string;
 
-    constructor(subGroup?: Partial<SubGroup>) {
-        super(subGroup?.id);
-        Object.assign(this, subGroup);
+    constructor(subgroup?: Partial<Subgroup>) {
+        super(subgroup?.id);
+        Object.assign(this, subgroup);
     }
 }

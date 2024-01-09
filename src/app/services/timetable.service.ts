@@ -58,7 +58,7 @@ export class TimetableService {
 
     convertToCalendarEvents(dataValues: any[]): CalendarEvent[] {
         return dataValues[0].map((course: Course) => ({
-            title: course?.teaching_title,
+            title: course?.teaching?.title,
             start: new Date(course.starttime),
             end: new Date(course.endtime),
             draggable: false,
@@ -67,12 +67,7 @@ export class TimetableService {
                 afterEnd: false,
             },
             cssClass: './calendar.component.css',
-            meta: {
-                room: course?.room_name,
-                personal: course?.personal_code,
-                description: course?.description,
-                courseId: course?.id,
-            },
+            meta: course,
         }));
     }
 
