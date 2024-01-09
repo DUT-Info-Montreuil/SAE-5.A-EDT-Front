@@ -1,6 +1,6 @@
 {
   "name": "sae-5.a-edt-front",
-  "version": "0.0.14-snapshot.8",
+  "version": "0.0.14-snapshot.9",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
