@@ -1,7 +1,7 @@
 <app-modal [isOpen]="isOpen" (closed)="close($event)" maxWidth="w-full max-w-3xl">
     <div *ngIf="currentStep === 0" class="flex flex-col gap-y-6 font-aileron">
         <div class="flex bg-subtitle-secondary dark:bg-grey-dark rounded-t-xl p-6 border-b-0.5 border-medium dark:border-grey">
-            <h3 class="!text-primary"><span class="font-bold">Étape 1</span> - Création du cours</h3>
+            <h3 class="!text-primary">Modification du cours</h3>
         </div>
         <div class="grid sm:grid-cols-2 gap-4 p-6">
             <app-labeled-icon-input [control]="descriptionControl" model="description" label="Description" placeholder="Entrez une description" typeInput="text">
@@ -24,14 +24,17 @@
             <app-dropdown [control]="coursetypeControl" model="course_type" [options]="course_types" label="Type de cours" placeholder="Selectionne un type" />
             <app-dropdown [control]="colortypeControl" model="color_type" [options]="color_types" label="Couleur" placeholder="Selectionne une couleur" />
         </div>
-        <div class="col-span-2 flex justify-end gap-x-4 p-6 border-t-0.5 border-medium dark:border-grey">
-            <app-button label="Annuler" type="grey" (click)="close(false)"></app-button>
-            <app-button label="Suivant" type="primary" (click)="onNextStep()"></app-button>
+        <div class="col-span-2 flex justify-between gap-x-4 p-6 border-t-0.5 border-medium dark:border-grey">
+            <app-button label="Supprimer" type="danger" (click)="close(false)"></app-button>
+            <div class="flex gap-x-4">
+                <app-button label="Annuler" type="grey" (click)="close(false)"></app-button>
+                <app-button label="Suivant" type="primary" (click)="onNextStep()"></app-button>
+            </div>
         </div>
     </div>
     <div *ngIf="currentStep === 1" class="flex flex-col font-aileron">
         <div class="flex bg-subtitle-secondary dark:bg-grey-dark rounded-t-xl p-6 border-b-0.5 border-medium dark:border-grey">
-            <h3 class="!text-primary"><span class="font-bold">Étape 2</span> - Affiliation du cours</h3>
+            <h3 class="!text-primary">Modification du cours</h3>
         </div>
         <div class="flex flex-col gap-y-4 pt-4">
             <div class="flex flex-col items-center px-6 xs:px-12">

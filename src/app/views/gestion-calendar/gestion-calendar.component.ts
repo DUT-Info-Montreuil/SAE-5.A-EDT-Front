@@ -1,12 +1,12 @@
 import { registerLocaleData } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import localeFr from '@angular/common/locales/fr';
 import { Subject } from 'rxjs';
 import { isSameDay } from 'date-fns';
 import { TimetableService } from 'src/app/services/timetable.service';
 import { FilterType } from 'src/app/models/enums';
-import { Personal, Specialization, Room, Teaching, SubGroup } from 'src/app/models/entities';
+import { Personal, Specialization, Room, Teaching, SubGroup, Course } from 'src/app/models/entities';
 import { DateFormattingService } from 'src/app/services/date-formatting.service';
 import { CourseService } from 'src/app/services/course.service';
 
@@ -37,11 +37,15 @@ export class GestionCalendarComponent {
     mapSubGroups = new Map<string, SubGroup>();
     filterModalOpened: boolean = false;
     courseModalOpened: boolean = false;
+    editCourseModalOpened: boolean = false;
     currentFilterType!: FilterType;
     currentFilterValue: any;
     formattedDate: string | null;
+    modeEditor: boolean = false;
+    alertMessage: string = '';
+    alertTitle: string = '';
 
-    constructor(private timetableService: TimetableService, private courseService: CourseService, private dateFormattingService: DateFormattingService) {
+    constructor(private timetableService: TimetableService, private courseService: CourseService, private dateFormattingService: DateFormattingService, private cdr: ChangeDetectorRef) {
         this.formattedDate = this.dateFormattingService.format(new Date());
         this.initSelectFields();
     }
@@ -61,6 +65,17 @@ export class GestionCalendarComponent {
         this.currentFilterType = filterDetails.filterType;
         this.currentFilterValue = filterDetails.filterValue;
         this.loadEvents();
+    }
+
+    onCourseAdded() {
+        this.loadEvents();
+    }
+
+    onCourseClicked(event: CalendarEvent): void {
+        if (this.modeEditor) {
+            this.editCourseModalOpened = true;
+            //this.selectedCourse = event?.meta as Course;
+        }
     }
 
     loadEvents() {
@@ -139,6 +154,26 @@ export class GestionCalendarComponent {
         }
     }
 
+    changeMode() {
+        this.modeEditor = !this.modeEditor;
+        this.showAlert(this.modeEditor ? 'Vous êtes passé en mode Éditeur' : 'Vous êtes passé en mode Simple', this.modeEditor ? 'Mode Editeur' : 'Mode Simple');
+    }
+
+    showAlert(message: string, title: string): void {
+        this.alertMessage = message;
+        this.alertTitle = title;
+
+        setTimeout(() => {
+            this.dismissAlert();
+        }, 3000);
+    }
+
+    dismissAlert(): void {
+        this.alertMessage = '';
+        this.alertTitle = '';
+        this.cdr.detectChanges();
+    }
+
     openFilterModal() {
         this.filterModalOpened = true;
     }
@@ -153,5 +188,18 @@ export class GestionCalendarComponent {
 
     closedCourseModal(reload?: boolean) {
         this.courseModalOpened = false;
+        if (reload) {
+            this.onCourseAdded();
+        }
+    }
+
+    openEditCourseModal() {
+        this.editCourseModalOpened = true;
+    }
+
+    closedEditCourseModal(reload?: boolean) {
+        this.editCourseModalOpened = false;
+        if (reload) {
+        }
     }
 }

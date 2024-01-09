@@ -25,7 +25,6 @@ export class ModalComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {}
 
     close(reload: boolean = false): void {
-        console.log('test');
         this.closed.emit(reload);
         this.isOpen = false;
     }

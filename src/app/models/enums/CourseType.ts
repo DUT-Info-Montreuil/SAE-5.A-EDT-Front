@@ -1,5 +1,8 @@
 export enum CourseType {
-    RCC = 'Ressource Théorique',
-    RT = 'Ressource Transversal',
-    SAE = 'Saé',
+    controles = 'Contrôle',
+    TP = 'TP',
+    TD = 'TD',
+    cours = 'Cours',
+    rattrapage = 'Rattrapage',
+    Projet = 'Projet',
 }

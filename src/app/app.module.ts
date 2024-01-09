@@ -51,6 +51,7 @@ import { CourseModalComponent } from './components/course-modal/course-modal.com
 import { SidebarToggleItemComponent } from './components/sidebar-toggle-item/sidebar-toggle-item.component';
 import { LabeledTimeInputComponent } from './components/labeled-time-input/labeled-time-input.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { EditCourseModalComponent } from './components/edit-course-modal/edit-course-modal.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout', 'user'], rehydrate: true })(reducer);
@@ -107,6 +108,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         SidebarToggleItemComponent,
         LabeledTimeInputComponent,
         DropdownComponent,
+        EditCourseModalComponent,
     ],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, ClickOutsideModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
     providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, { provide: CalendarDateFormatter, useClass: CustomDateFormatter }],

@@ -30,8 +30,16 @@
         @apply bg-primary rounded-md text-white text-base leading-none font-bold font-aileron transition duration-300 hover:bg-primary-hover hover:-translate-y-1;
     }
 
+    .btn-secondary {
+        @apply bg-primary-dark dark:bg-subtitle-dark rounded-md text-white text-base leading-none font-bold font-aileron transition duration-300 hover:bg-body hover:dark:bg-grey-dark hover:-translate-y-1;
+    }
+
     .btn-grey {
         @apply bg-subtitle dark:bg-medium rounded-md text-body dark:text-white text-base leading-none font-bold font-aileron transition duration-300 hover:bg-subtitle-hover dark:hover:bg-subtitle-dark hover:-translate-y-1;
+    }
+
+    .btn-danger {
+        @apply bg-danger rounded-md text-white text-base leading-none font-bold font-aileron transition duration-300 hover:bg-danger-dark hover:-translate-y-1;
     }
 
     .btn-primary-inverse {

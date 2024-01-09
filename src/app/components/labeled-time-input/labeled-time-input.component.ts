@@ -24,6 +24,17 @@ export class LabeledTimeInputComponent implements AfterViewInit {
             noCalendar: true,
             altFormat: 'H:i',
             time_24hr: true,
+            minuteIncrement: 10,
+            dateFormat: 'H:i',
+            onChange: (selectedDates, dateStr, instance) => {
+                const selectedDate = selectedDates[0];
+
+                if (selectedDate) {
+                    const roundedMinutes = Math.round(selectedDate.getMinutes() / 10) * 10;
+                    selectedDate.setMinutes(roundedMinutes);
+                    instance.setDate(selectedDate, true);
+                }
+            },
         });
     }
 }

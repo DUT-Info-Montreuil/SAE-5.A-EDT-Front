@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
+import { Course } from 'src/app/models/entities';
 
 @Component({
     selector: 'app-custom-event-calendar',

@@ -23,8 +23,12 @@ export class ButtonComponent {
 
         if (this.type === 'inverse') {
             computedClass.push('btn-primary-inverse');
+        } else if (this.type === 'secondary') {
+            computedClass.push('btn-secondary');
         } else if (this.type === 'grey') {
             computedClass.push('btn-grey');
+        } else if (this.type === 'danger') {
+            computedClass.push('btn-danger');
         } else {
             computedClass.push('btn-primary');
         }

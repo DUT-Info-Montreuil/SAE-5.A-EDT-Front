@@ -3,13 +3,15 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Valid
 import { Personal, Room, Course, Teaching, SubGroup } from 'src/app/models/entities';
 import { CourseType, FilterType } from 'src/app/models/enums';
 import { CourseService } from 'src/app/services/course.service';
+import moment from 'moment';
 
 @Component({
-    selector: 'app-course-modal',
-    templateUrl: './course-modal.component.html',
-    styleUrls: ['./course-modal.component.css'],
+    selector: 'app-edit-course-modal',
+    templateUrl: './edit-course-modal.component.html',
+    styleUrls: ['./edit-course-modal.component.css'],
 })
-export class CourseModalComponent {
+export class EditCourseModalComponent {
+    @Input() course!: Course;
     @Input() mapPersonals!: Map<string, Personal>;
     @Input() mapRooms!: Map<string, Room>;
     @Input() mapTeachings!: Map<string, Teaching>;
@@ -61,6 +63,9 @@ export class CourseModalComponent {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['isOpen'].currentValue === true) {
             this.onSearchChange(this.searchText);
+        }
+        if (changes['course'] && this.course) {
+            this.fillFormWithCourseData(this.course);
         }
     }
 
@@ -186,12 +191,13 @@ export class CourseModalComponent {
 
         if (this.courseForm.valid && teaching_id) {
             let course: Course = this.courseService.createCourseEntity(this.courseForm, this.courseRelationForm);
+            console.log(course);
             this.courseService
                 .addCourse(course)
                 .then((response) => {
                     this.isLoading = false;
                     this.resetForms();
-                    this.close(true);
+                    this.close();
                 })
                 .catch((error) => {
                     console.log(error);
@@ -222,6 +228,22 @@ export class CourseModalComponent {
         this.currentStep = 0;
     }
 
+    private fillFormWithCourseData(course: Course) {
+        this.courseForm.patchValue({
+            description: course.description,
+            date: new Date(course.starttime),
+            starttime: course.starttime,
+            endtime: course.endtime,
+            course_type: course.course_type,
+        });
+
+        console.log(new Date(course.starttime));
+        this.courseRelationForm.setControl('personals', this.fb.array(course.personals || []));
+        this.courseRelationForm.setControl('rooms', this.fb.array(course.rooms || []));
+        this.courseRelationForm.setControl('subGroups', this.fb.array(course.subGroups || []));
+        this.courseRelationForm.get('teaching_id')?.setValue(course.teaching_id);
+    }
+
     private startTimeBeforeEndTimeValidator(fg: FormGroup) {
         const startControl = fg.get('starttime');
         const endControl = fg.get('endtime');
@@ -230,6 +252,7 @@ export class CourseModalComponent {
             const end = endControl.value;
             if (start && end) {
                 const isValid = start < end;
+                console.log(isValid);
                 if (!isValid) {
                     endControl.setErrors({ startTimeBeforeEndTime: true });
                 } else {

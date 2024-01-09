@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/entities';
@@ -23,7 +23,7 @@ export class LoginComponent {
 
     isLoading: boolean = false;
 
-    constructor(private fb: FormBuilder, private router: Router, private darkModeService: DarkModeService, private authService: AuthService) {
+    constructor(private fb: FormBuilder, private router: Router, private darkModeService: DarkModeService, private authService: AuthService, private cdr: ChangeDetectorRef) {
         this.loginForm = this.fb.group({
             username: ['', [Validators.required, Validators.minLength(3)]],
             password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
@@ -59,10 +59,23 @@ export class LoginComponent {
                 })
                 .catch((error) => {
                     this.isLoading = false;
-                    this.apiError = error.response?.data?.msg || "Une erreur s'est produite lors de la connexion.";
+                    this.showAlert(error.response?.data?.msg || "Une erreur s'est produite lors de la connexion.");
                 });
         } else {
             this.loginForm.markAllAsTouched();
         }
+    }
+
+    showAlert(message: string): void {
+        this.apiError = message;
+
+        setTimeout(() => {
+            this.dismissAlert();
+        }, 3000);
+    }
+
+    dismissAlert(): void {
+        this.apiError = '';
+        this.cdr.detectChanges();
     }
 }
