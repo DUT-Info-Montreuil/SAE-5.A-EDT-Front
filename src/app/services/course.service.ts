@@ -18,6 +18,20 @@ export class CourseService {
         return await axios.put(`${environment.apiUrl}/courses/add`, course, { headers });
     }
 
+    async deleteCourse(courseId: string) {
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.delete(`${environment.apiUrl}/courses/delete/${courseId}`, { headers });
+    }
+
+    async updateCourse(course: Course) {
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.patch(`${environment.apiUrl}/courses/update/${course?.id}`, course, { headers });
+    }
+
     async getTeachings() {
         this.authService.checkAuthentication();
         const token = this.authService.getToken();

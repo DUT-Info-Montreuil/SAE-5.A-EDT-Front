@@ -11,13 +11,14 @@ import moment from 'moment';
     styleUrls: ['./edit-course-modal.component.css'],
 })
 export class EditCourseModalComponent {
-    @Input() course!: Course;
+    @Input() courseId!: string;
     @Input() mapPersonals!: Map<string, Personal>;
     @Input() mapRooms!: Map<string, Room>;
     @Input() mapTeachings!: Map<string, Teaching>;
     @Input() mapSubGroups!: Map<string, SubGroup>;
     @Input() isOpen!: boolean;
     @Output() closed = new EventEmitter<boolean>();
+    course?: Course;
     FilterType = FilterType;
     isLoading: boolean = false;
     courseForm: FormGroup;
@@ -185,6 +186,18 @@ export class EditCourseModalComponent {
         }
     }
 
+    deleteCourse() {
+        this.courseService
+            .deleteCourse(this.courseId)
+            .then((response) => {
+                this.resetForms();
+                this.close(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     submit() {
         this.isLoading = true;
         const { teaching_id } = this.courseRelationForm.value;
@@ -193,11 +206,11 @@ export class EditCourseModalComponent {
             let course: Course = this.courseService.createCourseEntity(this.courseForm, this.courseRelationForm);
             console.log(course);
             this.courseService
-                .addCourse(course)
+                .updateCourse(course)
                 .then((response) => {
                     this.isLoading = false;
                     this.resetForms();
-                    this.close();
+                    this.close(true);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -237,7 +250,6 @@ export class EditCourseModalComponent {
             course_type: course.course_type,
         });
 
-        console.log(new Date(course.starttime));
         this.courseRelationForm.setControl('personals', this.fb.array(course.personals || []));
         this.courseRelationForm.setControl('rooms', this.fb.array(course.rooms || []));
         this.courseRelationForm.setControl('subGroups', this.fb.array(course.subGroups || []));
@@ -252,7 +264,6 @@ export class EditCourseModalComponent {
             const end = endControl.value;
             if (start && end) {
                 const isValid = start < end;
-                console.log(isValid);
                 if (!isValid) {
                     endControl.setErrors({ startTimeBeforeEndTime: true });
                 } else {

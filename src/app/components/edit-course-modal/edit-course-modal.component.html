@@ -25,7 +25,7 @@
             <app-dropdown [control]="colortypeControl" model="color_type" [options]="color_types" label="Couleur" placeholder="Selectionne une couleur" />
         </div>
         <div class="col-span-2 flex justify-between gap-x-4 p-6 border-t-0.5 border-medium dark:border-grey">
-            <app-button label="Supprimer" type="danger" (click)="close(false)"></app-button>
+            <app-button label="Supprimer" type="danger" (click)="deleteCourse()"></app-button>
             <div class="flex gap-x-4">
                 <app-button label="Annuler" type="grey" (click)="close(false)"></app-button>
                 <app-button label="Suivant" type="primary" (click)="onNextStep()"></app-button>

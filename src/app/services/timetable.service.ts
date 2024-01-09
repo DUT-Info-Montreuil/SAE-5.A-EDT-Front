@@ -68,9 +68,10 @@ export class TimetableService {
             },
             cssClass: './calendar.component.css',
             meta: {
-                location: course?.room_name,
-                organizer: course?.personal_code,
+                room: course?.room_name,
+                personal: course?.personal_code,
                 description: course?.description,
+                courseId: course?.id,
             },
         }));
     }

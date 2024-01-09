@@ -44,6 +44,7 @@ export class GestionCalendarComponent {
     modeEditor: boolean = false;
     alertMessage: string = '';
     alertTitle: string = '';
+    courseId: string = '';
 
     constructor(private timetableService: TimetableService, private courseService: CourseService, private dateFormattingService: DateFormattingService, private cdr: ChangeDetectorRef) {
         this.formattedDate = this.dateFormattingService.format(new Date());
@@ -67,14 +68,10 @@ export class GestionCalendarComponent {
         this.loadEvents();
     }
 
-    onCourseAdded() {
-        this.loadEvents();
-    }
-
     onCourseClicked(event: CalendarEvent): void {
         if (this.modeEditor) {
             this.editCourseModalOpened = true;
-            //this.selectedCourse = event?.meta as Course;
+            this.courseId = event?.meta?.courseId;
         }
     }
 
@@ -189,7 +186,7 @@ export class GestionCalendarComponent {
     closedCourseModal(reload?: boolean) {
         this.courseModalOpened = false;
         if (reload) {
-            this.onCourseAdded();
+            this.loadEvents();
         }
     }
 
@@ -200,6 +197,7 @@ export class GestionCalendarComponent {
     closedEditCourseModal(reload?: boolean) {
         this.editCourseModalOpened = false;
         if (reload) {
+            this.loadEvents();
         }
     }
 }
