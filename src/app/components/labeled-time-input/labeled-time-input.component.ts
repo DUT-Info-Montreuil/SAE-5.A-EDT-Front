@@ -32,7 +32,10 @@ export class LabeledTimeInputComponent implements AfterViewInit {
                 if (selectedDate) {
                     const roundedMinutes = Math.round(selectedDate.getMinutes() / 10) * 10;
                     selectedDate.setMinutes(roundedMinutes);
-                    instance.setDate(selectedDate, true);
+
+                    if (selectedDate.getTime() !== instance.latestSelectedDateObj?.getTime()) {
+                        instance.setDate(selectedDate, true);
+                    }
                 }
             },
         });
