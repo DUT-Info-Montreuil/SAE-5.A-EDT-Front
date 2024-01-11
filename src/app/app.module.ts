@@ -46,6 +46,10 @@ import { FilterModalComponent } from './components/filter-modal/filter-modal.com
 import { CustomEventCalendarComponent } from './components/custom-event-calendar/custom-event-calendar.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { UpdateProfModalComponent } from './components/modals/update-prof-modal/update-prof-modal.component';
+import { UpdateSalleModalComponent } from './components/modals/update-salle-modal/update-salle-modal.component';
+import { UpdateRessourceModalComponent } from './components/modals/update-ressource-modal/update-ressource-modal.component';
+import { AddCohorteModalComponent } from './components/modals/add-cohorte-modal/add-cohorte-modal.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({ keys: ['layout', 'user'], rehydrate: true })(reducer);
@@ -97,9 +101,13 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         FilterModalComponent,
         CustomEventCalendarComponent,
         SearchInputComponent,
+        UpdateProfModalComponent,
+        UpdateSalleModalComponent,
+        UpdateRessourceModalComponent,
+        AddCohorteModalComponent,
     ],
-    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, ClickOutsideModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
-    providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, { provide: CalendarDateFormatter, useClass: CustomDateFormatter }],
+    imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],
+    providers: [ { provide: LOCALE_ID, useValue: 'fr-FR' }, DatePipe, { provide: CalendarDateFormatter, useClass: CustomDateFormatter }],
     bootstrap: [RootComponent],
 })
 export class AppModule {}
