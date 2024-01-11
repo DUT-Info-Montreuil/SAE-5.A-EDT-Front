@@ -1,3 +1,5 @@
+import { Personal, Room, Subgroup, Teaching } from '.';
+import { CourseType } from '../enums';
 import { AbstractModel } from './AbstractModel';
 
 export class Course extends AbstractModel {
@@ -8,16 +10,20 @@ export class Course extends AbstractModel {
     starttime!: string;
     endtime!: string;
     duree?: string;
-    course_type?: string;
-    personal_id?: string;
-    rooms_id?: string;
+    course_type?: CourseType;
+
+    /**
+     * Relations Id
+     */
     teaching_id?: string;
-    personal_code?: string;
-    personal_lastName?: string;
-    personal_firstName?: string;
-    teaching_title?: string;
-    room_name?: string;
-    room_code?: string;
+
+    /**
+     * Relations
+     */
+    teaching?: Teaching;
+    personals?: Personal[];
+    rooms?: Room[];
+    subgroups?: Subgroup[];
 
     constructor(course?: Partial<Course>) {
         super(course?.id);

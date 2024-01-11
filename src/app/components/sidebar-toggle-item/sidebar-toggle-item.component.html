@@ -1,0 +1,15 @@
+<div class="flex flex-col overflow-hidden py-4">
+    <div (click)="toggle()" class="grow flex items-center mx-4 rounded-lg transition-all duration-100 cursor-pointer" [ngClass]="{ 'ml-7': !collapse }">
+        <div class="w-full flex justify-between">
+            <span *ngIf="!collapse" class="truncate uppercase text-medium font-aileron text-xs font-semibold">{{ label }}</span>
+            <div class="flex justify-center" [ngClass]="{ 'w-full': collapse }">
+                <svg [@rotateIcon]="isOpen ? 'open' : 'closed'" class="w-5 h-5 stroke-medium" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.5 11.5L14.5 17.5L8.5 11.5" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div [ngClass]="{ 'overflow-hidden': !isOpen }" [@expandCollapse]="isOpen ? 'open' : 'closed'">
+        <ng-content select="[subitems]"></ng-content>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 <div class="flex justify-center">
-    <app-alert class="absolute top-5 right-5" *ngIf="apiError" color="danger" title="Oups !" [message]="apiError" (close)="apiError = ''"></app-alert>
+    <app-alert color="danger" title="Oups !" [message]="apiError" (close)="apiError = ''"></app-alert>
 
     <div class="flex w-96 md:w-auto bg-white dark:bg-light-dark rounded-2xl shadow-card py-10 px-5 md:px-10 lg:px-20 gap-x-16">
         <img *ngIf="!isDarkMode" class="hidden md:flex" src="../../../../assets/illustrations/auth/auth_login.svg" alt="ENT - Connexion" />

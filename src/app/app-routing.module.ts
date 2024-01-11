@@ -9,6 +9,7 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { CalendarComponent } from './views/calendar/calendar.component';
 import { GestionComponent } from './views/gestion/gestion.component';
 import { SettingsComponent } from './views/settings/settings.component';
+import { GestionCalendarComponent } from './views/gestion-calendar/gestion-calendar.component';
 
 const routes: Routes = [
     {
@@ -23,6 +24,7 @@ const routes: Routes = [
             { path: 'dashboard', component: DashboardComponent },
             { path: 'calendar', component: CalendarComponent },
             { path: 'gestion', component: GestionComponent },
+            { path: 'gestion-calendar', component: GestionCalendarComponent },
             { path: 'settings', component: SettingsComponent },
 
             // ici on mettra les autres routes de l'application

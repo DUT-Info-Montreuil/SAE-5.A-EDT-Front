@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { DateFormattingService } from '../../services/date-formatting.service';
-import { trigger, transition, style, animate, state } from '@angular/animations';
+import { AuthService } from 'src/app/services/auth.service';
 import { NumberSymbol } from '@angular/common';
 
 @Component({
@@ -15,7 +15,7 @@ export class DashboardComponent {
     scrollAmount = 0;
     reminderModalOpened: boolean = false;
 
-    constructor(private dateFormattingService: DateFormattingService) {
+    constructor(private dateFormattingService: DateFormattingService, private authService: AuthService) {
         this.formattedDate = this.dateFormattingService.format(new Date());
     }
 

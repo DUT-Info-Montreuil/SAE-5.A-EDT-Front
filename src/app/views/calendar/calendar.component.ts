@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { isSameDay } from 'date-fns';
 import { TimetableService } from 'src/app/services/timetable.service';
 import { FilterType } from 'src/app/models/enums';
-import { Teacher, Promotion, Room } from 'src/app/models/entities';
+import { Specialization, Room, Personal } from 'src/app/models/entities';
 import { DateFormattingService } from 'src/app/services/date-formatting.service';
 
 registerLocaleData(localeFr, 'fr');
@@ -30,9 +30,9 @@ export class CalendarComponent {
     isCreationModalOpen: boolean = false;
     refresh = new Subject<void>();
     eventDetails: any = null;
-    mapIdNomProfs = new Map<string, Teacher>();
-    mapIdNomRoom = new Map<string, Room>();
-    mapIdNomPromo = new Map<string, Promotion>();
+    mapPersonals = new Map<string, Personal>();
+    mapRooms = new Map<string, Room>();
+    mapSpecializations = new Map<string, Specialization>();
     filterModalOpened: boolean = false;
     currentFilterType!: FilterType;
     currentFilterValue: any;
@@ -95,9 +95,9 @@ export class CalendarComponent {
         try {
             const [specializations, personals, rooms] = await Promise.all([this.timetableService.getSpecializations(), this.timetableService.getPersonals(), this.timetableService.getRooms()]);
 
-            this.initializeSelect('selectPromo', specializations.data, this.mapIdNomPromo, FilterType.Promotion);
-            this.initializeSelect('selectProf', personals.data, this.mapIdNomProfs, FilterType.Teacher);
-            this.initializeSelect('selectSalle', rooms.data, this.mapIdNomRoom, FilterType.Room);
+            this.initializeSelect('selectPromo', specializations.data, this.mapSpecializations, FilterType.Specialization);
+            this.initializeSelect('selectProf', personals.data, this.mapPersonals, FilterType.Personal);
+            this.initializeSelect('selectSalle', rooms.data, this.mapRooms, FilterType.Room);
         } catch (error) {
             console.error('Error loading select field data:', error);
         }
@@ -117,12 +117,14 @@ export class CalendarComponent {
 
     private extractKeyAndValue(item: any, filterType: FilterType): [string, any] {
         switch (filterType) {
-            case FilterType.Teacher:
-                return [item.personal_code, new Teacher(item)];
+            case FilterType.Personal:
+                return [item.id, new Personal(item)];
             case FilterType.Room:
-                return [item.code, new Room(item)];
-            case FilterType.Promotion:
-                return [item.code, new Promotion(item)];
+                return [item.id, new Room(item)];
+            case FilterType.Specialization:
+                return [item.id, new Specialization(item)];
+            default:
+                throw new Error(`Type de filtre non pris en charge: ${filterType}`);
         }
     }
 

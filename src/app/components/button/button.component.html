@@ -1,4 +1,4 @@
-<button class="inline-flex items-center rounded-md gap-x-2 px-6 py-2" [ngClass]="customClass" (click)="click.emit()">
+<button class="inline-flex items-center rounded-md gap-x-2 px-6 py-2" [ngClass]="customClass">
     <ng-content select="[left-icon]"></ng-content>
     <span [ngClass]="fontSize" *ngIf="hasText && label" class="font-aileron font-bold grow">{{ label }}</span>
     <ng-content *ngIf="!hasText || !label"></ng-content>
