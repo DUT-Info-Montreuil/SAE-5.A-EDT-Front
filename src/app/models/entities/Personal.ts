@@ -14,4 +14,8 @@ export class Personal extends AbstractModel {
         super(personal?.id);
         Object.assign(this, personal);
     }
+
+    getSearchValue(): string {
+        return this.personal_code || '';
+    }
 }

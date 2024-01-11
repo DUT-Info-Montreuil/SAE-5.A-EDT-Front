@@ -15,4 +15,8 @@ export class Subgroup extends AbstractModel {
         super(subgroup?.id);
         Object.assign(this, subgroup);
     }
+
+    getSearchValue(): string {
+        return this.name || '';
+    }
 }

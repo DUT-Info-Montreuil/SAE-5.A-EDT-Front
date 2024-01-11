@@ -24,12 +24,12 @@ export class EditCourseModalComponent {
     courseRelationForm: FormGroup;
     currentStep: number = 0;
     course_types = Object.keys(CourseType).map((key) => ({ value: key, label: CourseType[key as keyof typeof CourseType] }));
-    color_types = [
-        { value: 'PURPLE', label: 'Violet', color: 'bg-calendar-purple' },
-        { value: 'PINK', label: 'Rose', color: 'bg-calendar-pink' },
-        { value: 'RED', label: 'Rouge', color: 'bg-calendar-red' },
-        { value: 'BLUE', label: 'Bleu', color: 'bg-calendar-blue' },
-    ];
+    // color_types = [
+    //     { value: 'PURPLE', label: 'Violet', color: 'bg-calendar-purple' },
+    //     { value: 'PINK', label: 'Rose', color: 'bg-calendar-pink' },
+    //     { value: 'RED', label: 'Rouge', color: 'bg-calendar-red' },
+    //     { value: 'BLUE', label: 'Bleu', color: 'bg-calendar-blue' },
+    // ];
     selectedTeaching?: Teaching;
     filterType?: FilterType = FilterType.Teaching;
     searchText: string = '';
@@ -42,12 +42,13 @@ export class EditCourseModalComponent {
     constructor(private fb: FormBuilder, private courseService: CourseService) {
         this.courseForm = this.fb.group(
             {
+                id: [''],
                 description: ['', [Validators.required, Validators.minLength(3)]],
                 date: ['', Validators.required],
                 starttime: ['', Validators.required],
                 endtime: ['', Validators.required],
                 course_type: ['', Validators.required],
-                color_type: ['', Validators.required],
+                // color_type: ['', Validators.required],
             },
             { validator: this.startTimeBeforeEndTimeValidator }
         );
@@ -67,6 +68,7 @@ export class EditCourseModalComponent {
         if (changes['course'] && this.course) {
             this.resetForms();
             this.fillFormWithCourseData(this.course);
+            console.log('test');
         }
     }
 
@@ -100,9 +102,9 @@ export class EditCourseModalComponent {
         return this.courseForm.get('course_type') as FormControl;
     }
 
-    get colortypeControl(): FormControl {
-        return this.courseForm.get('color_type') as FormControl;
-    }
+    // get colortypeControl(): FormControl {
+    //     return this.courseForm.get('color_type') as FormControl;
+    // }
 
     setActiveFilterType(filterType: FilterType) {
         this.filterType = filterType;
@@ -158,6 +160,7 @@ export class EditCourseModalComponent {
     onNextStep() {
         if (this.currentStep === 0 && this.courseForm.valid) {
             this.currentStep++;
+            console.log(this.courseForm.value);
         } else {
             this.courseForm.markAllAsTouched();
         }
@@ -204,7 +207,6 @@ export class EditCourseModalComponent {
 
         if (this.courseForm.valid && teaching_id) {
             let course: Course = this.courseService.createCourseEntity(this.courseForm, this.courseRelationForm);
-            console.log(course);
             this.courseService
                 .updateCourse(course)
                 .then((response) => {
@@ -225,9 +227,9 @@ export class EditCourseModalComponent {
         this.closed.emit(reload);
     }
 
-    private filterMap<T>(map: Map<string, T>, searchText: string): Array<{ key: string; value: T }> {
+    private filterMap<T>(map: Map<string, Personal | Room | Subgroup | Teaching>, searchText: string): Array<{ key: string; value: Personal | Room | Subgroup | Teaching }> {
         const filtered = Array.from(map)
-            .filter(([key, value]) => !searchText || key.toLowerCase().includes(searchText))
+            .filter(([key, value]) => !searchText || value.getSearchValue().toLowerCase().includes(searchText))
             .map(([key, value]) => ({ key, value }));
         return filtered;
     }
@@ -251,18 +253,20 @@ export class EditCourseModalComponent {
         if (subgroupsArray) {
             subgroupsArray.clear();
         }
-
         this.currentStep = 0;
     }
 
     private fillFormWithCourseData(course: Course) {
         this.courseForm.patchValue({
+            id: course.id,
             description: course.description,
-            date: new Date(course.starttime),
-            starttime: course.starttime,
-            endtime: course.endtime,
+            date: course.starttime,
+            starttime: this.convertToTime(course.starttime),
+            endtime: this.convertToTime(course.endtime),
             course_type: course.course_type,
         });
+
+        console.log(this.courseForm.value);
 
         this.courseRelationForm.setControl('personals', this.fb.array(course.personals || []));
         this.courseRelationForm.setControl('rooms', this.fb.array(course.rooms || []));
@@ -286,5 +290,12 @@ export class EditCourseModalComponent {
             }
         }
         return null;
+    }
+
+    private convertToTime(d: string) {
+        const date = new Date(d);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
     }
 }

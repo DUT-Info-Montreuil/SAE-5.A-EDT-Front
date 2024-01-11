@@ -1,7 +1,9 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { select } from '@ngrx/store';
 import flatpickr from 'flatpickr';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-labeled-time-input',
@@ -16,8 +18,15 @@ export class LabeledTimeInputComponent implements AfterViewInit {
     @Input() control!: FormControl;
     @ViewChild('timeInput') timeInput!: ElementRef;
 
+    private flatpickrInstance: any;
+    private controlValueChangesSubscription!: Subscription;
+
     ngAfterViewInit() {
-        flatpickr(this.timeInput.nativeElement, {
+        this.initializeFlatpickr();
+    }
+
+    private initializeFlatpickr() {
+        this.flatpickrInstance = flatpickr(this.timeInput.nativeElement, {
             altInput: true,
             allowInput: true,
             enableTime: true,
@@ -34,10 +43,30 @@ export class LabeledTimeInputComponent implements AfterViewInit {
                     selectedDate.setMinutes(roundedMinutes);
 
                     if (selectedDate.getTime() !== instance.latestSelectedDateObj?.getTime()) {
-                        instance.setDate(selectedDate, true);
+                        this.control.setValue(dateStr);
                     }
                 }
             },
         });
+
+        this.controlValueChangesSubscription = this.control.valueChanges.subscribe((value) => {
+            if (this.flatpickrInstance && value) {
+                const flatpickrTime = this.flatpickrInstance.latestSelectedDateObj;
+                const newTime = new Date(value);
+
+                if (!flatpickrTime || flatpickrTime.getTime() !== newTime.getTime()) {
+                    this.flatpickrInstance.setDate(value, false);
+                }
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.controlValueChangesSubscription) {
+            this.controlValueChangesSubscription.unsubscribe();
+        }
+        if (this.flatpickrInstance) {
+            this.flatpickrInstance.destroy();
+        }
     }
 }

@@ -20,4 +20,8 @@ export class Teaching extends AbstractModel {
         super(teaching?.id);
         Object.assign(this, teaching);
     }
+
+    getSearchValue(): string {
+        return this.title || '';
+    }
 }

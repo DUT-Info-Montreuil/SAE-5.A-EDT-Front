@@ -13,4 +13,8 @@ export class Room extends AbstractModel {
         super(room?.id);
         Object.assign(this, room);
     }
+
+    getSearchValue(): string {
+        return this.code || '';
+    }
 }

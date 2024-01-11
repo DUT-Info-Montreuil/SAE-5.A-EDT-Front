@@ -206,9 +206,9 @@ export class CourseModalComponent {
         this.closed.emit(reload);
     }
 
-    private filterMap<T>(map: Map<string, T>, searchText: string): Array<{ key: string; value: T }> {
+    private filterMap<T>(map: Map<string, Personal | Room | Subgroup | Teaching>, searchText: string): Array<{ key: string; value: Personal | Room | Subgroup | Teaching }> {
         const filtered = Array.from(map)
-            .filter(([key, value]) => !searchText || key.toLowerCase().includes(searchText))
+            .filter(([key, value]) => !searchText || value.getSearchValue().toLowerCase().includes(searchText))
             .map(([key, value]) => ({ key, value }));
         return filtered;
     }

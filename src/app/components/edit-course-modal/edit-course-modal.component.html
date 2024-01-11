@@ -4,7 +4,11 @@
             <h3 class="!text-primary">Modification du cours</h3>
         </div>
         <div class="grid sm:grid-cols-2 gap-4 p-6">
-            <app-labeled-icon-input [control]="descriptionControl" model="description" label="Description" placeholder="Entrez une description" typeInput="text">
+            <app-dropdown [control]="coursetypeControl" model="course_type" [options]="course_types" label="Type de cours" placeholder="Selectionne un type" />
+            <app-labeled-date-input [control]="dateControl" model="date" label="Date" placeholder="Selectionnez une date" />
+            <app-labeled-time-input [control]="starttimeControl" model="starttime" label="Heure de début" placeholder="Selectionnez une heure de début" />
+            <app-labeled-time-input [control]="endtimeControl" model="endtime" label="Heure de fin" placeholder="Selectionnez une heure de fin" />
+            <app-labeled-icon-input class="col-span-2" [control]="descriptionControl" model="description" label="Description" placeholder="Entrez une description" typeInput="textarea">
                 <ng-container icon>
                     <svg class="fill-primary w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_738_24)">
@@ -18,11 +22,7 @@
                     </svg>
                 </ng-container>
             </app-labeled-icon-input>
-            <app-labeled-date-input [control]="dateControl" model="date" label="Date" placeholder="Selectionnez une date" />
-            <app-labeled-time-input [control]="starttimeControl" model="starttime" label="Heure de début" placeholder="Selectionnez une heure de début" />
-            <app-labeled-time-input [control]="endtimeControl" model="endtime" label="Heure de fin" placeholder="Selectionnez une heure de fin" />
-            <app-dropdown [control]="coursetypeControl" model="course_type" [options]="course_types" label="Type de cours" placeholder="Selectionne un type" />
-            <app-dropdown [control]="colortypeControl" model="color_type" [options]="color_types" label="Couleur" placeholder="Selectionne une couleur" />
+            <!-- <app-dropdown [control]="colortypeControl" model="color_type" [options]="color_types" label="Couleur" placeholder="Selectionne une couleur" /> -->
         </div>
         <div class="col-span-2 flex justify-between gap-x-4 p-6 border-t-0.5 border-medium dark:border-grey">
             <app-button label="Supprimer" type="danger" (click)="deleteCourse()"></app-button>

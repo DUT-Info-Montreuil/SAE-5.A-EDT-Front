@@ -26,6 +26,7 @@ export class CourseService {
     }
 
     async updateCourse(course: Course) {
+        console.log(course);
         this.authService.checkAuthentication();
         const token = this.authService.getToken();
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
@@ -47,10 +48,11 @@ export class CourseService {
     }
 
     createCourseEntity(courseData: FormGroup, courseFilterData: FormGroup): Course {
-        const { description, date, starttime, endtime, course_type } = courseData.value;
+        const { id, description, date, starttime, endtime, course_type } = courseData.value;
         const { teaching_id, personals, rooms, subgroups } = courseFilterData.value;
 
         return new Course({
+            id,
             description,
             starttime: this.formatDateTime(date, starttime),
             endtime: this.formatDateTime(date, endtime),

@@ -1,4 +1,5 @@
 import { Personal, Room, Subgroup, Teaching } from '.';
+import { CourseType } from '../enums';
 import { AbstractModel } from './AbstractModel';
 
 export class Course extends AbstractModel {
@@ -9,7 +10,7 @@ export class Course extends AbstractModel {
     starttime!: string;
     endtime!: string;
     duree?: string;
-    course_type?: string;
+    course_type?: CourseType;
 
     /**
      * Relations Id

@@ -62,9 +62,9 @@ export class FilterModalComponent {
         this.updateNumberOfResults();
     }
 
-    private filterMap<T>(map: Map<string, T>, searchText: string): Array<{ key: string; value: T }> {
+    private filterMap<T>(map: Map<string, Personal | Room | Specialization>, searchText: string): Array<{ key: string; value: Personal | Room | Specialization }> {
         const filtered = Array.from(map)
-            .filter(([key, value]) => !searchText || key.toLowerCase().includes(searchText))
+            .filter(([key, value]) => !searchText || value.getSearchValue().toLowerCase().includes(searchText))
             .map(([key, value]) => ({ key, value }));
         return filtered;
     }

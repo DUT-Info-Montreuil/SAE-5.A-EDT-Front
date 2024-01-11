@@ -16,4 +16,8 @@ export class Specialization extends AbstractModel {
         super(promotion?.id);
         Object.assign(this, promotion);
     }
+
+    getSearchValue(): string {
+        return this.code || '';
+    }
 }

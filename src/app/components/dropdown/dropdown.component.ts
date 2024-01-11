@@ -1,6 +1,7 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
     selector: 'app-dropdown',
@@ -16,18 +17,26 @@ export class DropdownComponent {
     @Output() selectionChange = new EventEmitter<string>();
     isOpen = false;
     selectedOption?: { value: string; label: string; icon?: string; color?: string };
+    private controlValueChangesSubscription: Subscription = new Subscription();
 
-    constructor() {}
-
-    ngOnInit() {
-        this.initializeSelectedOption();
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['control']) {
+            this.controlValueChangesSubscription.unsubscribe();
+            this.controlValueChangesSubscription = this.control.valueChanges.subscribe((value) => {
+                this.setSelectedOption(value);
+            });
+            this.setSelectedOption(this.control.value);
+        }
     }
 
-    initializeSelectedOption() {
-        if (this.control.value) {
-            const matchingOption = this.options.find((option) => option.value === this.control.value);
-            this.selectedOption = matchingOption ? matchingOption : undefined;
+    ngOnDestroy() {
+        if (this.controlValueChangesSubscription) {
+            this.controlValueChangesSubscription.unsubscribe();
         }
+    }
+
+    private setSelectedOption(value: string) {
+        this.selectedOption = this.options.find((option) => option.value === value);
     }
 
     toggleDropdown() {
@@ -40,8 +49,8 @@ export class DropdownComponent {
 
     selectOption(option: { value: string; label: string; icon?: string; color?: string }) {
         this.selectedOption = option;
-        this.isOpen = false;
         this.control.setValue(option.value);
         this.selectionChange.emit(option.value);
+        this.close();
     }
 }
