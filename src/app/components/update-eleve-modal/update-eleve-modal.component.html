@@ -25,21 +25,57 @@
               <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.phone_number">
             </div>
             <div class="ml-2">
-              <p>TP :</p>
-              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.subgroup_id">
+              <p>Département :</p>
+              <ng-container *ngIf="!isDepartmentClicked; else selectDepartment">
+                <input readonly class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.subgroup_id" (click)="toggleDepartClicked($event)">
+              </ng-container>
+              <ng-template #selectDepartment>
+                <select class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.subgroup_id" (blur)="toggleDepartClicked($event)">
+                  <option value="" disabled selected>Sélectionner un département</option>
+                  <!-- Boucle à travers listeDepartment pour créer les options -->
+                  <ng-container *ngFor="let department of organizeDepartList">
+                    <option >{{ department[1] }}</option>
+                  </ng-container>
+                </select>
+              </ng-template>
             </div>
+            
             <div class="mr-2">
               <p>TD :</p>
-              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.group_id">
+              <ng-container *ngIf="!isTDClicked; else selectTD">
+                <input readonly class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.group_id" (click)="toggleTDClicked($event)">
+              </ng-container>
+              <ng-template #selectTD>
+                <select class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.group_id" (blur)="toggleTDClicked($event)">
+                  <option value="" disabled selected>Sélectionner un TD</option>
+                  <!-- Boucle à travers listeGroup pour créer les options -->
+                  <ng-container *ngFor="let group of listeGroup">
+                    <option>{{ group[1] }}</option>
+                  </ng-container>
+                </select>
+              </ng-template>
             </div>
+            
             <div class="ml-2">
               <p>Numéro Élève :</p>
-              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.student_number">
+              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" readonly [(ngModel)]="eleve.user_id">
             </div>    
             <div class="ml-2">
-                <p>Identifiant :</p>
-                <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.department_id">
-            </div>        
+              <p>TP :</p>
+              <ng-container *ngIf="!isTPClicked; else selectTP">
+                <input readonly class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.department_id" (click)="toggleTPClicked($event)">
+              </ng-container>
+              <ng-template #selectTP>
+                <select class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="eleve.department_id" (blur)="toggleTPClicked($event)">
+                  <option value="" disabled selected>Sélectionner un TP</option>
+                  <!-- Boucle à travers listeSubGroup pour créer les options -->
+                  <ng-container *ngFor="let subGroup of organizeTPList">
+                    <option>{{ subGroup }}</option>
+                  </ng-container>
+                </select>
+              </ng-template>
+            </div>
+                 
       </div>       
           
     <div class="flex justify-center items-center p-6 space-x-2 border-gray-200 rounded-b">

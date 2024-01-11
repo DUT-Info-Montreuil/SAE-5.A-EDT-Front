@@ -29,11 +29,13 @@ export class GestionComponent {
   listeDepartment: any[] = []
   listeRessources: any[] = [];
   limit: number = 5;
+  addCohorteClicked: boolean = false;
   isDepartmentClicked : boolean = false;
   isUpdateEleveModalOpen: boolean = false;
   isUpdateProfModalOpen: boolean = false;
   isAddEleveModalOpen: boolean = false;
   isUpdateSalleModalOpen:boolean = false;
+  updateEleveClicked:boolean = false
   isUpdateRessourceModalOpen:boolean = false;
   isTDClicked: boolean = false;
   isTPClicked: boolean = false;
@@ -56,7 +58,7 @@ export class GestionComponent {
     phone_number: '',
     group_id: '',
     department_id: '',
-    student_number: '',
+    user_id: '',
     subgroup_id: ''
   };  
   jsonProf: any = {
@@ -79,20 +81,30 @@ export class GestionComponent {
     this.initListeDepartment()
     this.initListeSubGroup()
     this.initEleveMap();
+    this.initProfesseurMap();
 
   }
-
+ 
+  addCohorte(event : any) {
+    // TODO
+  }
+  closeAddCohorteModal() {
+    this.addCohorteClicked = false;
+  }
+  openAddCohorteModal() {
+    this.addCohorteClicked = true;
+  }
   async deleteItem(item : any, itemType : any) {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    console.log("item = "+item+"\n itemType =" + itemType)
     switch (itemType) {
       case 'eleve':
         const confirmation = window.confirm("Êtes-vous sûr de vouloir effectuer cette action ? "+
                       "\n Cela supprimera definitivement "+ item[0] + " "+item[1]);
         if (confirmation) {
-          await axios.delete(`${environment.apiUrl}/students/delete/${item[6]}`, { headers });
+          let response = await axios.delete(`${environment.apiUrl}/students/delete/${item[6]}`, { headers });
+        console.log(response)
         }
         break;
       case 'ressource':
@@ -122,6 +134,7 @@ export class GestionComponent {
         console.log('Valeur de str non reconnue');
         break;
     }    
+    
   }
 
   submitSearch(str: any) {
@@ -173,7 +186,7 @@ export class GestionComponent {
     }
 
     let response = await axios.post(`${environment.apiUrl}/students/subgroups`,jsonData, { headers });
-    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.student_number,eleve.department_id]);
+    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -209,7 +222,7 @@ export class GestionComponent {
       "department_id": `${this.selectedDepartment[0]}`,
     }
     let response = await axios.post(`${environment.apiUrl}/students/groups`,jsonData, { headers });
-    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.student_number,eleve.department_id]);
+    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -247,7 +260,7 @@ export class GestionComponent {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
     let response = await axios.get(`${environment.apiUrl}/students/department/${department[0]}`, { headers });
-    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.student_number,eleve.department_id]);
+    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -286,21 +299,21 @@ export class GestionComponent {
       this.listeGroup.push(tab);
     });
     let response1 = await axios.post(`${environment.apiUrl}/students/promotion-and-department`, jsonData, {headers}) 
-    let data1 = response1.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.student_number,eleve.department_id]);
+    let data1 = response1.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data1.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
-        if (dept[0] === tab[0]) {
-          tab[0] = dept[1];
+        if (dept[0] === tab[7]) {
+          tab[7] = dept[1];
         }
       });
       this.listeGroup.forEach((group: string[]) => {
-        if (group[0] === tab[2]) {
-          tab[2] = group[1];
+        if (group[0] === tab[4]) {
+          tab[4] = group[1];
         }
       });
       this.listeSubGroup.forEach((subGroup: string[]) => {
-        if (subGroup[0] === tab[7]) {
-          tab[7] = subGroup[1];
+        if (subGroup[0] === tab[5]) {
+          tab[5] = subGroup[1];
         }
       });
       this.listeEleves.push(tab);
@@ -346,7 +359,8 @@ export class GestionComponent {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     this.listeEleves = [];
     let response = await axios.get(`${environment.apiUrl}/students/get`, {headers});
-    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.student_number,eleve.department_id]);
+    console.log(response.data)
+    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -448,10 +462,11 @@ export class GestionComponent {
   }
 
   openUpdateEleveModal(eleve : any) {
+    this.updateEleveClicked = ! this.updateEleveClicked
+
     Object.keys(this.jsonEleve).forEach((key, index) => {
       this.jsonEleve[key] = eleve[index];
     }); 
-    console.log(this.jsonEleve)
     this.isUpdateEleveModalOpen = true;
   }
   closeUpdateEleveModal(reload?: boolean) {
@@ -462,15 +477,15 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    await axios.patch(`${environment.apiUrl}/students/update/${formData.student_number}`, formData, { headers })
-    .then(response => {
-      console.log('Données mises à jour avec succès :', response.data);
-      // Traitez la réponse en conséquence
-    })
-    .catch(error => {
-      console.error('Erreur lors de la mise à jour des données :', error);
-      // Gérez les erreurs en conséquence
-    });
+    // await axios.patch(`${environment.apiUrl}/students/update/${formData.user_id}`, formData, { headers })
+    // .then(response => {
+    //   console.log('Données mises à jour avec succès :', response.data);
+    //   // Traitez la réponse en conséquence
+    // })
+    // .catch(error => {
+    //   console.error('Erreur lors de la mise à jour des données :', error);
+    //   // Gérez les erreurs en conséquence
+    // });
   }
     
   openUpdateProfModal(prof : any) {
@@ -479,6 +494,7 @@ export class GestionComponent {
     }); 
     this.isUpdateProfModalOpen = true;
   }
+
   closeUpdateProfModal(reload?: boolean) {
       this.isUpdateProfModalOpen = false;
   }
@@ -487,7 +503,7 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    await axios.patch(`${environment.apiUrl}/personals/update/${formData.id}`,  { headers })
+    await axios.patch(`${environment.apiUrl}/personals/update/${formData.id}`, formData, { headers })
 
   }
 
@@ -505,7 +521,7 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-   console.log(formData)
+
   }
 
   openUpdateRessourceModal(ressource : any) {
@@ -522,6 +538,5 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-   console.log(formData)
   }
 }

@@ -19,6 +19,7 @@ export class UpdateProfModalComponent {
   @Output() closed = new EventEmitter<boolean>();
 
   updateProfForm: FormGroup;
+  listeDepartmenent: any[] = [];
 
 
   constructor(private fb: FormBuilder) {
