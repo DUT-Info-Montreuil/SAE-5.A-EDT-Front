@@ -30,6 +30,7 @@ module.exports = {
             body: "#131336",
             medium: "#A5A5A5",
             subtitle: "#E9E9EF",
+            "subtitle-secondary": "#eeeef5",
             "subtitle-hover": "#D8D8DC",
             light: "#F5F5FB",
 
@@ -44,6 +45,7 @@ module.exports = {
             "warning-light-2": "#FFFCF8",
 
             danger: "#FA5353",
+            "danger-dark": "#D34848",
             "danger-light-1": "#F8E8E8",
             "danger-light-2": "#FFF9F8",
 

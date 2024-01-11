@@ -1,5 +1,7 @@
 export enum FilterType {
-    Teacher = 'teacher',
+    Personal = 'personal',
     Room = 'room',
-    Promotion = 'promotion',
+    Specialization = 'specialization',
+    Teaching = 'teaching',
+    SubGroup = 'subgroup',
 }

@@ -1,14 +1,14 @@
-<div class="bg-calendar-pink h-full flex flex-col justify-between rounded-md bg-opacity-80 border-subtitle dark:border-grey-dark border-0.5 text-white py-1 px-4 hover:bg-opacity-100">
+<div class="bg-calendar-purple shadow-purple h-full flex flex-col justify-between rounded-md border-subtitle dark:border-grey-dark border-0.5 text-white py-1 px-4 bg-opacity-80 dark:bg-opacity-60 hover:bg-opacity-100 hover:dark:bg-opacity-80 transition-all duration-300">
     <span class="font-bold">
-        {{ event?.title }}
+        {{ course.teaching?.title }}
     </span>
     <div class="flex justify-between">
         <span class="font-normal">
-            {{ event?.meta?.location }}
+            {{ getRoomCodes() }}
         </span>
         <div class="flex gap-x-1 items-center">
             <span class="font-bold">
-                {{ event?.meta?.organizer }}
+                {{ getPersonalCodes() }}
             </span>
             <svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M1.20201 0.258433C1.57096 -0.0861443 2.16916 -0.0861443 2.53811 0.258433L6.31715 3.78789C6.68612 4.13248 6.68612 4.69107 6.31715 5.03566L2.53811 8.56507C2.16916 8.90966 1.57096 8.90966 1.20201 8.56507C0.833055 8.22049 0.833055 7.6619 1.20201 7.31731L4.31298 4.41177L1.20201 1.50627C0.833055 1.16169 0.833055 0.60301 1.20201 0.258433Z" fill="white" />

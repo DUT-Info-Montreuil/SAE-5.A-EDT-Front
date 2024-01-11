@@ -60,6 +60,6 @@ export class SidebarComponent {
     }
 
     isRouteActive(routePath: string): boolean {
-        return this.router.url.startsWith(routePath);
+        return this.router.url === routePath;
     }
 }
