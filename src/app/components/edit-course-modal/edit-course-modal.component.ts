@@ -68,7 +68,6 @@ export class EditCourseModalComponent {
         if (changes['course'] && this.course) {
             this.resetForms();
             this.fillFormWithCourseData(this.course);
-            console.log('test');
         }
     }
 
@@ -210,6 +209,7 @@ export class EditCourseModalComponent {
             this.courseService
                 .updateCourse(course)
                 .then((response) => {
+                    console.log('test');
                     this.isLoading = false;
                     this.resetForms();
                     this.close(true);
@@ -265,8 +265,6 @@ export class EditCourseModalComponent {
             endtime: this.convertToTime(course.endtime),
             course_type: course.course_type,
         });
-
-        console.log(this.courseForm.value);
 
         this.courseRelationForm.setControl('personals', this.fb.array(course.personals || []));
         this.courseRelationForm.setControl('rooms', this.fb.array(course.rooms || []));

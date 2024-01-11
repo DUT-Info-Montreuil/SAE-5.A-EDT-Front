@@ -14,7 +14,7 @@ export class SidebarMobileComponent {
     constructor(private router: Router, private route: ActivatedRoute) {}
 
     isRouteActive(routePath: string): boolean {
-        return this.router.url.startsWith(routePath);
+        return this.router.url === routePath;
     }
 
     toggleDrawer() {

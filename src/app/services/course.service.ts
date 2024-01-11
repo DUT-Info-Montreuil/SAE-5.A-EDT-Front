@@ -26,7 +26,6 @@ export class CourseService {
     }
 
     async updateCourse(course: Course) {
-        console.log(course);
         this.authService.checkAuthentication();
         const token = this.authService.getToken();
         const headers = token ? { Authorization: `Bearer ${token}` } : {};

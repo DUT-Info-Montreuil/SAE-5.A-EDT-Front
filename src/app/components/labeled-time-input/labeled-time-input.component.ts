@@ -35,30 +35,31 @@ export class LabeledTimeInputComponent implements AfterViewInit {
             time_24hr: true,
             minuteIncrement: 10,
             dateFormat: 'H:i',
-            onChange: (selectedDates, dateStr, instance) => {
-                const selectedDate = selectedDates[0];
-
-                if (selectedDate) {
-                    const roundedMinutes = Math.round(selectedDate.getMinutes() / 10) * 10;
-                    selectedDate.setMinutes(roundedMinutes);
-
-                    if (selectedDate.getTime() !== instance.latestSelectedDateObj?.getTime()) {
-                        this.control.setValue(dateStr);
-                    }
-                }
-            },
+            onChange: this.handleFlatpickrChange.bind(this),
         });
 
         this.controlValueChangesSubscription = this.control.valueChanges.subscribe((value) => {
             if (this.flatpickrInstance && value) {
-                const flatpickrTime = this.flatpickrInstance.latestSelectedDateObj;
-                const newTime = new Date(value);
-
-                if (!flatpickrTime || flatpickrTime.getTime() !== newTime.getTime()) {
-                    this.flatpickrInstance.setDate(value, false);
-                }
+                this.flatpickrInstance.setDate(value, false);
             }
         });
+    }
+
+    private handleFlatpickrChange(selectedDates: Date[], dateStr: string, instance: flatpickr.Instance): void {
+        const selectedDate = selectedDates[0];
+        if (selectedDate) {
+            const newDateStr = this.getRoundedTime(selectedDate);
+            if (newDateStr !== dateStr) {
+                instance.setDate(newDateStr, true);
+            }
+        }
+    }
+
+    private getRoundedTime(date: Date): string {
+        const minutes = date.getMinutes();
+        const roundedMinutes = Math.round(minutes / 10) * 10;
+        date.setMinutes(roundedMinutes);
+        return date.getHours() + ':' + (roundedMinutes < 10 ? '0' : '') + roundedMinutes;
     }
 
     ngOnDestroy() {
