@@ -139,6 +139,7 @@ export class EditCourseModalComponent {
         this.filteredGroups = Array.from(this.mapGroups.values())
             .filter((group) => group.promotion === value.id)
             .map((group) => ({ key: group.id!, value: group }));
+        this.updateNumberOfResults();
     }
 
     isSelectedGroup(value: Group): boolean {
@@ -151,6 +152,7 @@ export class EditCourseModalComponent {
         this.filteredSubGroups = Array.from(this.mapSubGroups.values())
             .filter((subGroup) => subGroup.group_id === value.id)
             .map((subGroup) => ({ key: subGroup.id!, value: subGroup }));
+        this.updateNumberOfResults();
     }
 
     resetToStep(step: number) {
@@ -163,6 +165,7 @@ export class EditCourseModalComponent {
         if (step < 2) {
             this.selectedGroup = undefined;
         }
+        this.updateNumberOfResults();
     }
 
     toggleSelection(item: Personal | Room | Subgroup): void {
@@ -226,7 +229,13 @@ export class EditCourseModalComponent {
                 this.numberOfResults = this.filteredPersonals.length;
                 break;
             case FilterType.SubGroup:
-                this.numberOfResults = this.filteredSubGroups.length;
+                if (this.groupStep === 0) {
+                    this.numberOfResults = this.filteredSpecializations.length;
+                } else if (this.groupStep === 1) {
+                    this.numberOfResults = this.filteredGroups.length;
+                } else {
+                    this.numberOfResults = this.filteredSubGroups.length;
+                }
                 break;
             default:
                 this.numberOfResults = 0;
