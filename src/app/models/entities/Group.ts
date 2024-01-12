@@ -16,4 +16,8 @@ export class Group extends AbstractModel {
         super(group?.id);
         Object.assign(this, group);
     }
+
+    getSearchValue(): string {
+        return this.type || '';
+    }
 }

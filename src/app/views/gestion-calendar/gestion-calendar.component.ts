@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { isSameDay } from 'date-fns';
 import { TimetableService } from 'src/app/services/timetable.service';
 import { FilterType } from 'src/app/models/enums';
-import { Personal, Specialization, Room, Teaching, Subgroup, Course } from 'src/app/models/entities';
+import { Personal, Specialization, Room, Teaching, Subgroup, Course, Group } from 'src/app/models/entities';
 import { DateFormattingService } from 'src/app/services/date-formatting.service';
 import { CourseService } from 'src/app/services/course.service';
 
@@ -35,6 +35,7 @@ export class GestionCalendarComponent {
     mapSpecializations = new Map<string, Specialization>();
     mapTeachings = new Map<string, Teaching>();
     mapSubGroups = new Map<string, Subgroup>();
+    mapGroups = new Map<string, Group>();
     filterModalOpened: boolean = false;
     courseModalOpened: boolean = false;
     editCourseModalOpened: boolean = false;
@@ -110,13 +111,14 @@ export class GestionCalendarComponent {
         try {
             const [specializations, personals, rooms] = await Promise.all([this.timetableService.getSpecializations(), this.timetableService.getPersonals(), this.timetableService.getRooms()]);
 
-            const [teachings, subgroups] = await Promise.all([this.courseService.getTeachings(), this.courseService.getSubGroups()]);
+            const [teachings, groups, subgroups] = await Promise.all([this.courseService.getTeachings(), this.courseService.getGroups(), this.courseService.getSubGroups()]);
 
             this.initializeSelect('selectSpecialization', specializations.data, this.mapSpecializations, FilterType.Specialization);
             this.initializeSelect('selectPersonal', personals.data, this.mapPersonals, FilterType.Personal);
             this.initializeSelect('selectRoom', rooms.data, this.mapRooms, FilterType.Room);
             this.initializeSelect('selectTeaching', teachings.data, this.mapTeachings, FilterType.Teaching);
             this.initializeSelect('selectSubgroups', subgroups.data, this.mapSubGroups, FilterType.SubGroup);
+            this.initializeSelect('selectGroups', groups.data, this.mapGroups, FilterType.Group);
         } catch (error) {
             console.error('Error loading select field data:', error);
         }
@@ -145,6 +147,8 @@ export class GestionCalendarComponent {
             case FilterType.Teaching:
                 return [item.id, new Teaching(item)];
             case FilterType.SubGroup:
+                return [item.id, new Subgroup(item)];
+            case FilterType.Group:
                 return [item.id, new Subgroup(item)];
             default:
                 throw new Error(`Type de filtre non pris en charge: ${filterType}`);

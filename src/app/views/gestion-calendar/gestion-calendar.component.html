@@ -87,8 +87,8 @@
                     <mwl-calendar-day-view *ngSwitchCase="calendarView.Day" [viewDate]="viewDate" [events]="events" [dayStartHour]="dayStartHour" [dayEndHour]="dayEndHour" [hourSegments]="hourSegments" locale="fr" (click)="dayViewClick()" (eventClicked)="showEventDetails($event)" [refresh]="refresh" [hourSegmentHeight]="15" [eventTitleTemplate]="customEventTemplate" (eventClicked)="onCourseClicked($event.event)"> </mwl-calendar-day-view>
                 </span>
             </div>
-            <app-edit-course-modal [isOpen]="editCourseModalOpened" [course]="selectedCourse" (closed)="closedEditCourseModal($event)" [mapTeachings]="mapTeachings" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" [mapSubGroups]="mapSubGroups" />
-            <app-course-modal [isOpen]="courseModalOpened" (closed)="closedCourseModal($event)" [mapTeachings]="mapTeachings" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" [mapSubGroups]="mapSubGroups" />
+            <app-edit-course-modal [isOpen]="editCourseModalOpened" [course]="selectedCourse" (closed)="closedEditCourseModal($event)" [mapTeachings]="mapTeachings" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" [mapSubGroups]="mapSubGroups" [mapGroups]="mapGroups" [mapSpecializations]="mapSpecializations" />
+            <app-course-modal [isOpen]="courseModalOpened" (closed)="closedCourseModal($event)" [mapTeachings]="mapTeachings" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" [mapSubGroups]="mapSubGroups" [mapGroups]="mapGroups" [mapSpecializations]="mapSpecializations" />
             <app-filter-modal [isOpen]="filterModalOpened" (closed)="closedFilterModal()" [mapSpecializations]="mapSpecializations" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" (filterChanged)="onFilterChanged($event)" />
         </div>
     </div>

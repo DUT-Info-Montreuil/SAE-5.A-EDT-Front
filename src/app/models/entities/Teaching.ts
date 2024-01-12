@@ -1,4 +1,6 @@
+import { ColorType } from '../enums/ColorType';
 import { AbstractModel } from './AbstractModel';
+import { Color } from './Color';
 
 export class Teaching extends AbstractModel {
     /**
@@ -10,6 +12,7 @@ export class Teaching extends AbstractModel {
     sequence?: string;
     description?: string;
     teaching_type?: string;
+    color?: ColorType;
 
     /**
      * Relations Id

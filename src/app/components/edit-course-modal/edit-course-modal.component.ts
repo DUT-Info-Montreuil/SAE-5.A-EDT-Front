@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Personal, Room, Course, Teaching, Subgroup } from 'src/app/models/entities';
+import { Personal, Room, Course, Teaching, Subgroup, Group, Specialization } from 'src/app/models/entities';
 import { CourseType, FilterType } from 'src/app/models/enums';
 import { CourseService } from 'src/app/services/course.service';
 import moment from 'moment';
@@ -15,6 +15,8 @@ export class EditCourseModalComponent {
     @Input() mapPersonals!: Map<string, Personal>;
     @Input() mapRooms!: Map<string, Room>;
     @Input() mapTeachings!: Map<string, Teaching>;
+    @Input() mapSpecializations!: Map<string, Specialization>;
+    @Input() mapGroups!: Map<string, Group>;
     @Input() mapSubGroups!: Map<string, Subgroup>;
     @Input() isOpen!: boolean;
     @Output() closed = new EventEmitter<boolean>();
@@ -22,20 +24,19 @@ export class EditCourseModalComponent {
     isLoading: boolean = false;
     courseForm: FormGroup;
     courseRelationForm: FormGroup;
-    currentStep: number = 0;
+    modalStep: number = 0;
+    groupStep: number = 0;
     course_types = Object.keys(CourseType).map((key) => ({ value: key, label: CourseType[key as keyof typeof CourseType] }));
-    // color_types = [
-    //     { value: 'PURPLE', label: 'Violet', color: 'bg-calendar-purple' },
-    //     { value: 'PINK', label: 'Rose', color: 'bg-calendar-pink' },
-    //     { value: 'RED', label: 'Rouge', color: 'bg-calendar-red' },
-    //     { value: 'BLUE', label: 'Bleu', color: 'bg-calendar-blue' },
-    // ];
     selectedTeaching?: Teaching;
+    selectedGroup?: Group;
+    selectedSpecialization?: Specialization;
     filterType?: FilterType = FilterType.Teaching;
     searchText: string = '';
     filteredTeachings: Array<{ key: string; value: Teaching }> = [];
     filteredPersonals: Array<{ key: string; value: Personal }> = [];
     filteredRooms: Array<{ key: string; value: Room }> = [];
+    filteredSpecializations: Array<{ key: string; value: Specialization }> = [];
+    filteredGroups: Array<{ key: string; value: Group }> = [];
     filteredSubGroups: Array<{ key: string; value: Subgroup }> = [];
     numberOfResults: number = 0;
 
@@ -48,7 +49,6 @@ export class EditCourseModalComponent {
                 starttime: ['', Validators.required],
                 endtime: ['', Validators.required],
                 course_type: ['', Validators.required],
-                // color_type: ['', Validators.required],
             },
             { validator: this.startTimeBeforeEndTimeValidator }
         );
@@ -76,7 +76,21 @@ export class EditCourseModalComponent {
         this.filteredTeachings = this.filterMap(this.mapTeachings, this.searchText);
         this.filteredPersonals = this.filterMap(this.mapPersonals, this.searchText);
         this.filteredRooms = this.filterMap(this.mapRooms, this.searchText);
+        this.filteredSpecializations = this.filterMap(this.mapSpecializations, this.searchText);
+        this.filteredGroups = this.filterMap(this.mapGroups, this.searchText);
         this.filteredSubGroups = this.filterMap(this.mapSubGroups, this.searchText);
+
+        if (this.selectedSpecialization) {
+            this.filteredGroups = Array.from(this.mapGroups.values())
+                .filter((group) => group.promotion === this.selectedSpecialization!.id)
+                .map((group) => ({ key: group.id!, value: group }));
+        }
+
+        if (this.selectedGroup) {
+            this.filteredSubGroups = Array.from(this.mapSubGroups.values())
+                .filter((subgroup) => subgroup.group_id === this.selectedGroup!.id)
+                .map((subgroup) => ({ key: subgroup.id!, value: subgroup }));
+        }
 
         this.updateNumberOfResults();
     }
@@ -101,10 +115,6 @@ export class EditCourseModalComponent {
         return this.courseForm.get('course_type') as FormControl;
     }
 
-    // get colortypeControl(): FormControl {
-    //     return this.courseForm.get('color_type') as FormControl;
-    // }
-
     setActiveFilterType(filterType: FilterType) {
         this.filterType = filterType;
         this.updateNumberOfResults();
@@ -117,6 +127,42 @@ export class EditCourseModalComponent {
     selectTeaching(value: Teaching) {
         this.selectedTeaching = value;
         this.courseRelationForm.get('teaching_id')?.setValue(value.id);
+    }
+
+    isSelectedSpecialization(value: Specialization): boolean {
+        return this.selectedSpecialization?.id === value?.id;
+    }
+
+    selectSpecialization(value: Specialization) {
+        this.selectedSpecialization = value;
+        this.groupStep++;
+        this.filteredGroups = Array.from(this.mapGroups.values())
+            .filter((group) => group.promotion === value.id)
+            .map((group) => ({ key: group.id!, value: group }));
+    }
+
+    isSelectedGroup(value: Group): boolean {
+        return this.selectedGroup?.id === value?.id;
+    }
+
+    selectGroup(value: Group) {
+        this.selectedGroup = value;
+        this.groupStep++;
+        this.filteredSubGroups = Array.from(this.mapSubGroups.values())
+            .filter((subGroup) => subGroup.group_id === value.id)
+            .map((subGroup) => ({ key: subGroup.id!, value: subGroup }));
+    }
+
+    resetToStep(step: number) {
+        this.groupStep = step;
+
+        if (step < 1) {
+            this.selectedSpecialization = undefined;
+        }
+
+        if (step < 2) {
+            this.selectedGroup = undefined;
+        }
     }
 
     toggleSelection(item: Personal | Room | Subgroup): void {
@@ -157,16 +203,15 @@ export class EditCourseModalComponent {
     }
 
     onNextStep() {
-        if (this.currentStep === 0 && this.courseForm.valid) {
-            this.currentStep++;
-            console.log(this.courseForm.value);
+        if (this.modalStep === 0 && this.courseForm.valid) {
+            this.modalStep++;
         } else {
             this.courseForm.markAllAsTouched();
         }
     }
 
     onBeforeStep() {
-        this.currentStep--;
+        this.modalStep--;
     }
 
     updateNumberOfResults(): void {
@@ -227,7 +272,7 @@ export class EditCourseModalComponent {
         this.closed.emit(reload);
     }
 
-    private filterMap<T>(map: Map<string, Personal | Room | Subgroup | Teaching>, searchText: string): Array<{ key: string; value: Personal | Room | Subgroup | Teaching }> {
+    private filterMap<T extends Personal | Room | Subgroup | Teaching>(map: Map<string, T>, searchText: string): Array<{ key: string; value: T }> {
         const filtered = Array.from(map)
             .filter(([key, value]) => !searchText || value.getSearchValue().toLowerCase().includes(searchText))
             .map(([key, value]) => ({ key, value }));
@@ -253,7 +298,11 @@ export class EditCourseModalComponent {
         if (subgroupsArray) {
             subgroupsArray.clear();
         }
-        this.currentStep = 0;
+
+        this.filterType = FilterType.Teaching;
+        this.modalStep = 0;
+        this.selectedTeaching = undefined;
+        this.resetToStep(0);
     }
 
     private fillFormWithCourseData(course: Course) {

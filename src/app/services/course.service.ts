@@ -39,6 +39,13 @@ export class CourseService {
         return await axios.get(`${environment.apiUrl}/teachings/get`, { headers });
     }
 
+    async getGroups() {
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.get(`${environment.apiUrl}/groups/get`, { headers });
+    }
+
     async getSubGroups() {
         this.authService.checkAuthentication();
         const token = this.authService.getToken();

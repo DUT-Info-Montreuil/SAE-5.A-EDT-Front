@@ -1,7 +1,12 @@
-<div class="bg-calendar-purple shadow-purple h-full flex flex-col justify-between rounded-md border-subtitle dark:border-grey-dark border-0.5 text-white py-1 px-4 bg-opacity-80 dark:bg-opacity-60 hover:bg-opacity-100 hover:dark:bg-opacity-80 transition-all duration-300">
-    <span class="font-bold">
-        {{ course.teaching?.title }}
-    </span>
+<div class="h-full flex flex-col justify-between rounded-md border-subtitle dark:border-grey-dark border-0.5 text-white py-1 px-4 bg-opacity-80 dark:bg-opacity-60 hover:bg-opacity-100 hover:dark:bg-opacity-80 transition-all duration-300" [ngClass]="customClass">
+    <div class="flex flex-col text-center font-bold">
+        <span>
+            {{ course.teaching?.title }}
+        </span>
+        <span>
+            {{ getSubGroupsName() }}
+        </span>
+    </div>
     <div class="flex justify-between">
         <span class="font-normal">
             {{ getRoomCodes() }}
