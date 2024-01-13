@@ -2,6 +2,9 @@ import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { DateFormattingService } from '../../services/date-formatting.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { NumberSymbol } from '@angular/common';
+import { Course, User } from 'src/app/models/entities';
+import { TimetableService } from 'src/app/services/timetable.service';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-dashboard',
@@ -14,9 +17,17 @@ export class DashboardComponent {
     scrollProgress = 0;
     scrollAmount = 0;
     reminderModalOpened: boolean = false;
+    user?: User;
+    courses?: Course[];
+    refresh = new Subject<void>();
 
-    constructor(private dateFormattingService: DateFormattingService, private authService: AuthService) {
+    constructor(private dateFormattingService: DateFormattingService, private authService: AuthService, private timetableService: TimetableService) {
         this.formattedDate = this.dateFormattingService.format(new Date());
+    }
+
+    ngOnInit(): void {
+        this.user = this.authService.getUser()!;
+        this.loadEventsUser();
     }
 
     updateProgressBar(): void {
@@ -62,6 +73,23 @@ export class DashboardComponent {
         menuElement.scrollTo({
             left: this.scrollAmount,
             behavior: 'smooth',
+        });
+    }
+
+    loadEventsUser() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        this.timetableService.getEventsByUser(this.user!, today).then((events) => {
+            if (events) {
+                this.courses = events
+                    .filter((event) => {
+                        const eventDate = event.start;
+                        eventDate.setHours(0, 0, 0, 0);
+                        return eventDate.getTime() === today.getTime();
+                    })
+                    .map((event) => event.meta as Course);
+            }
+            this.refresh.next();
         });
     }
 

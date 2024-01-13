@@ -64,8 +64,8 @@ export class GestionCalendarComponent {
     }
 
     onFilterChanged(filterDetails: { filterType: FilterType; filterValue: string }) {
-        this.currentFilterType = filterDetails.filterType;
-        this.currentFilterValue = filterDetails.filterValue;
+        this.currentFilterType = filterDetails?.filterType;
+        this.currentFilterValue = filterDetails?.filterValue;
         this.loadEvents();
     }
 
@@ -77,7 +77,7 @@ export class GestionCalendarComponent {
     }
 
     loadEvents() {
-        this.timetableService.getEvents(this.currentFilterType, this.currentFilterValue, this.view, this.viewDate).then((events) => {
+        this.timetableService.getEvents(this.currentFilterType, this.currentFilterValue, this.viewDate).then((events) => {
             this.events = events;
             this.refresh.next();
         });

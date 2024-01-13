@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import * as fromUser from '../store/user';
 import { User } from '../models/entities';
 import { take } from 'rxjs';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
     providedIn: 'root',
@@ -18,7 +19,7 @@ export class AuthService {
             const { username, password } = loginForm.value;
             const response = await axios.post(`${environment.apiUrl}/auth/login`, { username, password });
 
-            const user = new User(response.data.user);
+            const user = new User({ username });
 
             if (rememberMe) {
                 localStorage.setItem('auth', JSON.stringify({ user, token: response.data.token }));
@@ -80,5 +81,16 @@ export class AuthService {
                 token = t;
             });
         return token;
+    }
+
+    getUser(): User | null {
+        let user: User | null = null;
+        this.store
+            .select(fromUser.selectUser)
+            .pipe(take(1))
+            .subscribe((u) => {
+                user = u;
+            });
+        return user;
     }
 }

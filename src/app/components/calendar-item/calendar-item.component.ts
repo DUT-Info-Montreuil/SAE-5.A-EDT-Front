@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-
+import { Course } from 'src/app/models/entities';
+import { Color } from 'src/app/models/entities/Color';
 
 @Component({
     selector: 'app-calendar-item',
@@ -7,11 +8,31 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./calendar-item.component.css'],
 })
 export class CalendarItemComponent {
-    @Input() color: string = 'bg-calendar-purple';
-    @Input() timeStart: string = 'Non renseigné';
-    @Input() timeEnd: string = 'Non renseigné';
-    @Input() personal: string = 'Non renseigné';
-    @Input() course: string = 'Non renseigné';
-    @Input() room: string = 'Non renseigné';
-   
+    @Input()
+    course!: Course;
+    color!: Color;
+
+    getRoomCodes(): string {
+        return this.course.rooms ? this.course.rooms.map((room) => room?.code).join(', ') : '';
+    }
+
+    getPersonalCodes(): string {
+        return this.course.personals ? this.course.personals.map((personal) => personal?.personal_code).join(', ') : '';
+    }
+
+    getSubGroupsName(): string {
+        return this.course.subgroups ? this.course.subgroups.map((subgroup) => subgroup?.name).join(', ') : '';
+    }
+
+    ngOnInit() {
+        this.color = new Color(this.course.teaching?.color!);
+    }
+
+    get customClass(): string {
+        return `bg-${this.color.tailwindClass} shadow-s-${this.color.tailwindClass}`;
+    }
+
+    formatTime(dateTime: string): string {
+        return dateTime.split('T')[1];
+    }
 }
