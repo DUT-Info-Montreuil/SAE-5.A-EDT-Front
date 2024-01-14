@@ -3,11 +3,11 @@ import { Course } from 'src/app/models/entities';
 import { Color } from 'src/app/models/entities/Color';
 
 @Component({
-    selector: 'app-calendar-item',
-    templateUrl: './calendar-item.component.html',
-    styleUrls: ['./calendar-item.component.css'],
+    selector: 'app-custom-event',
+    templateUrl: './custom-event.component.html',
+    styleUrls: ['./custom-event.component.css'],
 })
-export class CalendarItemComponent {
+export class CustomEventComponent {
     @Input()
     course!: Course;
     color!: Color;

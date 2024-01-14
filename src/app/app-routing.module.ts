@@ -10,6 +10,7 @@ import { CalendarComponent } from './views/calendar/calendar.component';
 import { GestionComponent } from './views/gestion/gestion.component';
 import { SettingsComponent } from './views/settings/settings.component';
 import { GestionCalendarComponent } from './views/gestion-calendar/gestion-calendar.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
     {
@@ -21,11 +22,11 @@ const routes: Routes = [
         component: AppLayoutComponent,
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
-            { path: 'dashboard', component: DashboardComponent },
-            { path: 'calendar', component: CalendarComponent },
-            { path: 'gestion', component: GestionComponent },
-            { path: 'gestion-calendar', component: GestionCalendarComponent },
-            { path: 'settings', component: SettingsComponent },
+            { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+            { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard] },
+            { path: 'gestion', component: GestionComponent, canActivate: [AuthGuard] },
+            { path: 'gestion-calendar', component: GestionCalendarComponent, canActivate: [AuthGuard] },
+            { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
             // ici on mettra les autres routes de l'application
         ],

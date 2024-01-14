@@ -34,4 +34,26 @@ export class CustomEventCalendarComponent {
     get customClass(): string {
         return `bg-${this.color.tailwindClass} shadow-s-${this.color.tailwindClass}`;
     }
+
+    getCourseDurationInMinutes(): number {
+        if (!this.course.starttime || !this.course.endtime) {
+            return 0;
+        }
+
+        const startTime = new Date(this.course.starttime);
+        const endTime = new Date(this.course.endtime);
+
+        const durationMilliseconds = endTime.getTime() - startTime.getTime();
+        return Math.floor(durationMilliseconds / 60000);
+    }
+
+    isTwoLine(): boolean {
+        console.log(this.getCourseDurationInMinutes());
+        return this.getCourseDurationInMinutes() < 90;
+    }
+
+    isOneLine(): boolean {
+        console.log(this.getCourseDurationInMinutes());
+        return this.getCourseDurationInMinutes() <= 30;
+    }
 }

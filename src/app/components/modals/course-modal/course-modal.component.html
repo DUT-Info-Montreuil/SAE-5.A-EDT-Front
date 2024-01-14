@@ -111,15 +111,15 @@
                     <div class="text-sm">
                         <ul class="flex flex-wrap gap-x-2">
                             <li>
-                                <span class="text-body dark:text-light cursor-pointer hover:text-primary hover:dark:text-primary transition-all duration-200 uppercase" (click)="resetToStep(0)">{{ selectedSpecialization?.code ?? "Promotion" }}</span>
+                                <span class="text-body dark:text-light cursor-pointer hover:text-primary hover:dark:text-primary transition-all duration-200 uppercase" (click)="resetToStep(0)"> {{ selectedSpecialization?.code ? "Promotion " + selectedSpecialization?.code : "Promotions" }}</span>
                             </li>
                             <li *ngIf="groupStep > 0" class="flex gap-x-2">
                                 <span class="text-medium">></span>
-                                <span class="text-body dark:text-light cursor-pointer hover:text-primary hover:dark:text-primary transition-all duration-200 uppercase" (click)="resetToStep(1)">{{ selectedGroup?.type ?? "Groupe" }}</span>
+                                <span class="text-body dark:text-light cursor-pointer hover:text-primary hover:dark:text-primary transition-all duration-200 uppercase" (click)="resetToStep(1)"> {{ selectedGroup?.type ? "TD" + selectedGroup?.type : "TD" }} </span>
                             </li>
                             <li *ngIf="groupStep > 1" class="flex gap-x-2">
                                 <span class="text-medium">></span>
-                                <span class="text-body dark:text-light cursor-pointer hover:text-primary hover:dark:text-primary transition-all duration-200 uppercase">Sous-Groupe</span>
+                                <span class="text-body dark:text-light cursor-pointer hover:text-primary hover:dark:text-primary transition-all duration-200 uppercase">TP</span>
                             </li>
                         </ul>
                     </div>

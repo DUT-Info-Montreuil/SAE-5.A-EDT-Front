@@ -4,7 +4,7 @@ import axios from 'axios';
 import { format, startOfWeek, endOfWeek, startOfDay, endOfDay } from 'date-fns';
 import { environment } from 'src/environments/environment';
 import { Course, User } from '../models/entities';
-import { FilterType } from '../models/enums';
+import { CourseType, FilterType } from '../models/enums';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -74,7 +74,7 @@ export class TimetableService {
 
     convertToCalendarEvents(dataValues: any[]): CalendarEvent[] {
         return dataValues[0].map((course: Course) => ({
-            title: course?.teaching?.title,
+            title: `${course?.course_type} : ${course?.teaching?.title}`,
             start: new Date(course.starttime),
             end: new Date(course.endtime),
             draggable: false,

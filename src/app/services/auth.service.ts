@@ -6,7 +6,6 @@ import { environment } from '../../environments/environment';
 import * as fromUser from '../store/user';
 import { User } from '../models/entities';
 import { take } from 'rxjs';
-import jwt_decode from 'jwt-decode';
 
 @Injectable({
     providedIn: 'root',
@@ -40,11 +39,31 @@ export class AuthService {
         sessionStorage.removeItem('auth');
     }
 
-    checkAuthentication(): void {
+    // checkAuthentication(): void {
+    //     let authData = sessionStorage.getItem('auth') || localStorage.getItem('auth');
+    //     if (authData) {
+    //         const { user, token } = JSON.parse(authData);
+    //         this.store.dispatch(fromUser.setUser({ user, token }));
+    //     } else {
+    //         this.store.dispatch(fromUser.resetUser());
+    //     }
+    // }
+
+    async checkAuthentication(): Promise<void> {
         let authData = sessionStorage.getItem('auth') || localStorage.getItem('auth');
         if (authData) {
             const { user, token } = JSON.parse(authData);
-            this.store.dispatch(fromUser.setUser({ user, token }));
+
+            try {
+                await axios.get(`${environment.apiUrl}/protected`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                this.store.dispatch(fromUser.setUser({ user, token }));
+            } catch (error) {
+                this.store.dispatch(fromUser.resetUser());
+                this.logout();
+            }
         } else {
             this.store.dispatch(fromUser.resetUser());
         }

@@ -24,7 +24,7 @@ import { localStorageSync } from 'ngrx-store-localstorage';
 import { DatePipe } from '@angular/common';
 import { ClickOutsideModule } from 'ng-click-outside';
 import localeFr from '@angular/common/locales/fr';
-import { CalendarItemComponent } from './components/calendar-item/calendar-item.component';
+import { CustomEventComponent } from './components/custom-event/custom-event.component';
 import { DragToScrollDirective } from './directives/drag-to-scroll.directive';
 import { EventCardComponent } from './components/event-card/event-card.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
@@ -36,14 +36,14 @@ import { EditReminderModalComponent } from './components/modals/edit-reminder-mo
 import { LabeledDateInputComponent } from './components/labeled-date-input/labeled-date-input.component';
 import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { ModalCreateClassesComponent } from './components/modal-create-classes/modal-create-classes.component';
+import { ModalCreateClassesComponent } from './components/modals/modal-create-classes/modal-create-classes.component';
 import { userReducer } from './store/user';
 import { AlertComponent } from './components/alert/alert.component';
 import { GestionAdminComponent } from './views/gestion-admin/gestion-admin.component';
-import { AddEleveModalComponent } from './components/add-eleve-modal/add-eleve-modal.component';
-import { DeleteEleveModalComponent } from './components/delete-eleve-modal/delete-eleve-modal.component';
-import { UpdateEleveModalComponent } from './components/update-eleve-modal/update-eleve-modal.component';
-import { FilterModalComponent } from './components/filter-modal/filter-modal.component';
+import { AddEleveModalComponent } from './components/modals/add-eleve-modal/add-eleve-modal.component';
+import { DeleteEleveModalComponent } from './components/modals/delete-eleve-modal/delete-eleve-modal.component';
+import { UpdateEleveModalComponent } from './components/modals/update-eleve-modal/update-eleve-modal.component';
+import { FilterModalComponent } from './components/modals/filter-modal/filter-modal.component';
 import { CustomEventCalendarComponent } from './components/custom-event-calendar/custom-event-calendar.component';
 import { SearchInputComponent } from './components/search-input/search-input.component';
 import { GestionCalendarComponent } from './views/gestion-calendar/gestion-calendar.component';
@@ -89,7 +89,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         GestionComponent,
         SidebarMobileComponent,
         ThemeToggleButtonComponent,
-        CalendarItemComponent,
+        CustomEventComponent,
         DragToScrollDirective,
         EventCardComponent,
         PaginationComponent,

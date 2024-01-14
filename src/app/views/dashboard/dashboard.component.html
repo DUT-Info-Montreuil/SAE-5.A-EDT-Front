@@ -40,7 +40,7 @@
             <span class="text-medium py-4" *ngIf="courses?.length === 0">Vous n'avez pas de cours programmé pour aujourd'hui.</span>
             <div *ngIf="courses && courses!.length > 0" #menu appDragToScroll class="flex overflow-x-scroll scrollbar-hide max-w-full py-4 cursor-pointer" (scroll)="updateProgressBar()">
                 <div class="flex flex-nowrap gap-x-4">
-                    <app-calendar-item *ngFor="let course of courses" [course]="course"></app-calendar-item>
+                    <app-custom-event *ngFor="let course of courses" [course]="course" />
                 </div>
             </div>
             <div *ngIf="courses && courses.length > 4" class="w-32 bg-subtitle dark:bg-light-dark h-1 mx-auto rounded-md relative">
