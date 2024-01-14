@@ -85,9 +85,43 @@ export class GestionComponent {
 
   }
  
-  addCohorte(event : any) {
-    // TODO
-  }
+  async addCohorte(formData : any, ) {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    switch (formData.itemType) {
+      case 'department':
+        let jsonDepartment = {
+          "degree_type":`${formData.degree_type}`,
+          "description":`${formData.description}`,
+          "name":`${formData.name}`,
+          "personal_id":parseInt(`${formData.personal_id}`, 10)
+        }
+        
+        console.log("department = " + JSON.stringify(jsonDepartment, null, 2));
+        let response = await axios.put(`${environment.apiUrl}/departments/add`,jsonDepartment, { headers });
+      break;
+      case 'group':
+        let jsonGroup = {
+          "department_id":parseInt(`${formData.department_id}`, 10),
+          "type":`${formData.type}`,
+          "promotion":parseInt(`${formData.promotion}`, 10)
+        }
+        console.log("group = "+JSON.stringify(jsonGroup, null, 2))
+        let response1 = await axios.put(`${environment.apiUrl}/groups/add`,jsonGroup, { headers });
+
+        break;
+      case 'subgroup':
+        let jsonSubGroup = {
+          "group_id":parseInt(`${formData.group_id}`, 10),
+          "name": `${formData.name}`
+        }
+        console.log("subgroup = "+JSON.stringify(jsonSubGroup, null, 2))
+        let response2 = await axios.put(`${environment.apiUrl}/subgroups/add`,jsonSubGroup, { headers });
+      break;
+      }
+    }
+
   closeAddCohorteModal() {
     this.addCohorteClicked = false;
   }
@@ -248,6 +282,7 @@ export class GestionComponent {
     data1.forEach((tab: string[]) => {
       this.listeSubGroup.push(tab);
     });  
+    console.log('subgroup = '+ this.listeSubGroup)
   }
 
   async departmentClick(department: any) {   
@@ -359,7 +394,6 @@ export class GestionComponent {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     this.listeEleves = [];
     let response = await axios.get(`${environment.apiUrl}/students/get`, {headers});
-    console.log(response.data)
     let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {

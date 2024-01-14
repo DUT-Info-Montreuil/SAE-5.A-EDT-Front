@@ -168,8 +168,8 @@
                             <h3>TP :</h3>
                             <select class="rounded-md ml-3 w-max selectPromo border py-2 px-3 focus:outline-none focus:border-blue-500" (change)="onChangeTPSelect($event)">
                                 <option value=""></option>
-                                <ng-container *ngFor="let td of listeSubGroup">
-                                    <option [value]="td">{{ td[1] }}</option>
+                                <ng-container *ngFor="let tp of listeSubGroup">
+                                    <option [value]="tp">{{ tp[1] }}</option>
                                 </ng-container>
                             </select>
                         </div>
@@ -513,7 +513,7 @@
                 <h3 class="text-center">Statistiques</h3>
             </div>
         </div>
-        <app-add-eleve-modal [isOpen]="isAddEleveModalOpen" (closed)="closeAddEleveModal()"></app-add-eleve-modal>
+        <app-add-eleve-modal (formSubmitted)="updateEleveSubmit($event)" [listeSubGroup]="listeSubGroup" [listeGroup]="listeGroup" [listeDepartment]="listeDepartment" [isOpen]="isAddEleveModalOpen" (closed)="closeAddEleveModal()"></app-add-eleve-modal>
         <ng-container *ngIf="updateEleveClicked">
             <app-update-eleve-modal (formSubmitted)="updateEleveSubmit($event)" [eleve]="jsonEleve" [listeSubGroup]="listeSubGroup" [listeGroup]="listeGroup" [listeDepartment]="listeDepartment" [isOpen]="isUpdateEleveModalOpen" (closed)="closeUpdateEleveModal()"></app-update-eleve-modal>
         </ng-container>
