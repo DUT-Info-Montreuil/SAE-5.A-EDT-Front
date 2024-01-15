@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { select } from '@ngrx/store';
 
 @Component({
   selector: 'app-add-cohorte-modal',
@@ -46,12 +45,7 @@ export class AddCohorteModalComponent {
     this.addCohorteForm = this.fb.group({
     });
   }
-  ngOnInit(): void {
-  }
 
-  onSelectChange() {
-    
-    }
 
   toggleDepartClicked(event : any) {
     this.organizeTDList = []
@@ -84,7 +78,7 @@ export class AddCohorteModalComponent {
           const departmentTrouve = this.listeDepartment.find(departement =>
             departement[1]=== this.group.department_id 
         );
-        this.group.department_id = departmentTrouve
+        this.group.department_id = departmentTrouve[0]
           this.formSubmitted.emit(this.group);
 
             break;

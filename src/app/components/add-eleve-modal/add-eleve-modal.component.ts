@@ -30,7 +30,7 @@ export class AddEleveModalComponent {
   tDSelected: boolean = false
   departmentTrouve : any [] = []
   groupTrouve: any [] = []
-  
+
   constructor(private fb: FormBuilder) {
     this.updateEleveForm = this.fb.group({
     });
@@ -38,6 +38,7 @@ export class AddEleveModalComponent {
  submit(){
 
  }
+ 
  tdClicked(event: any) {
   this.tDSelected = true;
   this.groupTrouve = this.listeGroup.find(group =>

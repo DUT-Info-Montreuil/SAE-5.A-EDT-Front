@@ -13,7 +13,8 @@ export class UpdateSalleModalComponent {
     code: '',
     capacity: '',
     has_computer: '',
-    has_projector: ''
+    has_projector: '',
+    id: ''
   };  
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
   @Output() closed = new EventEmitter<boolean>();
@@ -31,14 +32,8 @@ export class UpdateSalleModalComponent {
   }
 
   submit() {
-    const updatedValues = {
-      code: this.salle.code,
-      capacity: this.salle.capacity,
-      has_projector: this.salle.has_projector,
-      has_computer : this.salle.has_computer
-    };
-
-    this.formSubmitted.emit(updatedValues);
+       this.formSubmitted.emit(this.salle);
+    this.close()
   }
   
 }

@@ -24,6 +24,7 @@ export class GestionComponent {
   listeEleves: any[] = [];
   listeSubGroup: any[] = [];
   listeGroup:any [] = [];
+  listeSpecialization:any [] = [];
   valeurInput: any = "";
   listeRecherche: any[] = []
   listeDepartment: any[] = []
@@ -34,12 +35,16 @@ export class GestionComponent {
   isUpdateEleveModalOpen: boolean = false;
   isUpdateProfModalOpen: boolean = false;
   isAddEleveModalOpen: boolean = false;
+  isAddProfModalOpen: boolean = false;
+  isAddRessourceModalOpen: boolean = false;
+  isAddRoomModalOpen: boolean = false;
   isUpdateSalleModalOpen:boolean = false;
   updateEleveClicked:boolean = false
   isUpdateRessourceModalOpen:boolean = false;
   isTDClicked: boolean = false;
   isTPClicked: boolean = false;
   isPromotionClicked: boolean = false;
+  isDeleteCohorteClicked: boolean = false
   showAllCohorte: boolean = false;
   selectedTD: any[] = []
 
@@ -49,7 +54,10 @@ export class GestionComponent {
     semestre: '',
     hour_number: '',
     color: '',
-    sequence: ''
+    sequence: '',
+    id:'',
+    specialization_id: '',
+    description: ''
   }; 
   jsonEleve:any  = {
     last_name: '',
@@ -66,17 +74,19 @@ export class GestionComponent {
     last_name: '',
     mail: '',
     personal_code: '',
-    id: ''
+    user_id: ''
   };
   jsonSalle: any = {
     code: '',
     capacity: '',
     has_computer: '',
-    has_projector: ''
+    has_projector: '',
+    id:''
   };  
   
   constructor( private dateFormattingService: DateFormattingService, private authService: AuthService) {
     this.formattedDate = this.dateFormattingService.format(new Date());  
+    this.initSpecializationList()
     this.initListeGroup()
     this.initListeDepartment()
     this.initListeSubGroup()
@@ -128,6 +138,28 @@ export class GestionComponent {
   openAddCohorteModal() {
     this.addCohorteClicked = true;
   }
+  openDeleteCohorteModal() {
+    this.isDeleteCohorteClicked = true
+  }
+  closeDeleteCohorteModal() {
+    this.isDeleteCohorteClicked = false
+  }
+  async deleteCohorteSubmit(formData : any) {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    console.log(JSON.stringify(formData));
+    switch (formData.itemType) {
+      case 'department':
+        await axios.delete(`${environment.apiUrl}/departments/delete/${formData.id}`, { headers });
+        break;
+      case 'group':
+        await axios.delete(`${environment.apiUrl}/groups/delete/${formData.id}`, { headers });
+        break;
+      case 'subgroup':
+        await axios.delete(`${environment.apiUrl}/subgroups/delete/${formData.id}`, { headers });
+      break;
+      }  }
   async deleteItem(item : any, itemType : any) {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
@@ -137,8 +169,7 @@ export class GestionComponent {
         const confirmation = window.confirm("Êtes-vous sûr de vouloir effectuer cette action ? "+
                       "\n Cela supprimera definitivement "+ item[0] + " "+item[1]);
         if (confirmation) {
-          let response = await axios.delete(`${environment.apiUrl}/students/delete/${item[6]}`, { headers });
-        console.log(response)
+          await axios.delete(`${environment.apiUrl}/students/delete/${item[6]}`, { headers });
         }
         break;
       case 'ressource':
@@ -454,8 +485,13 @@ export class GestionComponent {
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     let response = await axios.get(`${environment.apiUrl}/teachings/get`, {headers});
-    let data = response.data.map((ressource: any) => [ressource.title, ressource.teaching_type, ressource.semestre, ressource.hour_number,  ressource.color, ressource.sequence, ressource.id]);
+    let data = response.data.map((ressource: any) => [ressource.title, ressource.teaching_type, ressource.semestre, ressource.hour_number,  ressource.color, ressource.sequence, ressource.id, ressource.specialization_id, ressource.description]);
     data.forEach((tab: string[]) => {
+      this.listeSpecialization.forEach((spe: string[]) => {
+        if (spe[0] === tab[7]) {
+          tab[7] = spe[2];
+        }
+      });
       this.listeRessources.push(tab);
     });
     this.listeRecherche = this.listeRessources
@@ -486,14 +522,6 @@ export class GestionComponent {
   afficherMoins() {
     this.limit -= 4; 
   }
-  
-  openAddEleveModal(){
-      this.isAddEleveModalOpen = true;
-  }
-
-  closeAddEleveModal(reload?: boolean) {
-      this.isAddEleveModalOpen = false;
-  }
 
   openUpdateEleveModal(eleve : any) {
     this.updateEleveClicked = ! this.updateEleveClicked
@@ -511,15 +539,15 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    // await axios.patch(`${environment.apiUrl}/students/update/${formData.user_id}`, formData, { headers })
-    // .then(response => {
-    //   console.log('Données mises à jour avec succès :', response.data);
-    //   // Traitez la réponse en conséquence
-    // })
-    // .catch(error => {
-    //   console.error('Erreur lors de la mise à jour des données :', error);
-    //   // Gérez les erreurs en conséquence
-    // });
+    await axios.patch(`${environment.apiUrl}/students/update/${formData.user_id}`, formData, { headers })
+    .then(response => {
+      console.log('Données mises à jour avec succès :', response.data);
+      // Traitez la réponse en conséquence
+    })
+    .catch(error => {
+      console.error('Erreur lors de la mise à jour des données :', error);
+      // Gérez les erreurs en conséquence
+    });
   }
     
   openUpdateProfModal(prof : any) {
@@ -555,8 +583,8 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
-  }
+    await axios.patch(`${environment.apiUrl}/rooms/update/${formData.id}`, formData, { headers })
+   }
 
   openUpdateRessourceModal(ressource : any) {
     Object.keys(this.jsonRessource).forEach((key, index) => {
@@ -572,5 +600,86 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    console.log(JSON.stringify(formData));
+    await axios.patch(`${environment.apiUrl}/teachings/update/${formData.id}`, formData, { headers })
+
   }
+
+  async initSpecializationList() {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    let response = await axios.get(`${environment.apiUrl}/specializations/get`, {headers});
+    let data = response.data.map((spe: any) => [ spe.id, spe.name, spe.code,spe.department_id ]);
+    data.forEach((tab: string[]) => {
+      this.listeSpecialization.push(tab);
+    });
+  }
+
+  openAddEleveModal(){
+    this.isAddEleveModalOpen = true;
+  }
+
+  closeAddEleveModal(reload?: boolean) {
+      this.isAddEleveModalOpen = false;
+  }
+  addEleveSubmit(eleve: any) {
+
+  }
+
+  openAddProfModal(){
+    this.isAddProfModalOpen = true;
+  }
+
+  closeAddProfModal(reload?: boolean) {
+    this.isAddProfModalOpen = false;
+  }
+  addProfSubmit(eleve: any) {
+
+  }
+  
+  openAddRoomModal(){
+    this.isAddRoomModalOpen = true;
+  }
+  closeAddRoomModal(reload?: boolean) {
+    this.isAddRoomModalOpen = false;
+  }
+  async addRoomSubmit(salle: any) {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const jsonSalle = {
+      "capacity":`${parseInt(salle.capacity, 10)}`,
+      "code":`${salle.code}`,
+      "has_computer":`${salle.has_computer}`,
+      "has_projector":`${salle.has_projector}`
+    }
+    await axios.put(`${environment.apiUrl}/rooms/add`, jsonSalle, { headers })
+  
+  }
+  
+  openAddRessourceModal(){
+    this.isAddRessourceModalOpen = true;
+  }
+
+  closeAddRessourceModal(reload?: boolean) {
+    this.isAddRessourceModalOpen = false;
+  }
+  async addRessourceSubmit(ressource: any) {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const jsonRessource = {
+      "color": `${ressource.color}`,
+      "description": `${ressource.description}`,
+      "hour_number": `${parseInt(ressource.hour_number, 10)}`,
+      "semestre": `${parseInt(ressource.semestre, 10)}`,
+      "sequence": `${ressource.sequence}`,
+      "specialization_id": `${parseInt(ressource.specialization_id, 10)}`,
+      "teaching_type": `${ressource.teaching_type}`,
+      "title": `${ressource.title}`
+    }
+    await axios.put(`${environment.apiUrl}/teachings/add`, jsonRessource, { headers })
+  }
+  
 }

@@ -32,6 +32,26 @@
                 <p>Couleur : </p>
                 <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="ressource.color">
               </div>
+              <div class="ml-2">
+                <p>Description : </p>
+                <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="ressource.description">
+            </div>   
+            <div class="mr-2">
+                <p>Parcour :</p>
+                <ng-container *ngIf="!isSpecializationClicked; else selectSpe">
+                  <input readonly class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="ressource.specialization_id" (click)="specializationClicked()">
+                </ng-container>
+                <ng-template #selectSpe>
+                  <select class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="ressource.specialization_id" >
+                    <option value="" disabled selected>Sélectionner un parcour</option>
+                    <!-- Boucle à travers listeDepartment pour créer les options -->
+                    <ng-container *ngFor="let spe of listeSpecialization">
+                      <option >{{ spe[2] }}</option>
+                    </ng-container>
+                  </select>
+                </ng-template>         
+            </div>
+            
                  
       </div>       
           
