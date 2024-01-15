@@ -3,7 +3,7 @@
         <span class="truncate basis-4/5" [ngClass]="{ 'text-start': isTwoLine() }">
             {{ course.teaching?.title }}
         </span>
-        <span class="truncate basis-4/5" [ngClass]="{ 'text-end': isTwoLine() }">
+        <span class="truncate" [ngClass]="{ 'text-end': isTwoLine(), 'basis-4/5': !isOneLine() }">
             {{ getSubGroupsName() }}
         </span>
     </div>
