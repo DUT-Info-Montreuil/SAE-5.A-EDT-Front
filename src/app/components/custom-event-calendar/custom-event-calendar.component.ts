@@ -48,12 +48,10 @@ export class CustomEventCalendarComponent {
     }
 
     isTwoLine(): boolean {
-        console.log(this.getCourseDurationInMinutes());
         return this.getCourseDurationInMinutes() < 90;
     }
 
     isOneLine(): boolean {
-        console.log(this.getCourseDurationInMinutes());
         return this.getCourseDurationInMinutes() <= 30;
     }
 }

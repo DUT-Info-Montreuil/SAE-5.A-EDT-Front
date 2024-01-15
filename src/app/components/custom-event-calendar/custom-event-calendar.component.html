@@ -1,9 +1,9 @@
 <div class="gap-x-4 h-full flex justify-between rounded-md border-subtitle dark:border-grey-dark border-0.5 text-white py-1 px-4 bg-opacity-80 dark:bg-opacity-60 hover:bg-opacity-100 hover:dark:bg-opacity-80 transition-all duration-300" [ngClass]="[customClass, !isOneLine() ? 'flex-col' : 'items-center']">
     <div class="w-full flex text-center font-bold" [ngClass]="{ 'flex-col': !isTwoLine(), 'justify-between': isTwoLine() }">
-        <span class="truncate basis-4/5" [ngClass]="{ 'text-start': isTwoLine() }">
+        <span *ngIf="course.teaching?.title" class="truncate basis-4/5" [ngClass]="{ 'text-start': isTwoLine() }">
             {{ course.teaching?.title }}
         </span>
-        <span class="truncate" [ngClass]="{ 'text-end': isTwoLine(), 'basis-4/5': !isOneLine() }">
+        <span *ngIf="course.subgroups" class="truncate" [ngClass]="{ 'text-end': isTwoLine(), 'basis-4/5': !isOneLine() }">
             {{ getSubGroupsName() }}
         </span>
     </div>

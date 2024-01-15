@@ -5,6 +5,8 @@ export class Subgroup extends AbstractModel {
      * Attributes
      */
     name?: string;
+    department?: string;
+    promotion?: string;
 
     /**
      * Relations Id

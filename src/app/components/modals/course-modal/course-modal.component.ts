@@ -37,6 +37,8 @@ export class CourseModalComponent {
     filteredGroups: Array<{ key: string; value: Group }> = [];
     filteredSubGroups: Array<{ key: string; value: Subgroup }> = [];
     numberOfResults: number = 0;
+    groups?: Group[];
+    specializations?: Specialization[];
 
     constructor(private fb: FormBuilder, private courseService: CourseService) {
         this.courseForm = this.fb.group(
@@ -122,21 +124,13 @@ export class CourseModalComponent {
         this.courseRelationForm.get('teaching_id')?.setValue(value.id);
     }
 
-    isSelectedSpecialization(value: Specialization): boolean {
-        return this.selectedSpecialization?.id === value?.id;
-    }
-
     selectSpecialization(value: Specialization) {
         this.selectedSpecialization = value;
         this.groupStep++;
         this.filteredGroups = Array.from(this.mapGroups.values())
-            .filter((group) => group.promotion === value.id)
+            .filter((group) => group.promotion === value.id && group.department_id === value.department_id)
             .map((group) => ({ key: group.id!, value: group }));
         this.updateNumberOfResults();
-    }
-
-    isSelectedGroup(value: Group): boolean {
-        return this.selectedGroup?.id === value?.id;
     }
 
     selectGroup(value: Group) {
@@ -180,22 +174,52 @@ export class CourseModalComponent {
         } else {
             array.push(new FormControl(item));
         }
+
+        this.fillGroupsAndSubgroups();
     }
 
-    isSelected(item: Personal | Room | Subgroup): boolean {
-        let array: FormArray;
-
+    isSelected(item: Personal | Room | Subgroup | Group | Specialization): boolean {
         if (item instanceof Personal) {
-            array = this.courseRelationForm.get('personals') as FormArray;
+            return this.isSelectedInFormArray(item, this.courseRelationForm.get('personals') as FormArray);
         } else if (item instanceof Room) {
-            array = this.courseRelationForm.get('rooms') as FormArray;
+            return this.isSelectedInFormArray(item, this.courseRelationForm.get('rooms') as FormArray);
         } else if (item instanceof Subgroup) {
-            array = this.courseRelationForm.get('subgroups') as FormArray;
+            return this.isSelectedInFormArray(item, this.courseRelationForm.get('subgroups') as FormArray);
+        } else if (item instanceof Group) {
+            return this.groups?.some((group) => group.id === item.id) ?? false;
+        } else if (item instanceof Specialization) {
+            return this.specializations?.some((specialization) => specialization.id === item.id) ?? false;
         } else {
             throw new Error('Type non géré');
         }
+    }
 
+    private isSelectedInFormArray(item: any, array: FormArray): boolean {
         return array.value.some((x: any) => x.id === item.id);
+    }
+
+    fillGroupsAndSubgroups() {
+        this.groups = [];
+        this.specializations = [];
+
+        const subGroupsFormArray = this.courseRelationForm.get('subgroups') as FormArray;
+
+        subGroupsFormArray.controls.forEach((control) => {
+            const subGroupId = control.value.id;
+            const subGroup = this.mapSubGroups.get(subGroupId);
+
+            if (subGroup) {
+                const group = this.mapGroups.get(subGroup.group_id!);
+                if (group) {
+                    this.groups!.push(group);
+
+                    const specialization = this.mapSpecializations.get(group.promotion!);
+                    if (specialization) {
+                        this.specializations!.push(specialization);
+                    }
+                }
+            }
+        });
     }
 
     onNextStep() {
@@ -291,6 +315,8 @@ export class CourseModalComponent {
         this.filterType = FilterType.Teaching;
         this.modalStep = 0;
         this.selectedTeaching = undefined;
+        this.groups = undefined;
+        this.specializations = undefined;
         this.resetToStep(0);
     }
 

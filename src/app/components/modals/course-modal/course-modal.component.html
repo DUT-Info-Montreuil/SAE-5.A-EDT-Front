@@ -3,12 +3,12 @@
         <div class="flex bg-subtitle-secondary dark:bg-grey-dark rounded-t-xl p-6 border-b-0.5 border-medium dark:border-grey">
             <h3 class="!text-primary"><span class="font-bold">Étape 1</span> - Création du cours</h3>
         </div>
-        <div class="grid sm:grid-cols-2 gap-4 p-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6">
             <app-dropdown [control]="coursetypeControl" model="course_type" [options]="course_types" label="Type de cours" placeholder="Selectionne un type" />
             <app-labeled-date-input [control]="dateControl" model="date" label="Date" placeholder="Selectionnez une date" />
             <app-labeled-time-input [control]="starttimeControl" model="starttime" label="Heure de début" placeholder="Selectionnez une heure de début" />
             <app-labeled-time-input [control]="endtimeControl" model="endtime" label="Heure de fin" placeholder="Selectionnez une heure de fin" />
-            <app-labeled-icon-input class="col-span-2" [control]="descriptionControl" model="description" label="Description" placeholder="Entrez une description" typeInput="textarea">
+            <app-labeled-icon-input class="sm:col-span-2" [control]="descriptionControl" model="description" label="Description" placeholder="Entrez une description" typeInput="textarea">
                 <ng-container icon>
                     <svg class="fill-primary w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_738_24)">
@@ -129,15 +129,15 @@
                                 *ngFor="let specialization of filteredSpecializations"
                                 (click)="selectSpecialization(specialization.value)"
                                 [ngClass]="{
-                                    'bg-primary text-white': isSelectedSpecialization(specialization.value),
-                                    'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelectedSpecialization(specialization.value)
+                                    'bg-primary text-white': isSelected(specialization.value),
+                                    'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelected(specialization.value)
                                 }"
                                 class="flex items-center justify-center px-4 py-1 border-1 border-subtitle dark:border-grey rounded-full transition-colors duration-300 focus:outline-none gap-x-2"
                             >
-                                <svg *ngIf="isSelectedSpecialization(specialization.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <svg *ngIf="isSelected(specialization.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
                                 </svg>
-                                <div *ngIf="!isSelectedSpecialization(specialization.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
+                                <div *ngIf="!isSelected(specialization.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
                                 <span class="whitespace-nowrap">{{ specialization.value.code }}</span>
                             </button>
                         </ng-container>
@@ -146,15 +146,15 @@
                                 *ngFor="let group of filteredGroups"
                                 (click)="selectGroup(group.value)"
                                 [ngClass]="{
-                                    'bg-primary text-white': isSelectedGroup(group.value),
-                                    'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelectedGroup(group.value)
+                                    'bg-primary text-white': isSelected(group.value),
+                                    'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelected(group.value)
                                 }"
                                 class="flex items-center justify-center px-4 py-1 border-1 border-subtitle dark:border-grey rounded-full transition-colors duration-300 focus:outline-none gap-x-2"
                             >
-                                <svg *ngIf="isSelectedGroup(group.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <svg *ngIf="isSelected(group.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
                                 </svg>
-                                <div *ngIf="!isSelectedGroup(group.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
+                                <div *ngIf="!isSelected(group.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
                                 <span class="whitespace-nowrap">{{ group.value.type }}</span>
                             </button>
                         </ng-container>
