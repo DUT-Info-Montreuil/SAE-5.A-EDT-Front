@@ -15,7 +15,6 @@ export class UpdateEleveModalComponent implements OnInit{
     phone_number: '',
     subgroup_id: '',
     group_id: '',
-    user_id:''
   };  
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
   @Output() closed = new EventEmitter<boolean>();
@@ -31,6 +30,7 @@ export class UpdateEleveModalComponent implements OnInit{
   organizeDepartList: any[] = [];
   departmentTrouve : any [] = []
   groupTrouve: any [] = []
+  sousGroupTrouve: any [] = []
 
   constructor(private fb: FormBuilder) {
     this.updateEleveForm = this.fb.group({
@@ -72,8 +72,10 @@ export class UpdateEleveModalComponent implements OnInit{
 
   toggleTPClicked(event:any) {
     this.isTPClicked = !this.isTPClicked;
-    console.log("departClick = "+ event.target.value)
-
+    this.sousGroupTrouve = this.listeSubGroup.find(subgroup =>
+      subgroup[1] === event.target.value 
+    );
+    this.eleve.subgroup_id = this.sousGroupTrouve[0]
   }
 
   close(reload: boolean = false) {
@@ -81,18 +83,12 @@ export class UpdateEleveModalComponent implements OnInit{
   }
 
   submit() {
-   const updatedValues = {
-      lastName: this.eleve.last_name,
-      firstName: this.eleve.first_name,
-      department_id: 1,
-      mail: this.eleve.mail,
-      phone_number: this.eleve.phone_number,
-      subgroup_id: 38,
-      group_id: 38,
-      user_id: this.eleve.user_id
-    };
+    this.eleve.department_id = this.departmentTrouve[0]
+    this.eleve.group_id = this.groupTrouve[0]
+    this.eleve.subgroup_id = this.sousGroupTrouve[0]
+    
 
-    this.formSubmitted.emit(updatedValues);
+    this.formSubmitted.emit(this.eleve);
   }
   
 }

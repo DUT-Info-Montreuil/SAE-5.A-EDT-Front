@@ -566,7 +566,6 @@ export class GestionComponent {
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     await axios.patch(`${environment.apiUrl}/personals/update/${formData.id}`, formData, { headers })
-
   }
 
   openUpdateSalleModal(prof : any) {
