@@ -30,5 +30,6 @@ export class AddPersonalModalComponent {
 
   submit () {
     this.formSubmitted.emit(this.jsonProf);
+    this.close()
   }
 }

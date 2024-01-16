@@ -66,15 +66,16 @@ export class GestionComponent {
     phone_number: '',
     group_id: '',
     department_id: '',
-    user_id: '',
+    id: '',
     subgroup_id: ''
   };  
   jsonProf: any = {
     first_name: '',
     last_name: '',
     mail: '',
+    phone_number: '',
     personal_code: '',
-    user_id: ''
+    id: ''
   };
   jsonSalle: any = {
     code: '',
@@ -108,7 +109,6 @@ export class GestionComponent {
           "personal_id":parseInt(`${formData.personal_id}`, 10)
         }
         
-        console.log("department = " + JSON.stringify(jsonDepartment, null, 2));
         let response = await axios.put(`${environment.apiUrl}/departments/add`,jsonDepartment, { headers });
       break;
       case 'group':
@@ -117,7 +117,6 @@ export class GestionComponent {
           "type":`${formData.type}`,
           "promotion":parseInt(`${formData.promotion}`, 10)
         }
-        console.log("group = "+JSON.stringify(jsonGroup, null, 2))
         let response1 = await axios.put(`${environment.apiUrl}/groups/add`,jsonGroup, { headers });
 
         break;
@@ -425,7 +424,7 @@ export class GestionComponent {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     this.listeEleves = [];
     let response = await axios.get(`${environment.apiUrl}/students/get`, {headers});
-    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
+    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -470,7 +469,7 @@ export class GestionComponent {
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     let response = await axios.get(`${environment.apiUrl}/personals/get`, {headers});
-    let data = response.data.map((prof: any) => [ prof.mail,prof.first_name,prof.last_name, prof.personal_code,prof.id]);
+    let data = response.data.map((prof: any) => [ prof.first_name, prof.last_name, prof.mail, prof.phone_number, prof.personal_code, prof.id]);
     data.forEach((tab: string[]) => {
       this.listeProfs.push(tab);
     });
@@ -536,10 +535,11 @@ export class GestionComponent {
   }
 
   async updateEleveSubmit(formData: any) {
+    console.log(JSON.stringify(formData));
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    await axios.patch(`${environment.apiUrl}/students/update/${formData.user_id}`, formData, { headers })
+    await axios.patch(`${environment.apiUrl}/students/update/${formData.id}`, formData, { headers })
     .then(response => {
       console.log('Données mises à jour avec succès :', response.data);
       // Traitez la réponse en conséquence
@@ -565,6 +565,8 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    console.log(JSON.stringify(formData));
+    
     await axios.patch(`${environment.apiUrl}/personals/update/${formData.id}`, formData, { headers })
   }
 

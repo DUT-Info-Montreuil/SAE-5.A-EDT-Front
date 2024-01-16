@@ -68,9 +68,9 @@ export class AddCohorteModalComponent {
     switch (this.selectedOption) {
         case "Créer un département":
           const professeurTrouve = this.listePersonel.find(professeur =>
-            (professeur[1] +' '+ professeur[2] )=== this.department.personal_id 
+            (professeur[0] +' '+ professeur[1] )=== this.department.personal_id 
         );
-        this.department.personal_id = professeurTrouve[4]
+        this.department.personal_id = professeurTrouve[5]
           this.formSubmitted.emit(this.department);
 
             break;

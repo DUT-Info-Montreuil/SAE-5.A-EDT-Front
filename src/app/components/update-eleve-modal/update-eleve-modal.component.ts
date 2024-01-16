@@ -15,6 +15,7 @@ export class UpdateEleveModalComponent implements OnInit{
     phone_number: '',
     subgroup_id: '',
     group_id: '',
+    id: ''
   };  
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
   @Output() closed = new EventEmitter<boolean>();
@@ -89,6 +90,7 @@ export class UpdateEleveModalComponent implements OnInit{
     
 
     this.formSubmitted.emit(this.eleve);
+    this.close()
   }
   
 }

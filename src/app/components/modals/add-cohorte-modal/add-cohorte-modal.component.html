@@ -32,7 +32,7 @@
                     <!-- Boucle à travers listeDepartment pour créer les options -->
                     <option value="" disabled selected>Choissisez un professeur</option>
                     <ng-container *ngFor="let prof of listePersonel">
-                        <option >{{ prof[1] +' '  + prof[2]}}</option>
+                        <option >{{ prof[0] +' '  + prof[1]}}</option>
                     </ng-container>
                 </select>                
             </div>
