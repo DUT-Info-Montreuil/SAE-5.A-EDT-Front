@@ -9,7 +9,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class AddEleveModalComponent {
   @Input() isOpen!: boolean;
-  @Output() closed = new EventEmitter<boolean>();
 
   updateEleveForm: FormGroup;
   @Input() listeDepartment!: any[];
@@ -22,25 +21,43 @@ export class AddEleveModalComponent {
     phone_number: '',
     subgroup_id: '',
     group_id: '',
-    department_id: ''
+    department_id: '',
+    password:''
   };  
+  @Output() closed = new EventEmitter<boolean>();
+  @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
   organizeTPList: any[] = [];
   organizeTDList: any[] = [];
   departSelected: boolean = false;
   tDSelected: boolean = false
   departmentTrouve : any [] = []
   groupTrouve: any [] = []
+  sousGroupTrouve: any [] = []
+
 
   constructor(private fb: FormBuilder) {
     this.updateEleveForm = this.fb.group({
     });
 }
  submit(){
-
- }
  
+  this.jsonEleve.department_id = this.departmentTrouve[0]
+  this.jsonEleve.group_id = this.groupTrouve[0]
+  this.jsonEleve.subgroup_id = this.sousGroupTrouve[0]
+  this.formSubmitted.emit(this.jsonEleve);
+    this.close()
+ }
+
+  tpclicked(event:any) {
+  this.sousGroupTrouve = this.listeSubGroup.find(subgroup =>
+    subgroup[1] === event.target.value 
+  );
+  this.jsonEleve.subgroup_id = this.sousGroupTrouve[0]
+ }
+
  tdClicked(event: any) {
   this.tDSelected = true;
+  this.organizeTPList = []
   this.groupTrouve = this.listeGroup.find(group =>
     (group[1] + ', ' +group[3] + ' année') === event.target.value 
   );

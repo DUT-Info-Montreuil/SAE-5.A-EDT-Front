@@ -623,8 +623,24 @@ export class GestionComponent {
   closeAddEleveModal(reload?: boolean) {
       this.isAddEleveModalOpen = false;
   }
-  addEleveSubmit(eleve: any) {
+  async addEleveSubmit(eleve: any) {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const jsonEleve = {
+      "department_id": `${parseInt(eleve.department_id, 10)}`,
+      "first_name": `${eleve.first_name}`,
+      "group_id": `${parseInt(eleve.group_id, 10)}`,
+      "last_name": `${eleve.last_name}`,
+      "mail": `${eleve.mail}`,
+      "phone_number": `${eleve.phone_number}`,
+      "subgroup_id": `${parseInt(eleve.subgroup_id, 10)}`,
+      "password": `${eleve.password}`
+    }
+    console.log("Eleve = " +JSON.stringify(eleve));
 
+    await axios.put(`${environment.apiUrl}/students/add`, jsonEleve, { headers })
+  
   }
 
   openAddProfModal(){
@@ -634,8 +650,20 @@ export class GestionComponent {
   closeAddProfModal(reload?: boolean) {
     this.isAddProfModalOpen = false;
   }
-  addProfSubmit(eleve: any) {
-
+  async addProfSubmit(formData: any) {
+    console.log(JSON.stringify(formData));
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const jsonProf = {
+      "first_name":`${formData.first_name}`,
+      "last_name":`${formData.last_name}`,
+      "mail":`${formData.mail}`,
+      "personal_code":`${formData.personal_code}`,
+      "phone_number":`${formData.phone_number}`,
+      "password":`${formData.password}`
+    }
+    await axios.put(`${environment.apiUrl}/personals/add`, jsonProf, { headers })
   }
   
   openAddRoomModal(){

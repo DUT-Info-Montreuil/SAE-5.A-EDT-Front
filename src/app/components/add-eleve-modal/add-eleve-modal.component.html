@@ -20,6 +20,12 @@
           <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonEleve.phone_number">
         </div>
         <div class="ml-2">
+          <p>Mot de passe :</p>
+          <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonEleve.password">
+        </div>
+        <div class="ml-2">
+          </div>
+        <div class="ml-2">
           <p>Département :</p>
           <select class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonEleve.department_id"  (blur)="departClicked($event)">
             <option value="" disabled selected>Sélectionner un département</option>
@@ -40,7 +46,7 @@
         </div>       
         <div class="ml-2" *ngIf="tDSelected">
           <p>TP :</p>
-          <select class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonEleve.subgroup_id">
+          <select class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonEleve.subgroup_id" (blur)="tpclicked($event)">
               <!-- Boucle à travers listeDepartment pour créer les options -->
               <option value="" disabled selected>Sélectionner un TP</option>
               <ng-container *ngFor="let subgroup of organizeTPList">

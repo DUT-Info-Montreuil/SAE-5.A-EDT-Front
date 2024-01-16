@@ -83,12 +83,11 @@ export class AddCohorteModalComponent {
 
             break;
         case "Créer un sous-groupe (TP)":
-          console.log(this.subGroup)
           const groupTrouve = this.listeGroup.find(group =>
             (group[1] + ', ' +group[3] + ' année') === this.subGroup.group_id 
-        );
-        this.subGroup.group_id = groupTrouve[0]
-                   this.formSubmitted.emit(this.subGroup);
+          );
+          this.subGroup.group_id = groupTrouve[0]
+          this.formSubmitted.emit(this.subGroup);
 
             break;
         default:
