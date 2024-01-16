@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { select } from '@ngrx/store';
 
 @Component({
   selector: 'app-add-cohorte-modal',
@@ -10,22 +9,25 @@ import { select } from '@ngrx/store';
 export class AddCohorteModalComponent {
   @Input() isOpen!: boolean;
   department = {
-    
       degree_type: '',
       description: '',
       name: '',
-      personal_id: ''
+      personal_id: '',
+      itemType: 'department'
   }
   group = {
     department_id: '',
     promotion: '',
-    type: ''
+    type: '',
+    itemType: 'group'
   }
   subGroup = {
     name: '',
     group_id:'',
-    department_id:''
+    department_id:'',
+    itemType: 'subgroup'
   }
+  organizeTDList: any[] = [];
   departSelected: boolean = false;
   selectedOption: string = 'Créer un département'
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
@@ -36,73 +38,60 @@ export class AddCohorteModalComponent {
   @Input() listeSubGroup!: any[];
   addCohorteForm: FormGroup;
   isDepartmentClicked: boolean = false;
-  organizeTDList: any[] = [];
   organizeDepartList: any[] = [];
   organizePersonalList: any [] = []
- 
 
   constructor(private fb: FormBuilder) {
     this.addCohorteForm = this.fb.group({
     });
   }
-  ngOnInit(): void {
-    console.log(this.listeGroup)
-  }
 
-  onSelectChange() {
-    switch (this.selectedOption) {
-      case 'Créer un département':
-
-      break;
-
-      case 'Créer un groupe (TD)':
-       
-        break;
-
-      case 'Créer un sous-groupe (TP)':
-       
-        break;
-
-      default:
-        break;
-      }
-    }
 
   toggleDepartClicked(event : any) {
-    this.listeDepartment.forEach((itemDepartment, indexDepartment) => {
-      if (itemDepartment[1] = event.target.value) {
-        const filteredItemGroups = this.listeGroup.filter(itemGroup => itemGroup[2] === itemDepartment[0]);
-        this.organizeTDList.push(...filteredItemGroups);
-      }
-  });
+    this.organizeTDList = []
+    const departmentTrouve = this.listeDepartment.find(departement =>
+      departement[1]=== event.target.value
+  );
+    const filteredItemGroups = this.listeGroup.filter(itemGroup => itemGroup[2] === departmentTrouve[0]);
+    this.organizeTDList.push(...filteredItemGroups);
+    console.log(this.organizeTDList)
+  
   
     this.departSelected = true;
-
-
     }
-
-  toggleTDClicked(event:any) {
-    console.log("departClick = "+ event.target.value)
-
-  }
-
-  toggleTPClicked(event:any) {
-    console.log("departClick = "+ event.target.value)
-
-  }
 
   close(reload: boolean = false) {
       this.closed.emit(reload);
   }
 
   submit() {
-   
+    switch (this.selectedOption) {
+        case "Créer un département":
+          const professeurTrouve = this.listePersonel.find(professeur =>
+            (professeur[0] +' '+ professeur[1] )=== this.department.personal_id 
+        );
+        this.department.personal_id = professeurTrouve[5]
+          this.formSubmitted.emit(this.department);
 
-    const updatedValues = {
-     
-    };
+            break;
+        case "Créer un groupe (TD)":
+          const departmentTrouve = this.listeDepartment.find(departement =>
+            departement[1]=== this.group.department_id 
+        );
+        this.group.department_id = departmentTrouve[0]
+          this.formSubmitted.emit(this.group);
 
-    this.formSubmitted.emit(updatedValues);
+            break;
+        case "Créer un sous-groupe (TP)":
+          const groupTrouve = this.listeGroup.find(group =>
+            (group[1] + ', ' +group[3] + ' année') === this.subGroup.group_id 
+          );
+          this.subGroup.group_id = groupTrouve[0]
+          this.formSubmitted.emit(this.subGroup);
+
+            break;
+        default:
+            break;
+    }
   }
-  
 }

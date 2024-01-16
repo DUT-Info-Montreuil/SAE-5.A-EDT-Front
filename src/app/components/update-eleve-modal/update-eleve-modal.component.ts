@@ -15,7 +15,7 @@ export class UpdateEleveModalComponent implements OnInit{
     phone_number: '',
     subgroup_id: '',
     group_id: '',
-    user_id: ''
+    id: ''
   };  
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
   @Output() closed = new EventEmitter<boolean>();
@@ -29,7 +29,9 @@ export class UpdateEleveModalComponent implements OnInit{
   organizeTDList: any[] = [];
   organizeTPList: any[] = [];
   organizeDepartList: any[] = [];
- 
+  departmentTrouve : any [] = []
+  groupTrouve: any [] = []
+  sousGroupTrouve: any [] = []
 
   constructor(private fb: FormBuilder) {
     this.updateEleveForm = this.fb.group({
@@ -50,19 +52,31 @@ export class UpdateEleveModalComponent implements OnInit{
 
   toggleDepartClicked(event : any) {
     this.isDepartmentClicked = !this.isDepartmentClicked;
-    console.log("departClick = "+ event.target.value)
-  }
+    this.organizeTDList = []
+    this.departmentTrouve = this.listeDepartment.find(departement =>
+      departement[1]=== event.target.value
+  );
+    const filteredItemGroups = this.listeGroup.filter(itemGroup => itemGroup[2] === this.departmentTrouve[0]);
+    this.organizeTDList.push(...filteredItemGroups);
+  }  
+
 
   toggleTDClicked(event:any) {
+    this.organizeTPList = []
     this.isTDClicked = !this.isTDClicked;
-    console.log("departClick = "+ event.target.value)
-
+    this.groupTrouve = this.listeGroup.find(group =>
+      (group[1] + ', ' +group[3] + ' année') === event.target.value 
+      );
+    const filteredItemSubGroups = this.listeSubGroup.filter(itemGroup => itemGroup[2] === this.groupTrouve[0]);
+    this.organizeTPList.push(...filteredItemSubGroups);
   }
 
   toggleTPClicked(event:any) {
     this.isTPClicked = !this.isTPClicked;
-    console.log("departClick = "+ event.target.value)
-
+    this.sousGroupTrouve = this.listeSubGroup.find(subgroup =>
+      subgroup[1] === event.target.value 
+    );
+    this.eleve.subgroup_id = this.sousGroupTrouve[0]
   }
 
   close(reload: boolean = false) {
@@ -70,18 +84,13 @@ export class UpdateEleveModalComponent implements OnInit{
   }
 
   submit() {
-   const updatedValues = {
-      lastName: this.eleve.last_name,
-      firstName: this.eleve.first_name,
-      department_id: this.eleve.department_id,
-      mail: this.eleve.mail,
-      phone_number: this.eleve.phone_number,
-      subgroup_id: this.eleve.subgroup_id,
-      group_id: this.eleve.group_id,
-      user_id: this.eleve.user_id
-    };
+    this.eleve.department_id = this.departmentTrouve[0]
+    this.eleve.group_id = this.groupTrouve[0]
+    this.eleve.subgroup_id = this.sousGroupTrouve[0]
+    
 
-    this.formSubmitted.emit(updatedValues);
+    this.formSubmitted.emit(this.eleve);
+    this.close()
   }
   
 }

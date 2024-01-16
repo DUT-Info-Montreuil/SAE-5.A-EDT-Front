@@ -10,13 +10,17 @@ export class UpdateRessourceModalComponent {
 
   @Input() isOpen!: boolean;
   @Input() ressource = {
-    title: '',
-    teaching_type: '',
-    semestre: '',
-    hour_number: '',
-    color: '',
-    sequence: ''
+    "color": '',
+    "description": '',
+    "hour_number": '',
+    "semestre": '',
+    "sequence": '',
+    "specialization_id": '',
+    "teaching_type": '',
+    "title": ''
   };  
+  isSpecializationClicked: boolean = false
+  @Input() listeSpecialization!: any[];
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
   @Output() closed = new EventEmitter<boolean>();
 
@@ -33,16 +37,16 @@ export class UpdateRessourceModalComponent {
   }
 
   submit() {
-    const updatedValues = {
-      title: this.ressource.title,
-      teaching_type: this.ressource.teaching_type,
-      semestre: this.ressource.semestre,
-      hour_number : this.ressource.hour_number,
-      color : this.ressource.color,
-      sequence : this.ressource.sequence
-    };
+   
 
-    this.formSubmitted.emit(updatedValues);
-  }
-  
+    const parcourTrouve = this.listeSpecialization.find(spe =>
+      spe[2]=== this.ressource.specialization_id 
+    );
+    this.ressource.specialization_id = parcourTrouve[0]
+    this.formSubmitted.emit(this.ressource);
+    this.close()
+    }
+    specializationClicked() {
+      this.isSpecializationClicked = true ;
+    }
 }
