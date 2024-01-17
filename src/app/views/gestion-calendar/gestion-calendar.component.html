@@ -25,16 +25,27 @@
                     </button>
                 </div>
             </div>
-            <div class="flex flex-col-reverse sm:flex-row items-center xs:justify-end gap-6">
-                <app-button *ngIf="modeEditor" label="Ajouter" type="grey" (click)="openCourseModal()">
-                    <ng-container left-icon>
-                        <svg class="w-4 h-4 fill-dark dark:fill-white" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M10.3785 0.655518C8.40073 0.655518 6.46733 1.24201 4.82284 2.34082C3.17835 3.43963 1.89663 5.00142 1.13975 6.82868C0.382873 8.65594 0.18484 10.6666 0.570692 12.6064C0.956544 14.5462 1.90895 16.3281 3.30748 17.7266C4.706 19.1251 6.48783 20.0775 8.42764 20.4634C10.3674 20.8492 12.3781 20.6512 14.2054 19.8943C16.0326 19.1374 17.5944 17.8557 18.6932 16.2112C19.792 14.5667 20.3785 12.6333 20.3785 10.6555C20.3785 9.3423 20.1199 8.04194 19.6173 6.82868C19.1148 5.61543 18.3782 4.51303 17.4496 3.58445C16.521 2.65586 15.4186 1.91927 14.2054 1.41672C12.9921 0.914175 11.6918 0.655518 10.3785 0.655518ZM10.3785 18.6555C8.79629 18.6555 7.24957 18.1863 5.93398 17.3073C4.61839 16.4282 3.59301 15.1788 2.98751 13.717C2.38201 12.2552 2.22358 10.6466 2.53226 9.09479C2.84094 7.54294 3.60287 6.11748 4.72169 4.99866C5.84051 3.87984 7.26597 3.11792 8.81782 2.80923C10.3697 2.50055 11.9782 2.65898 13.44 3.26448C14.9018 3.86998 16.1512 4.89536 17.0303 6.21095C17.9093 7.52655 18.3785 9.07326 18.3785 10.6555C18.3785 12.7772 17.5357 14.8121 16.0354 16.3124C14.5351 17.8127 12.5003 18.6555 10.3785 18.6555ZM14.3785 9.65551H11.3785V6.65552C11.3785 6.3903 11.2732 6.13595 11.0856 5.94841C10.8981 5.76087 10.6438 5.65552 10.3785 5.65552C10.1133 5.65552 9.85897 5.76087 9.67144 5.94841C9.4839 6.13595 9.37854 6.3903 9.37854 6.65552V9.65551H6.37854C6.11333 9.65551 5.85897 9.76087 5.67144 9.94841C5.4839 10.1359 5.37854 10.3903 5.37854 10.6555C5.37854 10.9207 5.4839 11.1751 5.67144 11.3626C5.85897 11.5502 6.11333 11.6555 6.37854 11.6555H9.37854V14.6555C9.37854 14.9207 9.4839 15.1751 9.67144 15.3626C9.85897 15.5502 10.1133 15.6555 10.3785 15.6555C10.6438 15.6555 10.8981 15.5502 11.0856 15.3626C11.2732 15.1751 11.3785 14.9207 11.3785 14.6555V11.6555H14.3785C14.6438 11.6555 14.8981 11.5502 15.0856 11.3626C15.2732 11.1751 15.3785 10.9207 15.3785 10.6555C15.3785 10.3903 15.2732 10.1359 15.0856 9.94841C14.8981 9.76087 14.6438 9.65551 14.3785 9.65551Z"
-                            />
-                        </svg>
-                    </ng-container>
-                </app-button>
+            <div class="flex flex-col-reverse sm:flex-row md:flex-wrap items-center xs:justify-between gap-6">
+                <div class="flex items-center justify-center gap-x-6">
+                    <app-button *ngIf="modeEditor" label="Ajouter" type="grey" (click)="openCourseModal()">
+                        <ng-container left-icon>
+                            <svg class="w-4 h-4 fill-dark dark:fill-white" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M10.3785 0.655518C8.40073 0.655518 6.46733 1.24201 4.82284 2.34082C3.17835 3.43963 1.89663 5.00142 1.13975 6.82868C0.382873 8.65594 0.18484 10.6666 0.570692 12.6064C0.956544 14.5462 1.90895 16.3281 3.30748 17.7266C4.706 19.1251 6.48783 20.0775 8.42764 20.4634C10.3674 20.8492 12.3781 20.6512 14.2054 19.8943C16.0326 19.1374 17.5944 17.8557 18.6932 16.2112C19.792 14.5667 20.3785 12.6333 20.3785 10.6555C20.3785 9.3423 20.1199 8.04194 19.6173 6.82868C19.1148 5.61543 18.3782 4.51303 17.4496 3.58445C16.521 2.65586 15.4186 1.91927 14.2054 1.41672C12.9921 0.914175 11.6918 0.655518 10.3785 0.655518ZM10.3785 18.6555C8.79629 18.6555 7.24957 18.1863 5.93398 17.3073C4.61839 16.4282 3.59301 15.1788 2.98751 13.717C2.38201 12.2552 2.22358 10.6466 2.53226 9.09479C2.84094 7.54294 3.60287 6.11748 4.72169 4.99866C5.84051 3.87984 7.26597 3.11792 8.81782 2.80923C10.3697 2.50055 11.9782 2.65898 13.44 3.26448C14.9018 3.86998 16.1512 4.89536 17.0303 6.21095C17.9093 7.52655 18.3785 9.07326 18.3785 10.6555C18.3785 12.7772 17.5357 14.8121 16.0354 16.3124C14.5351 17.8127 12.5003 18.6555 10.3785 18.6555ZM14.3785 9.65551H11.3785V6.65552C11.3785 6.3903 11.2732 6.13595 11.0856 5.94841C10.8981 5.76087 10.6438 5.65552 10.3785 5.65552C10.1133 5.65552 9.85897 5.76087 9.67144 5.94841C9.4839 6.13595 9.37854 6.3903 9.37854 6.65552V9.65551H6.37854C6.11333 9.65551 5.85897 9.76087 5.67144 9.94841C5.4839 10.1359 5.37854 10.3903 5.37854 10.6555C5.37854 10.9207 5.4839 11.1751 5.67144 11.3626C5.85897 11.5502 6.11333 11.6555 6.37854 11.6555H9.37854V14.6555C9.37854 14.9207 9.4839 15.1751 9.67144 15.3626C9.85897 15.5502 10.1133 15.6555 10.3785 15.6555C10.6438 15.6555 10.8981 15.5502 11.0856 15.3626C11.2732 15.1751 11.3785 14.9207 11.3785 14.6555V11.6555H14.3785C14.6438 11.6555 14.8981 11.5502 15.0856 11.3626C15.2732 11.1751 15.3785 10.9207 15.3785 10.6555C15.3785 10.3903 15.2732 10.1359 15.0856 9.94841C14.8981 9.76087 14.6438 9.65551 14.3785 9.65551Z"
+                                />
+                            </svg>
+                        </ng-container>
+                    </app-button>
+                    <app-button *ngIf="modeEditor" label="Copier" type="grey" (click)="openCopyCourseModal()">
+                        <ng-container left-icon>
+                            <svg class="w-4 h-4 fill-dark dark:fill-white" viewBox="0 0 74 92" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M37 21.9C36.3 21.2 35.4 21 34.5 21H4.6C2.6 21 0 22.2 0 24.1V87.4C0 89.4 2.6 91.9 4.6 91.9H52C54 91.9 55 89.3 55 87.4V41.8C55 40.9 54.9 40.1 54.2 39.4L37 21.9ZM46.9 42H34V29.1L46.9 42ZM8 84V28H27V45.2C27 47.2 28.8 49 30.8 49H48V84H8ZM73.4 18L56 0.6C55.4 0.1 54.8 0 54 0H24.1C22.4 0 21 0.9 21 2.5V12.1C21 13.8 22.3 15.1 24 15.1C25.7 15.1 27 13.7 27 12.1V6H48V22.9C48 24.6 49.4 26 51.1 26H68V63H63.9C62.2 63 60.9 64.3 60.9 66C60.9 67.7 62.3 69 63.9 69H71.5C73.2 69 74 67.5 74 65.8V20.2C74 19.4 73.9 18.6 73.4 18ZM54 7L66.9 20H54V7Z"
+                                />
+                            </svg>
+                        </ng-container>
+                    </app-button>
+                </div>
                 <div class="flex items-center justify-center gap-x-6">
                     <app-button label="Filtrer" (click)="openFilterModal()">
                         <ng-container left-icon>
@@ -87,6 +98,7 @@
                     <mwl-calendar-day-view *ngSwitchCase="calendarView.Day" [viewDate]="viewDate" [events]="events" [dayStartHour]="dayStartHour" [dayEndHour]="dayEndHour" [hourSegments]="hourSegments" locale="fr" (click)="dayViewClick()" (eventClicked)="showEventDetails($event)" [refresh]="refresh" [hourSegmentHeight]="15" [eventTitleTemplate]="customEventTemplate" (eventClicked)="onCourseClicked($event.event)"> </mwl-calendar-day-view>
                 </span>
             </div>
+            <app-copy-course-modal [isOpen]="copyCourseModalOpened" (closed)="closedCopyCourseModal($event)" [mapSpecializations]="mapSpecializations" />
             <app-edit-course-modal [isOpen]="editCourseModalOpened" [course]="selectedCourse" (closed)="closedEditCourseModal($event)" [mapTeachings]="mapTeachings" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" [mapSubGroups]="mapSubGroups" [mapGroups]="mapGroups" [mapSpecializations]="mapSpecializations" />
             <app-course-modal [isOpen]="courseModalOpened" (closed)="closedCourseModal($event)" [mapTeachings]="mapTeachings" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" [mapSubGroups]="mapSubGroups" [mapGroups]="mapGroups" [mapSpecializations]="mapSpecializations" />
             <app-filter-modal [isOpen]="filterModalOpened" (closed)="closedFilterModal()" [mapSpecializations]="mapSpecializations" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" (filterChanged)="onFilterChanged($event)" />

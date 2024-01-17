@@ -28,7 +28,7 @@ export class TimetableService {
             const token = this.authService.getToken();
             const headers = token ? { Authorization: `Bearer ${token}` } : {};
             const data = { username: user?.username, week_date_start: currentWeek[0], week_date_end: currentWeek[1] };
-            const response = await axios.post(`${environment.apiUrl}/courses/timetable/by-student`, data, { headers });
+            const response = await axios.post(`${environment.apiUrl}/courses/timetable/by-username`, data, { headers });
             return this.convertToCalendarEvents(Object.values(response.data));
         } catch (error) {
             console.error('Error loading data', error);
@@ -73,6 +73,10 @@ export class TimetableService {
     }
 
     convertToCalendarEvents(dataValues: any[]): CalendarEvent[] {
+        if (!Array.isArray(dataValues[0])) {
+            return [];
+        }
+
         return dataValues[0].map((course: Course) => ({
             title: `${course?.course_type} : ${course?.teaching?.title}`,
             start: new Date(course.starttime),

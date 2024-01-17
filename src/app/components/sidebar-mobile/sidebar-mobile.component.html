@@ -46,10 +46,10 @@
                     </app-sidebar-item>
                 </ul>
                 <div class="h-[0.5px] mt-4 bg-subtitle dark:bg-grey"></div>
-                <app-sidebar-toggle-item label="Gestion">
+                <app-sidebar-toggle-item *ngIf="userRole === Role.ADMIN || userRole === Role.TEACHER_RESPONSIBLE" label="Gestion">
                     <ng-container subitems>
                         <ul class="mt-2">
-                            <app-sidebar-item (click)="toggleDrawer()" label="Administration" [routePath]="routes.GESTION" [active]="isRouteActive(routes.GESTION)">
+                            <app-sidebar-item *ngIf="userRole === Role.ADMIN" (click)="toggleDrawer()" label="Administration" [routePath]="routes.GESTION" [active]="isRouteActive(routes.GESTION)">
                                 <ng-container icon>
                                     <svg class="w-5 h-5" [ngClass]="{ 'fill-primary': isRouteActive(routes.GESTION), 'fill-grey dark:fill-body-light': !isRouteActive(routes.GESTION) }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none">
                                         <g clip-path="url(#clip0_62_172)">
@@ -68,7 +68,7 @@
                                     </svg>
                                 </ng-container>
                             </app-sidebar-item>
-                            <app-sidebar-item (click)="toggleDrawer()" label="Emploi du temps" [routePath]="routes.GESTION_CALENDAR" [active]="isRouteActive(routes.GESTION_CALENDAR)">
+                            <app-sidebar-item *ngIf="userRole === Role.ADMIN || userRole === Role.TEACHER_RESPONSIBLE" (click)="toggleDrawer()" label="Emploi du temps" [routePath]="routes.GESTION_CALENDAR" [active]="isRouteActive(routes.GESTION_CALENDAR)">
                                 <ng-container icon>
                                     <svg class="w-5 h-5" [ngClass]="{ 'fill-primary': isRouteActive(routes.GESTION_CALENDAR), 'fill-grey dark:fill-body-light': !isRouteActive(routes.GESTION_CALENDAR) }" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path

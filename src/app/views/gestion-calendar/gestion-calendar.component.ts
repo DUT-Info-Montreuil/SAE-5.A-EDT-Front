@@ -39,6 +39,7 @@ export class GestionCalendarComponent {
     filterModalOpened: boolean = false;
     courseModalOpened: boolean = false;
     editCourseModalOpened: boolean = false;
+    copyCourseModalOpened: boolean = false;
     currentFilterType!: FilterType;
     currentFilterValue: any;
     formattedDate: string | null;
@@ -200,6 +201,17 @@ export class GestionCalendarComponent {
 
     closedEditCourseModal(reload?: boolean) {
         this.editCourseModalOpened = false;
+        if (reload) {
+            this.loadEvents();
+        }
+    }
+
+    openCopyCourseModal() {
+        this.copyCourseModalOpened = true;
+    }
+
+    closedCopyCourseModal(reload?: boolean) {
+        this.copyCourseModalOpened = false;
         if (reload) {
             this.loadEvents();
         }

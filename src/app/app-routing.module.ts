@@ -11,6 +11,7 @@ import { GestionComponent } from './views/gestion/gestion.component';
 import { SettingsComponent } from './views/settings/settings.component';
 import { GestionCalendarComponent } from './views/gestion-calendar/gestion-calendar.component';
 import { AuthGuard } from './guards/auth.guard';
+import { Role } from './models/enums/Role';
 
 const routes: Routes = [
     {
@@ -24,8 +25,8 @@ const routes: Routes = [
             { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
             { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
             { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard] },
-            { path: 'gestion', component: GestionComponent, canActivate: [AuthGuard] },
-            { path: 'gestion-calendar', component: GestionCalendarComponent, canActivate: [AuthGuard] },
+            { path: 'gestion', component: GestionComponent, canActivate: [AuthGuard], data: { requiredRoles: [Role.ADMIN] } },
+            { path: 'gestion-calendar', component: GestionCalendarComponent, canActivate: [AuthGuard], data: { requiredRoles: [Role.ADMIN, Role.TEACHER_RESPONSIBLE] } },
             { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
             // ici on mettra les autres routes de l'application

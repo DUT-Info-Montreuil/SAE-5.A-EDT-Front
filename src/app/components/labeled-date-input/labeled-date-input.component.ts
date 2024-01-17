@@ -15,6 +15,7 @@ export class LabeledDateInputComponent implements AfterViewInit, OnDestroy {
     @Input() placeholder = '';
     @Input() hasAction = false;
     @Input() control!: FormControl;
+    @Input() startOfWeek = false;
     @ViewChild('dateInput') dateInput!: ElementRef;
 
     private flatpickrInstance: any;
@@ -30,18 +31,34 @@ export class LabeledDateInputComponent implements AfterViewInit, OnDestroy {
             allowInput: true,
             altFormat: 'd/m/Y',
             dateFormat: 'Y-m-d',
+            onOpen: (selectedDates: Date[]) => {
+                if (this.startOfWeek && selectedDates[0]) {
+                    this.adjustDateToStartOfWeek(selectedDates[0]);
+                }
+            },
         });
 
         this.controlValueChangesSubscription = this.control.valueChanges.subscribe((value) => {
             if (this.flatpickrInstance && value) {
+                let newDate = new Date(value);
+
+                if (this.startOfWeek) {
+                    newDate = this.adjustDateToStartOfWeek(newDate);
+                }
+
                 const flatpickrDate = this.flatpickrInstance.selectedDates[0];
-                const newDate = new Date(value);
 
                 if (!flatpickrDate || flatpickrDate.getTime() !== newDate.getTime()) {
                     this.flatpickrInstance.setDate(newDate, true);
                 }
             }
         });
+    }
+
+    private adjustDateToStartOfWeek(date: Date): Date {
+        const day = date.getDay();
+        const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+        return new Date(date.setDate(diff));
     }
 
     ngOnDestroy() {

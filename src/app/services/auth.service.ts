@@ -18,17 +18,43 @@ export class AuthService {
             const { username, password } = loginForm.value;
             const response = await axios.post(`${environment.apiUrl}/auth/login`, { username, password });
 
-            const user = new User({ username });
+            let user: User = new User({ username });
+            user = await this.getRole(user, response.data.token);
 
             if (rememberMe) {
                 localStorage.setItem('auth', JSON.stringify({ user, token: response.data.token }));
             } else {
                 sessionStorage.setItem('auth', JSON.stringify({ user, token: response.data.token }));
             }
+
             this.store.dispatch(fromUser.setUser({ user, token: response.data.token }));
 
             return response.data;
         } catch (error) {
+            throw error;
+        }
+    }
+
+    async getRole(user: User, token: string): Promise<User> {
+        try {
+            const response = await axios.post(
+                `${environment.apiUrl}/users/get-roles`,
+                { username: user.username },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            if (response.data && response.data.role) {
+                user.role = response.data.role;
+                return user;
+            } else {
+                throw new Error('Role information is missing in the response.');
+            }
+        } catch (error) {
+            console.error('Error fetching user role:', error);
+            this.store.dispatch(fromUser.resetUser());
+            this.logout();
             throw error;
         }
     }

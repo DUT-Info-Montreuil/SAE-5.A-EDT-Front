@@ -312,6 +312,7 @@ export class CourseModalComponent {
             subgroupsArray.clear();
         }
 
+        this.searchText = '';
         this.filterType = FilterType.Teaching;
         this.modalStep = 0;
         this.selectedTeaching = undefined;

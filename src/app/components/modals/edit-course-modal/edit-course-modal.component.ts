@@ -242,6 +242,19 @@ export class EditCourseModalComponent {
         this.modalStep--;
     }
 
+    goToDeleteConfirmation() {
+        this.modalStep = 2;
+    }
+
+    cancelDeletion() {
+        this.modalStep = 0;
+    }
+
+    confirmDeletion() {
+        this.deleteCourse();
+        this.modalStep = 0;
+    }
+
     updateNumberOfResults(): void {
         switch (this.filterType) {
             case FilterType.Teaching:
@@ -305,7 +318,7 @@ export class EditCourseModalComponent {
         this.closed.emit(reload);
     }
 
-    private filterMap<T extends Personal | Room | Subgroup | Teaching>(map: Map<string, T>, searchText: string): Array<{ key: string; value: T }> {
+    private filterMap<T extends Personal | Room | Subgroup | Teaching | Specialization | Group>(map: Map<string, T>, searchText: string): Array<{ key: string; value: T }> {
         const filtered = Array.from(map)
             .filter(([key, value]) => !searchText || value.getSearchValue().toLowerCase().includes(searchText))
             .map(([key, value]) => ({ key, value }));
@@ -332,6 +345,7 @@ export class EditCourseModalComponent {
             subgroupsArray.clear();
         }
 
+        this.searchText = '';
         this.filterType = FilterType.Teaching;
         this.modalStep = 0;
         this.selectedTeaching = undefined;
