@@ -5,6 +5,7 @@ import { NumberSymbol } from '@angular/common';
 import { Course, User } from 'src/app/models/entities';
 import { TimetableService } from 'src/app/services/timetable.service';
 import { Subject } from 'rxjs';
+import { Role } from 'src/app/models/enums';
 
 @Component({
     selector: 'app-dashboard',
@@ -20,6 +21,7 @@ export class DashboardComponent {
     user?: User;
     courses?: Course[];
     refresh = new Subject<void>();
+    Role = Role;
 
     constructor(private dateFormattingService: DateFormattingService, private authService: AuthService, private timetableService: TimetableService) {
         this.formattedDate = this.dateFormattingService.format(new Date());

@@ -85,7 +85,7 @@ export class EditCourseModalComponent {
 
         if (this.selectedSpecialization) {
             this.filteredGroups = Array.from(this.mapGroups.values())
-                .filter((group) => group.promotion === this.selectedSpecialization!.id)
+                .filter((group) => group.promotion === this.selectedSpecialization!.id && group.department_id === this.selectedSpecialization!.department_id)
                 .map((group) => ({ key: group.id!, value: group }));
         }
 
