@@ -1,6 +1,6 @@
 {
   "name": "sae-5.a-edt-front",
-  "version": "0.0.13-snapshot.6",
+  "version": "0.0.15",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -20,17 +20,17 @@
     "@angular/router": "^16.2.11",
     "@ngrx/store": "^16.3.0",
     "@tailwindcss/line-clamp": "^0.4.4",
-    "angularx-flatpickr": "^7.3.0",
-    "axios": "^1.6.2",
-    "flatpickr": "^4.6.13",
     "angular-calendar": "^0.31.0",
     "angular-input-mask": "^0.0.7",
+    "angularx-flatpickr": "^7.3.0",
+    "axios": "^1.6.2",
     "date-fns": "^2.29.3",
+    "flatpickr": "^4.6.13",
     "flowbite": "^2.0.0",
     "moment": "^2.29.4",
+    "ng-click-outside": "^9.0.1",
     "ngrx-store-localstorage": "^16.0.0",
     "rxjs": "~7.8.0",
-    "tailwindcss": "^3.3.3",
     "tailwindcss-inner-border": "^0.2.0",
     "tslib": "^2.3.0",
     "webpack": "^5.89.0",
@@ -43,6 +43,7 @@
     "@angular/compiler-cli": "^16.2.0",
     "@types/flatpickr": "^3.1.2",
     "@types/jasmine": "~4.3.0",
+    "autoprefixer": "^10.4.16",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -50,6 +51,8 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "moment-locales-webpack-plugin": "^1.2.0",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
     "typescript": "~5.1.3"
   }
 }

@@ -10,14 +10,14 @@
             </div>
             <textarea
                 *ngIf="typeInput === 'textarea'"
-                class="w-full bg-subtitle font-aileron text-grey placeholder:text-grey dark:text-body-light placeholder:dark:text-body-light dark:bg-grey-dark border-1 border-transparent rounded-lg focus:ring-primary"
+                class="w-full bg-subtitle font-aileron text-grey placeholder:text-grey dark:text-body-light placeholder:dark:text-body-light dark:bg-grey-dark !ring-2 ring-transparent !border-0 !inner-border-0 rounded-lg focus:ring-primary"
                 rows="3"
                 [ngClass]="{
                 'pr-8': !hasAction,
                 'pr-2': !hasAction,
                 'pl-12': hasIcon,
                 'pl-4': !hasIcon,
-                'border-2 border-danger focus:border-danger focus:ring-transparent' : (control.touched && control.invalid),
+                'focus:!ring-danger' : (control.touched && control.invalid),
             }"
                 value=""
                 [placeholder]="placeholder"
@@ -25,13 +25,13 @@
             ></textarea>
             <input
                 *ngIf="typeInput !== 'textarea'"
-                class="w-full bg-subtitle font-aileron text-grey placeholder:text-grey dark:text-body-light placeholder:dark:text-body-light dark:bg-grey-dark border-1 border-transparent rounded-lg focus:ring-primary"
+                class="w-full bg-subtitle font-aileron text-grey placeholder:text-grey dark:text-body-light placeholder:dark:text-body-light dark:bg-grey-dark !ring-2 ring-transparent !border-0 !inner-border-0 rounded-lg focus:ring-primary"
                 [ngClass]="{
                     'pr-8': !hasAction,
                     'pr-2': !hasAction,
                     'pl-12': hasIcon,
                     'pl-4': !hasIcon,
-                    'border-2 border-danger focus:border-danger focus:ring-transparent' : (control.touched && control.invalid),
+                    'focus:!ring-danger' : (control.touched && control.invalid),
                 }"
                 value=""
                 [placeholder]="placeholder"

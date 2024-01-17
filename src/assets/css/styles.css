@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./calendar.css";
+
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -28,8 +30,16 @@
         @apply bg-primary rounded-md text-white text-base leading-none font-bold font-aileron transition duration-300 hover:bg-primary-hover hover:-translate-y-1;
     }
 
+    .btn-secondary {
+        @apply bg-primary-dark dark:bg-subtitle-dark rounded-md text-white text-base leading-none font-bold font-aileron transition duration-300 hover:bg-body hover:dark:bg-grey-dark hover:-translate-y-1;
+    }
+
     .btn-grey {
         @apply bg-subtitle dark:bg-medium rounded-md text-body dark:text-white text-base leading-none font-bold font-aileron transition duration-300 hover:bg-subtitle-hover dark:hover:bg-subtitle-dark hover:-translate-y-1;
+    }
+
+    .btn-danger {
+        @apply bg-danger rounded-md text-white text-base leading-none font-bold font-aileron transition duration-300 hover:bg-danger-dark hover:-translate-y-1;
     }
 
     .btn-primary-inverse {
@@ -42,89 +52,5 @@
     .scrollbar-hide {
         -ms-overflow-style: none;
         scrollbar-width: none;
-    }
-    .date-picker > input {
-        @apply border-transparent;
-    }
-
-    .date-picker.has-errors > input {
-        @apply border-danger border-0;
-    }
-
-    .date-picker.has-errors > input:focus {
-        @apply border-danger border-2 ring-0 outline-none;
-    }
-
-    .flatpickr-calendar.open {
-        @apply shadow-card rounded-lg;
-    }
-
-    .flatpickr-calendar.open .flatpickr-months {
-        @apply flex justify-between items-center px-2 py-2 bg-primary-light-1 rounded-t-lg;
-    }
-
-    .flatpickr-calendar.open .flatpickr-current-month {
-        @apply w-auto;
-    }
-
-    .flatpickr-calendar.open .flatpickr-months .flatpickr-monthDropdown-months,
-    .flatpickr-calendar.open .flatpickr-months .numInput {
-        @apply capitalize font-rubik text-base font-medium text-white;
-    }
-
-    .flatpickr-calendar.open .flatpickr-months .flatpickr-month .flatpickr-current-month,
-    .flatpickr-calendar.open .flatpickr-months .flatpickr-month .flatpickr-current-month {
-        @apply font-rubik text-base font-medium text-white;
-    }
-
-    .flatpickr-calendar.open .flatpickr-months .flatpickr-prev-month,
-    .flatpickr-calendar.open .flatpickr-months .flatpickr-next-month {
-        @apply relative fill-white;
-    }
-
-    .flatpickr-calendar.open .flatpickr-months .flatpickr-prev-month:hover,
-    .flatpickr-calendar.open .flatpickr-months .flatpickr-next-month:hover {
-        @apply bg-primary-light-1 rounded-full;
-    }
-
-    .flatpickr-calendar.open .flatpickr-months .flatpickr-prev-month:hover > svg,
-    .flatpickr-calendar.open .flatpickr-months .flatpickr-next-month:hover > svg {
-        @apply fill-body;
-    }
-
-    .flatpickr-calendar.open .flatpickr-weekdays {
-        @apply bg-primary-light-1 capitalize;
-    }
-
-    .flatpickr-calendar.open span.flatpickr-weekday {
-        @apply font-rubik text-sm font-normal text-white;
-    }
-
-    .flatpickr-calendar.open .flatpickr-days {
-        @apply font-rubik text-sm font-normal py-2;
-    }
-
-    .flatpickr-calendar.open .flatpickr-day {
-        @apply font-rubik text-sm font-normal text-body transition duration-300 rounded-md border-0 flex justify-center items-center aspect-square;
-    }
-
-    .flatpickr-day:hover {
-        @apply !bg-primary-light-1 rounded-md border-0;
-    }
-
-    .flatpickr-day.today {
-        @apply bg-primary-light-1 rounded-md border-0;
-    }
-
-    .flatpickr-day.today:hover {
-        @apply bg-primary-light-1 text-body;
-    }
-
-    .flatpickr-calendar.open .flatpickr-day.selected {
-        @apply bg-primary-light-1 text-white rounded-md border-0;
-    }
-
-    .flatpickr-calendar.open .flatpickr-day.selected:hover {
-        @apply bg-primary;
     }
 }

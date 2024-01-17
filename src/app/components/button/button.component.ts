@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-button',
@@ -17,15 +17,18 @@ export class ButtonComponent {
     @Input() paddingY = 'py-2';
     @Input() hasText = true;
     @Input() shadow = true;
-    @Output() click = new EventEmitter<void>();
 
     get customClass(): string[] {
         let computedClass: string[] = [this.fontSize, this.paddingX, this.paddingY];
 
         if (this.type === 'inverse') {
             computedClass.push('btn-primary-inverse');
+        } else if (this.type === 'secondary') {
+            computedClass.push('btn-secondary');
         } else if (this.type === 'grey') {
             computedClass.push('btn-grey');
+        } else if (this.type === 'danger') {
+            computedClass.push('btn-danger');
         } else {
             computedClass.push('btn-primary');
         }

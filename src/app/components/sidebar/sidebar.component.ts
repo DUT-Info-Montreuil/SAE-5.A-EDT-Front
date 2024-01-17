@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { Role } from 'src/app/models/enums';
 import { RoutePaths } from 'src/app/routes';
+import { AuthService } from 'src/app/services/auth.service';
 import { selectOverflowYHidden, selectSideBarCollapsed, setSideBarCollapsed } from 'src/app/store/layout';
 
 @Component({
@@ -35,11 +37,16 @@ export class SidebarComponent {
     public routes = RoutePaths;
     public sideBarCollapsed: boolean = false;
     public overflowYHidden: boolean = false;
+    public userRole?: Role;
+    public Role = Role;
 
     private sidebarCollapsedSubscription!: Subscription;
     private overflowYHiddenSubscription!: Subscription;
 
-    constructor(private store: Store, private router: Router, private route: ActivatedRoute) {}
+    constructor(private store: Store, private router: Router, private authService: AuthService) {
+        this.authService.checkAuthentication();
+        this.userRole = this.authService.getUser()?.role;
+    }
 
     ngOnInit() {
         this.sidebarCollapsedSubscription = this.store.select(selectSideBarCollapsed).subscribe((value) => {
@@ -60,6 +67,6 @@ export class SidebarComponent {
     }
 
     isRouteActive(routePath: string): boolean {
-        return this.router.url.startsWith(routePath);
+        return this.router.url === routePath;
     }
 }
