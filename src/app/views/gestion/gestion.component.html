@@ -1,7 +1,7 @@
 <div class="p-4 md:p-8 flex flex-col gap-y-8">
     <!-- Div stylisée avec background gris et arrondie -->
     <div class="w-full flex justify-between items-center">
-        <h3 class="text-body">Gestion EDT</h3>
+        <h3 class="text-body">Administration</h3>
         <h3 class="font-normal text-medium dark:text-medium text-right">{{ formattedDate }}</h3>
     </div>
     <div>
@@ -105,11 +105,11 @@
                                     </svg>
                                 </div>
                                 <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
-                                    <p><strong>Nom :</strong> {{ eleve[1] }} <br /></p>
+                                    <p><strong>Nom :</strong> {{ eleve[0] }} <br /></p>
                                 </div>
 
                                 <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
-                                    <p><strong>Prénom :</strong> {{ eleve[0] }} <br /></p>
+                                    <p><strong>Prénom :</strong> {{ eleve[1] }} <br /></p>
                                 </div>
                             </div>
                         </div>
@@ -167,11 +167,11 @@
                                     </svg>
                                 </div>
                                 <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
-                                    <p><strong>Nom :</strong> {{ eleve[1] }} <br /></p>
+                                    <p><strong>Nom :</strong> {{ eleve[0] }} <br /></p>
                                 </div>
 
                                 <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
-                                    <p><strong>Prénom :</strong> {{ eleve[0] }} <br /></p>
+                                    <p><strong>Prénom :</strong> {{ eleve[1] }} <br /></p>
                                 </div>
                             </div>
                         </div>
@@ -380,7 +380,10 @@
                                 </div>
                                 <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
                                     <p><strong>Nom :</strong> {{ prof[0] }} <br /></p>
-                                    <p><strong>Nom :</strong> {{ prof[1] }} <br /></p>
+                                </div>
+
+                                <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
+                                    <p><strong>Prénom :</strong> {{ prof[1] }} <br /></p>
                                 </div>
                             </div>
                         </div>
@@ -439,7 +442,10 @@
                                 </div>
                                 <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
                                     <p><strong>Nom :</strong> {{ prof[0] }} <br /></p>
-                                    <p><strong>Nom :</strong> {{ prof[1] }} <br /></p>
+                                </div>
+
+                                <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
+                                    <p><strong>Prénom :</strong> {{ prof[1] }} <br /></p>
                                 </div>
                             </div>
                         </div>
