@@ -17,8 +17,6 @@ export class AddEleveModalComponent {
   jsonEleve = {
     last_name: '',
     first_name: '',
-    mail: '',
-    phone_number: '',
     subgroup_id: '',
     group_id: '',
     department_id: '',

@@ -12,10 +12,10 @@ export class UpdateProfModalComponent {
     id: '',
     first_name: '',
     last_name: '',
-    mail: '',
-    phone_number: '',
-    personal_code: ''
+    personal_code: '',
+    roles: ''
   };  
+  isRoleClicked = false
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
   @Output() closed = new EventEmitter<boolean>();
 
@@ -31,10 +31,19 @@ export class UpdateProfModalComponent {
   close(reload: boolean = false) {
       this.closed.emit(reload);
   }
-
+  toggleRoleClicked() {
+    this.isRoleClicked = !this.isRoleClicked;
+  }
+  
   submit() {
-    console.log("prof = " + JSON.stringify(this.prof, null, 2));
-
+    switch (this.prof.roles) {
+      case 'Professeur':
+       this.prof.roles = 'TEACHER'
+       break;
+       case 'Responsable':
+         this.prof.roles = 'TEACHER_RESPONSIBLE'
+         break;
+   }
 
     this.formSubmitted.emit(this.prof);
     this.close()
