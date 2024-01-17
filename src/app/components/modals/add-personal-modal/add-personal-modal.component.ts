@@ -14,10 +14,10 @@ export class AddPersonalModalComponent {
   jsonProf = {
     "first_name": '',
     "last_name": '',
-    "mail": '',
     "personal_code": '',
-    "phone_number": '',
-    "password": ''
+    "password": '',
+    "id": '',
+    "roles": ''
   }
 
   constructor(private fb: FormBuilder) {
@@ -29,7 +29,16 @@ export class AddPersonalModalComponent {
 }
 
   submit () {
+    switch (this.jsonProf.roles) {
+       case 'Professeur':
+        this.jsonProf.roles = 'TEACHER'
+        break;
+        case 'Responsable':
+          this.jsonProf.roles = 'TEACHER_RESPONSIBLE'
+          break;
+    }
     this.formSubmitted.emit(this.jsonProf);
     this.close()
   }
+ 
 }

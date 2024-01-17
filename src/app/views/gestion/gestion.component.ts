@@ -62,8 +62,7 @@ export class GestionComponent {
   jsonEleve:any  = {
     last_name: '',
     first_name: '',
-    mail: '',
-    phone_number: '',
+   
     group_id: '',
     department_id: '',
     id: '',
@@ -72,10 +71,9 @@ export class GestionComponent {
   jsonProf: any = {
     first_name: '',
     last_name: '',
-    mail: '',
-    phone_number: '',
     personal_code: '',
-    id: ''
+    id: '',
+    roles: ''
   };
   jsonSalle: any = {
     code: '',
@@ -168,7 +166,7 @@ export class GestionComponent {
         const confirmation = window.confirm("Êtes-vous sûr de vouloir effectuer cette action ? "+
                       "\n Cela supprimera definitivement "+ item[0] + " "+item[1]);
         if (confirmation) {
-          await axios.delete(`${environment.apiUrl}/students/delete/${item[6]}`, { headers });
+          await axios.delete(`${environment.apiUrl}/students/delete/${item[4]}`, { headers });
         }
         break;
       case 'ressource':
@@ -188,9 +186,9 @@ export class GestionComponent {
         break;
       case 'professeur':
         const confirmation4 = window.confirm("Êtes-vous sûr de vouloir effectuer cette action ? "+
-                      "\n Cela supprimera definitivement "+ item[1] + " "+item[2]);
+                      "\n Cela supprimera definitivement "+ item[0] + " "+item[1]);
         if (confirmation4) {
-          await axios.delete(`${environment.apiUrl}/personals/delete/${item[4]}`, { headers });
+          await axios.delete(`${environment.apiUrl}/personals/delete/${item[3]}`, { headers });
         }
       
         break;
@@ -250,7 +248,7 @@ export class GestionComponent {
     }
 
     let response = await axios.post(`${environment.apiUrl}/students/subgroups`,jsonData, { headers });
-    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
+    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -286,7 +284,7 @@ export class GestionComponent {
       "department_id": `${this.selectedDepartment[0]}`,
     }
     let response = await axios.post(`${environment.apiUrl}/students/groups`,jsonData, { headers });
-    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
+    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -307,12 +305,11 @@ export class GestionComponent {
     });
 
     this.listeSubGroup = []
-    let response1 = await axios.post(`${environment.apiUrl}/subgroups/identify`,jsonData, { headers });
+    let response1 = await axios.get(`${environment.apiUrl}/subgroups/by-group/${valuesArray[0]}`, { headers });
     let data1 = response1.data.map((subgroup: any) => [subgroup.id, subgroup.name, subgroup.group_id]);
     data1.forEach((tab: string[]) => {
       this.listeSubGroup.push(tab);
     });  
-    console.log('subgroup = '+ this.listeSubGroup)
   }
 
   async departmentClick(department: any) {   
@@ -325,7 +322,7 @@ export class GestionComponent {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
     let response = await axios.get(`${environment.apiUrl}/students/department/${department[0]}`, { headers });
-    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
+    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -364,7 +361,7 @@ export class GestionComponent {
       this.listeGroup.push(tab);
     });
     let response1 = await axios.post(`${environment.apiUrl}/students/promotion-and-department`, jsonData, {headers}) 
-    let data1 = response1.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
+    let data1 = response1.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data1.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -424,7 +421,7 @@ export class GestionComponent {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     this.listeEleves = [];
     let response = await axios.get(`${environment.apiUrl}/students/get`, {headers});
-    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.id,eleve.department_id]);
+    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.group_id, eleve.subgroup_id, eleve.id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -469,7 +466,7 @@ export class GestionComponent {
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     let response = await axios.get(`${environment.apiUrl}/personals/get`, {headers});
-    let data = response.data.map((prof: any) => [ prof.first_name, prof.last_name, prof.mail, prof.phone_number, prof.personal_code, prof.id]);
+    let data = response.data.map((prof: any) => [ prof.first_name, prof.last_name, prof.personal_code, prof.id, prof.roles]);
     data.forEach((tab: string[]) => {
       this.listeProfs.push(tab);
     });
@@ -633,8 +630,6 @@ export class GestionComponent {
       "first_name": `${eleve.first_name}`,
       "group_id": `${parseInt(eleve.group_id, 10)}`,
       "last_name": `${eleve.last_name}`,
-      "mail": `${eleve.mail}`,
-      "phone_number": `${eleve.phone_number}`,
       "subgroup_id": `${parseInt(eleve.subgroup_id, 10)}`,
       "password": `${eleve.password}`
     }
@@ -659,9 +654,7 @@ export class GestionComponent {
     const jsonProf = {
       "first_name":`${formData.first_name}`,
       "last_name":`${formData.last_name}`,
-      "mail":`${formData.mail}`,
       "personal_code":`${formData.personal_code}`,
-      "phone_number":`${formData.phone_number}`,
       "password":`${formData.password}`
     }
     await axios.put(`${environment.apiUrl}/personals/add`, jsonProf, { headers })

@@ -12,14 +12,6 @@
           <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonProf.first_name">
         </div>
         <div class="ml-2">
-          <p>Mail :</p>
-          <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="email" [(ngModel)]="jsonProf.mail">
-        </div>
-        <div class="mr-2">
-          <p>Téléphone :</p>
-          <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonProf.phone_number">
-        </div>
-        <div class="ml-2">
           <p>Mot de passe :</p>
           <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonProf.password">
         </div>
@@ -27,9 +19,15 @@
             <p>Code :</p>
             <input class="rounded-xl bg-gray-50 dark:bg-grey-dark" type="text" [(ngModel)]="jsonProf.personal_code">
           </div>
-                      
-               
-      </div>       
+          <div class="ml-2">
+            <p>Rôle :</p>
+              <select class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonProf.roles">
+                <option>Professeur</option>
+                <option>Responsable</option>
+                <option>ADMIN</option>
+              </select>
+          </div>
+        </div>       
           
     <div class="flex justify-center items-center p-6 space-x-2 border-gray-200 rounded-b">
         <app-button label="Valider" type="primary" (click)="submit()"></app-button>

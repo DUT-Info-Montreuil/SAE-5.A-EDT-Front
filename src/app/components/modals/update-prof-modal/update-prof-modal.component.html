@@ -17,18 +17,23 @@
               <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="prof.last_name">
             </div>
             <div class="ml-2">
-              <p>Mail :</p>
-              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="prof.mail">
-            </div>
-            <div class="mr-2">
-              <p>Téléphone  :</p>
-              <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="prof.phone_number">
-            </div>
-            <div class="ml-2">
               <p>Code :</p>
               <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="prof.personal_code">
             </div>
-                 
+            <div class="ml-2">
+              <p>Rôle :</p>
+              <ng-container *ngIf="!isRoleClicked; else selectField">
+                <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="prof.roles" readonly (click)="toggleRoleClicked()">
+              </ng-container>
+            
+              <ng-template #selectField>
+                <select class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="prof.roles" (blur)="toggleRoleClicked()">
+                  <option>Professeur</option>
+                  <option>Responsable</option>
+                  <option>ADMIN</option>
+                </select>
+              </ng-template>
+            </div>           
       </div>       
           
     <div class="flex justify-center items-center p-6 space-x-2 border-gray-200 rounded-b">

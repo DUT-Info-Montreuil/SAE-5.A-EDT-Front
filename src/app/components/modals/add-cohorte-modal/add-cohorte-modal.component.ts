@@ -70,7 +70,7 @@ export class AddCohorteModalComponent {
           const professeurTrouve = this.listePersonel.find(professeur =>
             (professeur[0] +' '+ professeur[1] )=== this.department.personal_id 
         );
-        this.department.personal_id = professeurTrouve[5]
+        this.department.personal_id = professeurTrouve[3]
           this.formSubmitted.emit(this.department);
 
             break;
@@ -93,5 +93,6 @@ export class AddCohorteModalComponent {
         default:
             break;
     }
+    this.close()
   }
 }
