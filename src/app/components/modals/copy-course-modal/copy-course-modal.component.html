@@ -1,0 +1,59 @@
+<app-modal [isOpen]="isOpen" (closed)="close($event)" maxWidth="w-full max-w-3xl">
+    <div class="flex flex-col font-aileron">
+        <div class="flex bg-subtitle-secondary dark:bg-grey-dark rounded-t-xl p-6 border-b-0.5 border-medium dark:border-grey">
+            <h3 class="!text-primary">Copier un ou plusieurs cours</h3>
+        </div>
+        <div class="flex flex-col items-center px-6 xs:px-12">
+            <app-search-input class="w-full py-4" (textChanged)="onSearchChange($event)" placeholder="Recherchez..."> </app-search-input>
+        </div>
+        <div class="flex flex-col border-y-0.5 border-medium dark:border-grey">
+            <div class="flex flex-wrap content-start gap-4 p-4 overflow-y-auto overflow-x-hidden h-64 sm:h-auto">
+                <button
+                    *ngFor="let promo of filteredSpecializations"
+                    (click)="selectSpecialization(promo.value)"
+                    [ngClass]="{
+                        'bg-primary text-white': isSelected(promo.value),
+                        'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelected(promo.value)
+                    }"
+                    class="flex items-center justify-center px-4 py-1 border-1 border-subtitle dark:border-grey rounded-full transition-colors duration-300 focus:outline-none gap-x-2"
+                >
+                    <svg *ngIf="isSelected(promo.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
+                    </svg>
+                    <div *ngIf="!isSelected(promo.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
+                    <span class="whitespace-nowrap">{{ promo.value.code }}</span>
+                </button>
+            </div>
+            <div class="h-auto flex items-end px-6 py-4">
+                <span class="text-medium text-sm">{{ numberOfResults }} résultats</span>
+            </div>
+        </div>
+        <div class="flex flex-col gap-6 p-6">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <div class="flex gap-x-2 items-center">
+                    <input type="radio" name="copyOption" value="day" [(ngModel)]="copyOption" />
+                    <span>Copier une journée</span>
+                </div>
+                <div class="flex gap-x-2 items-center">
+                    <input type="radio" name="copyOption" value="week" [(ngModel)]="copyOption" />
+                    <span>Copier une semaine</span>
+                </div>
+            </div>
+
+            <div *ngIf="copyOption === 'day'" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <app-labeled-date-input [control]="dayToCopyControl" model="day_to_copy" label="Date de copie" placeholder="Selectionnez une date" />
+                <app-labeled-date-input [control]="dayToPasteControl" model="day_to_paste" label="Date à coller" placeholder="Selectionnez une date" />
+            </div>
+            <div *ngIf="copyOption === 'week'" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <app-labeled-date-input [control]="weekToCopyControl" model="week_to_copy_start" label="Date de copie" placeholder="Selectionnez une date" [startOfWeek]="true" />
+                <app-labeled-date-input [control]="weekToPasteControl" model="week_to_paste_start" label="Date à coller" placeholder="Selectionnez une date" [startOfWeek]="true" />
+            </div>
+        </div>
+        <div class="flex flex-col-reverse sm:flex-row justify-center sm:justify-end items-center gap-y-4 p-6 border-t-0.5 border-medium dark:border-grey">
+            <div class="flex gap-x-4">
+                <app-button label="Annuler" type="grey" (click)="close(false)"></app-button>
+                <app-button label="Valider" type="primary" (click)="submit()"></app-button>
+            </div>
+        </div>
+    </div>
+</app-modal>

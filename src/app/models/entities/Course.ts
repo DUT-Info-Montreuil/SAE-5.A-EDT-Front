@@ -13,11 +13,6 @@ export class Course extends AbstractModel {
     course_type?: CourseType;
 
     /**
-     * Relations Id
-     */
-    teaching_id?: string;
-
-    /**
      * Relations
      */
     teaching?: Teaching;

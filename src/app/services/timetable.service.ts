@@ -3,8 +3,8 @@ import { CalendarEvent, CalendarView } from 'angular-calendar';
 import axios from 'axios';
 import { format, startOfWeek, endOfWeek, startOfDay, endOfDay } from 'date-fns';
 import { environment } from 'src/environments/environment';
-import { Course } from '../models/entities';
-import { FilterType } from '../models/enums';
+import { Course, User } from '../models/entities';
+import { CourseType, FilterType } from '../models/enums';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -20,7 +20,23 @@ export class TimetableService {
         return [format(startOfWeek(viewDate), 'yyyy-MM-dd'), format(endOfWeek(viewDate), 'yyyy-MM-dd')];
     }
 
-    async getEvents(filterType: FilterType, filterValue: any, view: CalendarView, viewDate: Date): Promise<CalendarEvent[]> {
+    async getEventsByUser(user: User, viewDate: Date): Promise<CalendarEvent[]> {
+        const currentWeek = this.getCurrentTimeDisplay(viewDate);
+
+        try {
+            this.authService.checkAuthentication();
+            const token = this.authService.getToken();
+            const headers = token ? { Authorization: `Bearer ${token}` } : {};
+            const data = { username: user?.username, week_date_start: currentWeek[0], week_date_end: currentWeek[1] };
+            const response = await axios.post(`${environment.apiUrl}/courses/timetable/by-username`, data, { headers });
+            return this.convertToCalendarEvents(Object.values(response.data));
+        } catch (error) {
+            console.error('Error loading data', error);
+            return [];
+        }
+    }
+
+    async getEvents(filterType: FilterType, filterValue: any, viewDate: Date): Promise<CalendarEvent[]> {
         if (!filterType || !filterValue) {
             return [];
         }
@@ -57,8 +73,12 @@ export class TimetableService {
     }
 
     convertToCalendarEvents(dataValues: any[]): CalendarEvent[] {
+        if (!Array.isArray(dataValues[0])) {
+            return [];
+        }
+
         return dataValues[0].map((course: Course) => ({
-            title: course?.teaching?.title,
+            title: `${course?.course_type} : ${course?.teaching?.title}`,
             start: new Date(course.starttime),
             end: new Date(course.endtime),
             draggable: false,

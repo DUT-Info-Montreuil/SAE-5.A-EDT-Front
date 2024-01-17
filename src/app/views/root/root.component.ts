@@ -13,8 +13,8 @@ import * as fromRoot from '../../store/index';
 export class RootComponent implements OnInit {
     constructor(private authService: AuthService, private router: Router, private store: Store<fromRoot.LayoutState>) {}
 
-    ngOnInit(): void {
-        this.authService.checkAuthentication();
+    async ngOnInit(): Promise<void> {
+        await this.authService.checkAuthentication();
 
         this.store.pipe(select(fromRoot.selectDarkMode)).subscribe((darkMode) => {
             if (darkMode) {

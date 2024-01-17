@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { environment } from 'src/environments/environment';
-import { Course } from '../models/entities';
+import { Course, Teaching } from '../models/entities';
 import { FormGroup } from '@angular/forms';
 import { AuthService } from './auth.service';
 
@@ -32,11 +32,25 @@ export class CourseService {
         return await axios.patch(`${environment.apiUrl}/courses/update/${course?.id}`, course, { headers });
     }
 
+    async copyCourse(copyOption: string, form: FormGroup) {
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.post(`${environment.apiUrl}/courses/copy/${copyOption}`, form, { headers });
+    }
+
     async getTeachings() {
         this.authService.checkAuthentication();
         const token = this.authService.getToken();
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
         return await axios.get(`${environment.apiUrl}/teachings/get`, { headers });
+    }
+
+    async getGroups() {
+        this.authService.checkAuthentication();
+        const token = this.authService.getToken();
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        return await axios.get(`${environment.apiUrl}/groups/get`, { headers });
     }
 
     async getSubGroups() {
@@ -56,7 +70,7 @@ export class CourseService {
             starttime: this.formatDateTime(date, starttime),
             endtime: this.formatDateTime(date, endtime),
             course_type,
-            teaching_id: teaching_id.toString(),
+            teaching: new Teaching({ id: teaching_id }),
             personals,
             rooms,
             subgroups,

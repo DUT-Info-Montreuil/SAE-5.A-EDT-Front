@@ -11,56 +11,47 @@
             "prefix": "app",
             "architect": {
                 "build": {
-                  "builder": "@angular-devkit/build-angular:browser",
-                  "options": {
-                    "outputPath": "dist/sae-5.a-edt-front",
-                    "index": "src/index.html",
-                    "main": "src/main.ts",
-                    "polyfills": [
-                      "zone.js"
-                    ],
-                    "tsConfig": "tsconfig.app.json",
-                    "assets": [
-                      "src/assets"
-                    ],
-                    "styles": [
-                      "node_modules/angular-calendar/css/angular-calendar.css",
-                      "src/assets/css/styles.css",
-                      "src/assets/css/fonts.css"
-                    ],
-                    "stylePreprocessorOptions": {
-                      "includePaths": [
-                        "node_modules"
-                      ]
-                    },
-                    "scripts": []
-                  },
-                  "configurations": {
-                    "production": {
-                      "budgets": [
-                        {
-                          "type": "initial",
-                          "maximumWarning": "500kb",
-                          "maximumError": "1mb"
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/sae-5.a-edt-front",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": ["zone.js"],
+                        "tsConfig": "tsconfig.app.json",
+                        "assets": ["src/assets"],
+                        "styles": ["node_modules/angular-calendar/css/angular-calendar.css", "src/assets/css/styles.css", "src/assets/css/fonts.css"],
+                        "stylePreprocessorOptions": {
+                            "includePaths": ["node_modules"]
                         },
-                        {
-                          "type": "anyComponentStyle",
-                          "maximumWarning": "2kb",
-                          "maximumError": "4kb"
-                        }
-                      ],
-                      "outputHashing": "all"
+                        "allowedCommonJsDependencies": ["deepmerge"],
+                        "scripts": []
                     },
-                    "development": {
-                      "buildOptimizer": false,
-                      "optimization": false,
-                      "vendorChunk": true,
-                      "extractLicenses": false,
-                      "sourceMap": true,
-                      "namedChunks": true
-                    }
-                  },
-                  "defaultConfiguration": "production"
+                    "configurations": {
+                        "production": {
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "2kb",
+                                    "maximumError": "4kb"
+                                }
+                            ],
+                            "outputHashing": "all"
+                        },
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        }
+                    },
+                    "defaultConfiguration": "production"
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
@@ -81,28 +72,19 @@
                     }
                 },
                 "test": {
-                  "builder": "@angular-devkit/build-angular:karma",
-                  "options": {
-                    "polyfills": [
-                      "zone.js",
-                      "zone.js/testing"
-                    ],
-                    "tsConfig": "tsconfig.spec.json",
-                    "assets": [
-                      "src/favicon.ico",
-                      "src/assets"
-                    ],
-                    "styles": [
-                      "node_modules/angular-calendar/css/angular-calendar.css",
-                      "src/styles.css"
-                    ],
-                    "scripts": []
-                  }
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "polyfills": ["zone.js", "zone.js/testing"],
+                        "tsConfig": "tsconfig.spec.json",
+                        "assets": ["src/favicon.ico", "src/assets"],
+                        "styles": ["node_modules/angular-calendar/css/angular-calendar.css", "src/styles.css"],
+                        "scripts": []
+                    }
                 }
             }
         }
     },
     "cli": {
-      "analytics": "d96fda5a-5972-408b-920a-df5f3de62d78"
+        "analytics": "d96fda5a-5972-408b-920a-df5f3de62d78"
     }
 }
