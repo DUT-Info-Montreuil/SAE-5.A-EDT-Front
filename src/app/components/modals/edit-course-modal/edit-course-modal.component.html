@@ -1,0 +1,205 @@
+<app-modal [isOpen]="isOpen" (closed)="close($event)" maxWidth="w-full max-w-3xl">
+    <div *ngIf="modalStep === 0" class="flex flex-col gap-y-6 font-aileron">
+        <div class="flex bg-subtitle-secondary dark:bg-grey-dark rounded-t-xl p-6 border-b-0.5 border-medium dark:border-grey">
+            <h3 class="!text-primary">Modification du cours</h3>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6">
+            <app-dropdown [control]="coursetypeControl" model="course_type" [options]="course_types" label="Type de cours" placeholder="Selectionne un type" />
+            <app-labeled-date-input class="col-span-1" [control]="dateControl" model="date" label="Date" placeholder="Selectionnez une date" />
+            <app-labeled-time-input [control]="starttimeControl" model="starttime" label="Heure de début" placeholder="Selectionnez une heure de début" />
+            <app-labeled-time-input [control]="endtimeControl" model="endtime" label="Heure de fin" placeholder="Selectionnez une heure de fin" />
+            <app-labeled-icon-input class="sm:col-span-2" [control]="descriptionControl" model="description" label="Description" placeholder="Entrez une description" typeInput="textarea">
+                <ng-container icon>
+                    <svg class="fill-primary w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_738_24)">
+                            <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V9H19V19ZM19 7H5V5H19V7ZM7 11H12V16H7V11Z" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_738_24">
+                                <rect width="24" height="24" fill="white" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </ng-container>
+            </app-labeled-icon-input>
+        </div>
+        <div class="col-span-2 flex flex-wrap items-center justify-center sm:justify-between gap-4 p-6 border-t-0.5 border-medium dark:border-grey">
+            <app-button label="Supprimer" type="danger" (click)="goToDeleteConfirmation()"></app-button>
+            <div class="flex gap-x-4">
+                <app-button label="Annuler" type="grey" (click)="close(false)"></app-button>
+                <app-button label="Suivant" type="primary" (click)="onNextStep()"></app-button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="modalStep === 1" class="flex flex-col font-aileron">
+        <div class="flex bg-subtitle-secondary dark:bg-grey-dark rounded-t-xl p-6 border-b-0.5 border-medium dark:border-grey">
+            <h3 class="!text-primary">Modification du cours</h3>
+        </div>
+        <div class="flex flex-col gap-y-4 pt-4">
+            <div class="flex flex-col items-center px-6 xs:px-12">
+                <app-search-input class="w-full" (textChanged)="onSearchChange($event)" placeholder="Recherchez..."> </app-search-input>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:h-96 border-t-0.5 border-medium dark:border-grey">
+                <div class="overflow-y-hidden overflow-x-hidden py-4 bg-[#f7f8f9] dark:bg-[#2D2D2D] basis-1/3">
+                    <div class="flex flex-col flex-wrap gap-2">
+                        <a class="grow flex items-center py-2 px-3 mx-2 rounded-lg transition-all duration-100 hover:bg-subtitle dark:hover:bg-grey-dark cursor-pointer text-medium hover:text-body hover:dark:text-light" [ngClass]="{ '!text-body dark:!text-light bg-subtitle dark:bg-grey-dark': filterType === FilterType.Teaching }" (click)="setActiveFilterType(FilterType.Teaching)">
+                            <span class="font-semibold uppercase text-sm">Enseignement</span>
+                        </a>
+                        <a class="grow flex items-center py-2 px-3 mx-2 rounded-lg transition-all duration-100 hover:bg-subtitle dark:hover:bg-grey-dark cursor-pointer text-medium hover:text-body hover:dark:text-light" [ngClass]="{ '!text-body dark:!text-light bg-subtitle dark:bg-grey-dark': filterType === FilterType.Room }" (click)="setActiveFilterType(FilterType.Room)">
+                            <span class="font-semibold uppercase text-sm">Salles</span>
+                        </a>
+                        <a class="grow flex items-center py-2 px-3 mx-2 rounded-lg transition-all duration-100 hover:bg-subtitle dark:hover:bg-grey-dark cursor-pointer text-medium hover:text-body hover:dark:text-light" [ngClass]="{ '!text-body dark:!text-light bg-subtitle dark:bg-grey-dark': filterType === FilterType.Personal }" (click)="setActiveFilterType(FilterType.Personal)">
+                            <span class="font-semibold uppercase text-sm">Professeurs</span>
+                        </a>
+                        <a class="grow flex items-center py-2 px-3 mx-2 rounded-lg transition-all duration-100 hover:bg-subtitle dark:hover:bg-grey-dark cursor-pointer text-medium hover:text-body hover:dark:text-light" [ngClass]="{ '!text-body dark:!text-light bg-subtitle dark:bg-grey-dark': filterType === FilterType.SubGroup }" (click)="setActiveFilterType(FilterType.SubGroup)">
+                            <span class="font-semibold uppercase text-sm">Groupes</span>
+                        </a>
+                    </div>
+                </div>
+                <div *ngIf="filterType === FilterType.Teaching" class="flex flex-wrap content-start gap-4 p-4 sm:basis-2/3 overflow-y-auto overflow-x-hidden h-64 sm:h-auto">
+                    <button
+                        *ngFor="let teaching of filteredTeachings"
+                        (click)="selectTeaching(teaching.value)"
+                        [ngClass]="{
+                            'bg-primary text-white': isSelectedTeaching(teaching.value),
+                            'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelectedTeaching(teaching.value)
+                        }"
+                        class="flex items-center justify-center px-4 py-1 border-1 border-subtitle dark:border-grey rounded-full transition-colors duration-300 focus:outline-none gap-x-2"
+                    >
+                        <svg *ngIf="isSelectedTeaching(teaching.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
+                        </svg>
+                        <div *ngIf="!isSelectedTeaching(teaching.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
+                        <span class="whitespace-nowrap">{{ teaching.value.title }}</span>
+                    </button>
+                </div>
+
+                <div *ngIf="filterType === FilterType.Room" class="flex flex-wrap content-start gap-4 p-4 sm:basis-2/3 overflow-y-auto overflow-x-hidden h-64 sm:h-auto">
+                    <button
+                        *ngFor="let room of filteredRooms"
+                        (click)="toggleSelection(room.value)"
+                        [ngClass]="{
+                            'bg-primary text-white': isSelected(room.value),
+                            'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelected(room.value)
+                        }"
+                        class="flex items-center justify-center px-4 py-1 border-1 border-subtitle dark:border-grey rounded-full transition-colors duration-300 focus:outline-none gap-x-2"
+                    >
+                        <svg *ngIf="isSelected(room.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
+                        </svg>
+                        <div *ngIf="!isSelected(room.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
+                        <span class="whitespace-nowrap">{{ room.value.code }}</span>
+                    </button>
+                </div>
+
+                <div *ngIf="filterType === FilterType.Personal" class="flex flex-wrap content-start gap-4 p-4 sm:basis-2/3 overflow-y-auto overflow-x-hidden h-64 sm:h-auto">
+                    <button
+                        *ngFor="let personal of filteredPersonals"
+                        (click)="toggleSelection(personal.value)"
+                        [ngClass]="{
+                            'bg-primary text-white': isSelected(personal.value),
+                            'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelected(personal.value)
+                        }"
+                        class="flex items-center justify-center px-4 py-1 border-1 border-subtitle dark:border-grey rounded-full transition-colors duration-300 focus:outline-none gap-x-2"
+                    >
+                        <svg *ngIf="isSelected(personal.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
+                        </svg>
+                        <div *ngIf="!isSelected(personal.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
+                        <span class="whitespace-nowrap">{{ personal.value.personal_code }}</span>
+                    </button>
+                </div>
+
+                <div *ngIf="filterType === FilterType.SubGroup" class="flex flex-col gap-y-4 p-4 sm:basis-2/3 overflow-y-auto overflow-x-hidden h-64 sm:h-auto">
+                    <div class="text-sm">
+                        <ul class="flex flex-wrap gap-x-2">
+                            <li>
+                                <span class="text-body dark:text-light cursor-pointer hover:text-primary hover:dark:text-primary transition-all duration-200 uppercase" (click)="resetToStep(0)"> {{ selectedSpecialization?.code ? "Promotion " + selectedSpecialization?.code : "Promotions" }}</span>
+                            </li>
+                            <li *ngIf="groupStep > 0" class="flex gap-x-2">
+                                <span class="text-medium">></span>
+                                <span class="text-body dark:text-light cursor-pointer hover:text-primary hover:dark:text-primary transition-all duration-200 uppercase" (click)="resetToStep(1)"> {{ selectedGroup?.type ? "TD" + selectedGroup?.type : "TD" }} </span>
+                            </li>
+                            <li *ngIf="groupStep > 1" class="flex gap-x-2">
+                                <span class="text-medium">></span>
+                                <span class="text-body dark:text-light cursor-pointer hover:text-primary hover:dark:text-primary transition-all duration-200 uppercase">TP</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-wrap content-start gap-4">
+                        <ng-container *ngIf="groupStep === 0">
+                            <button
+                                *ngFor="let specialization of filteredSpecializations"
+                                (click)="selectSpecialization(specialization.value)"
+                                [ngClass]="{
+                                    'bg-primary text-white': isSelected(specialization.value),
+                                    'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelected(specialization.value)
+                                }"
+                                class="flex items-center justify-center px-4 py-1 border-1 border-subtitle dark:border-grey rounded-full transition-colors duration-300 focus:outline-none gap-x-2"
+                            >
+                                <svg *ngIf="isSelected(specialization.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
+                                </svg>
+                                <div *ngIf="!isSelected(specialization.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
+                                <span class="whitespace-nowrap">{{ specialization.value.code }}</span>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="groupStep === 1">
+                            <button
+                                *ngFor="let group of filteredGroups"
+                                (click)="selectGroup(group.value)"
+                                [ngClass]="{
+                                    'bg-primary text-white': isSelected(group.value),
+                                    'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelected(group.value)
+                                }"
+                                class="flex items-center justify-center px-4 py-1 border-1 border-subtitle dark:border-grey rounded-full transition-colors duration-300 focus:outline-none gap-x-2"
+                            >
+                                <svg *ngIf="isSelected(group.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
+                                </svg>
+                                <div *ngIf="!isSelected(group.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
+                                <span class="whitespace-nowrap">{{ group.value.type }}</span>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="groupStep === 2">
+                            <button
+                                *ngFor="let subGroup of filteredSubGroups"
+                                (click)="toggleSelection(subGroup.value)"
+                                [ngClass]="{
+                                    'bg-primary text-white': isSelected(subGroup.value),
+                                    'bg-white dark:bg-grey-dark text-body dark:text-light': !isSelected(subGroup.value)
+                                }"
+                                class="flex items-center justify-center px-4 py-1 border-1 border-subtitle dark:border-grey rounded-full transition-colors duration-300 focus:outline-none gap-x-2"
+                            >
+                                <svg *ngIf="isSelected(subGroup.value)" class="w-4 h-4 fill-white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" />
+                                </svg>
+                                <div *ngIf="!isSelected(subGroup.value)" class="border-subtitle dark:border-light border-1 rounded-full w-4 h-4"></div>
+                                <span class="whitespace-nowrap">{{ subGroup.value.name }}</span>
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col-reverse sm:flex-row justify-center sm:justify-between items-center gap-y-4 p-6 border-t-0.5 border-medium dark:border-grey">
+            <span class="text-medium text-sm">{{ numberOfResults }} résultats</span>
+            <div class="flex gap-x-4">
+                <app-button label="Retour" type="grey" (click)="onBeforeStep()"></app-button>
+                <app-button label="Valider" type="primary" (click)="submit()"></app-button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="modalStep === 2" class="flex flex-col gap-y-6 font-aileron">
+        <div class="flex bg-subtitle-secondary dark:bg-grey-dark rounded-t-xl p-6 border-b-0.5 border-medium dark:border-grey">
+            <h3 class="!text-primary">Confirmer la suppression</h3>
+        </div>
+        <div class="p-6">
+            <p>Êtes-vous sûr de vouloir supprimer ce cours ? Cette action est irréversible.</p>
+        </div>
+        <div class="flex justify-end gap-4 p-6">
+            <app-button label="Annuler" type="grey" (click)="cancelDeletion()"></app-button>
+            <app-button label="Supprimer" type="danger" (click)="confirmDeletion()"></app-button>
+        </div>
+    </div>
+</app-modal>

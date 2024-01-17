@@ -2,118 +2,70 @@ name: CI/CD Pipeline
 # Pipeline by Adil CHETOUANI
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-      - release/*
-      - feature/*
-  workflow_dispatch:
+    push:
+        branches:
+            - main
+            - develop
+            - release/*
+            - feature/*
+    workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20
 
-      - name: Install Dependencies
-        run: |
-          npm install
+            - name: Install Dependencies
+              run: |
+                  npm install --legacy-peer-deps
 
-      - name: Build
-        run: |
-          npm run build
+            - name: Build
+              run: |
+                  npm run build
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
+    package:
+        needs: build
+        runs-on: ubuntu-latest
+        permissions:
+            packages: write
+            contents: write
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20
 
-  package:
-    needs: test
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: write
+            - name: Set Git Bot
+              run: |
+                  git config user.name "Adil Bot"
+                  git config user.email "onizuka9361@gmail.com"
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+            - name: Update local branch
+              run: |
+                  BRANCH_NAME=${GITHUB_REF#refs/heads/}
+                  git pull origin ${BRANCH_NAME} --rebase
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
+            - name: Version handling
+              run: |
+                  BRANCH_NAME=${GITHUB_REF#refs/heads/}
+                  VERSION=$(node -p "require('./package.json').version")
 
-      - name: Set Git Bot
-        run: |
-          git config user.name "Adil Bot"
-          git config user.email "onizuka9361@gmail.com"
+                  if [[ "$BRANCH_NAME" == "develop" ]]; then
+                    npm version patch
+                  elif [[ "$BRANCH_NAME" =~ ^feature/ ]]; then
+                    npm version prerelease --preid=snapshot
+                  fi
 
-      - name: Update local branch
-        run: |
-          BRANCH_NAME=${GITHUB_REF#refs/heads/}
-          git pull origin ${BRANCH_NAME} --rebase
-
-      - name: Version handling
-        run: |
-          BRANCH_NAME=${GITHUB_REF#refs/heads/}
-          VERSION=$(node -p "require('./package.json').version")
-
-          if [[ "$BRANCH_NAME" == "develop" ]]; then
-            npm version patch
-          elif [[ "$BRANCH_NAME" =~ ^feature/ ]]; then
-            npm version prerelease --preid=snapshot
-          fi
-
-          git push origin $BRANCH_NAME --tags
-
-  deploy_release:
-    needs: package
-    runs-on: ubuntu-latest
-    environment:
-      name: Release Deployment
-    permissions:
-      packages: write
-      contents: write
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: Set Git Bot
-        run: |
-          git config user.name "Adil Bot"
-          git config user.email "onizuka9361@gmail.com"
-
-      - name: Update local branch
-        run: |
-          git checkout develop
-          git pull origin develop --rebase
-
-      - name: Create Release Branch
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          RELEASE_BRANCH="release/$VERSION"
-          git checkout -b $RELEASE_BRANCH develop
-          git push origin $RELEASE_BRANCH --tags
+                  git push origin $BRANCH_NAME --tags

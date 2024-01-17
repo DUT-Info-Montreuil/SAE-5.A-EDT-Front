@@ -1,0 +1,107 @@
+<div class="p-4 md:p-8 flex flex-col gap-y-8">
+    <div class="w-full flex justify-between items-center">
+        <h3 class="text-body">Gestion emploi du temps</h3>
+        <h3 class="font-normal text-medium dark:text-medium text-right">{{ formattedDate }}</h3>
+    </div>
+    <div id="calendar-container" class="">
+        <app-alert color="success" [title]="alertTitle" [message]="alertMessage" (close)="alertMessage = ''; alertTitle = ''"></app-alert>
+        <div class="flex flex-col gap-y-6">
+            <div id="cal-buttons" class="flex flex-col items-center">
+                <div id="cal-date-nav-button" class="flex flex-row items-center gap-x-3">
+                    <button id="previous" [excludeDays]="excludeDays" mwlCalendarPreviousView [(viewDate)]="viewDate" [view]="view">
+                        <svg class="fill-primary w-4 h-4" viewBox="0 0 25 25" fill="none" [ngClass]="{ 'rotate-180': null }">
+                            <path
+                                d="M12.5 0C19.4033 0 25 5.59667 25 12.5C25 19.4033 19.4033 25 12.5 25C5.59667 25 0 19.4033 0 12.5C0 5.59667 5.59667 0 12.5 0ZM8.58333 13.0917L13.9883 18.4967C14.1455 18.6485 14.356 18.7325 14.5745 18.7306C14.793 18.7287 15.002 18.641 15.1565 18.4865C15.311 18.332 15.3987 18.123 15.4006 17.9045C15.4025 17.686 15.3185 17.4755 15.1667 17.3183L10.3483 12.5L15.1667 7.68167C15.3185 7.5245 15.4025 7.314 15.4006 7.0955C15.3987 6.877 15.311 6.66799 15.1565 6.51348C15.002 6.35898 14.793 6.27134 14.5745 6.26944C14.356 6.26754 14.1455 6.35153 13.9883 6.50333L8.58333 11.9083C8.5055 11.9858 8.44389 12.0781 8.40211 12.1797C8.36033 12.2813 8.33922 12.3902 8.34 12.5C8.33945 12.6098 8.36067 12.7186 8.40244 12.8202C8.4442 12.9217 8.50569 13.014 8.58333 13.0917Z"
+                            />
+                        </svg>
+                    </button>
+                    <h3 class="flex text-body w-56 md:w-64 justify-center">{{ viewDate | calendarDate : view + "ViewTitle" : "fr" }}</h3>
+                    <button id="next" [excludeDays]="excludeDays" mwlCalendarNextView [(viewDate)]="viewDate" [view]="view">
+                        <svg class="fill-primary w-4 h-4" viewBox="0 0 25 25" fill="none" transform="rotate(180)">
+                            <path
+                                d="M12.5 0C19.4033 0 25 5.59667 25 12.5C25 19.4033 19.4033 25 12.5 25C5.59667 25 0 19.4033 0 12.5C0 5.59667 5.59667 0 12.5 0ZM8.58333 13.0917L13.9883 18.4967C14.1455 18.6485 14.356 18.7325 14.5745 18.7306C14.793 18.7287 15.002 18.641 15.1565 18.4865C15.311 18.332 15.3987 18.123 15.4006 17.9045C15.4025 17.686 15.3185 17.4755 15.1667 17.3183L10.3483 12.5L15.1667 7.68167C15.3185 7.5245 15.4025 7.314 15.4006 7.0955C15.3987 6.877 15.311 6.66799 15.1565 6.51348C15.002 6.35898 14.793 6.27134 14.5745 6.26944C14.356 6.26754 14.1455 6.35153 13.9883 6.50333L8.58333 11.9083C8.5055 11.9858 8.44389 12.0781 8.40211 12.1797C8.36033 12.2813 8.33922 12.3902 8.34 12.5C8.33945 12.6098 8.36067 12.7186 8.40244 12.8202C8.4442 12.9217 8.50569 13.014 8.58333 13.0917Z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="flex flex-col-reverse sm:flex-row md:flex-wrap items-center xs:justify-between gap-6">
+                <div class="flex items-center justify-center gap-x-6">
+                    <app-button *ngIf="modeEditor" label="Ajouter" type="grey" (click)="openCourseModal()">
+                        <ng-container left-icon>
+                            <svg class="w-4 h-4 fill-dark dark:fill-white" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M10.3785 0.655518C8.40073 0.655518 6.46733 1.24201 4.82284 2.34082C3.17835 3.43963 1.89663 5.00142 1.13975 6.82868C0.382873 8.65594 0.18484 10.6666 0.570692 12.6064C0.956544 14.5462 1.90895 16.3281 3.30748 17.7266C4.706 19.1251 6.48783 20.0775 8.42764 20.4634C10.3674 20.8492 12.3781 20.6512 14.2054 19.8943C16.0326 19.1374 17.5944 17.8557 18.6932 16.2112C19.792 14.5667 20.3785 12.6333 20.3785 10.6555C20.3785 9.3423 20.1199 8.04194 19.6173 6.82868C19.1148 5.61543 18.3782 4.51303 17.4496 3.58445C16.521 2.65586 15.4186 1.91927 14.2054 1.41672C12.9921 0.914175 11.6918 0.655518 10.3785 0.655518ZM10.3785 18.6555C8.79629 18.6555 7.24957 18.1863 5.93398 17.3073C4.61839 16.4282 3.59301 15.1788 2.98751 13.717C2.38201 12.2552 2.22358 10.6466 2.53226 9.09479C2.84094 7.54294 3.60287 6.11748 4.72169 4.99866C5.84051 3.87984 7.26597 3.11792 8.81782 2.80923C10.3697 2.50055 11.9782 2.65898 13.44 3.26448C14.9018 3.86998 16.1512 4.89536 17.0303 6.21095C17.9093 7.52655 18.3785 9.07326 18.3785 10.6555C18.3785 12.7772 17.5357 14.8121 16.0354 16.3124C14.5351 17.8127 12.5003 18.6555 10.3785 18.6555ZM14.3785 9.65551H11.3785V6.65552C11.3785 6.3903 11.2732 6.13595 11.0856 5.94841C10.8981 5.76087 10.6438 5.65552 10.3785 5.65552C10.1133 5.65552 9.85897 5.76087 9.67144 5.94841C9.4839 6.13595 9.37854 6.3903 9.37854 6.65552V9.65551H6.37854C6.11333 9.65551 5.85897 9.76087 5.67144 9.94841C5.4839 10.1359 5.37854 10.3903 5.37854 10.6555C5.37854 10.9207 5.4839 11.1751 5.67144 11.3626C5.85897 11.5502 6.11333 11.6555 6.37854 11.6555H9.37854V14.6555C9.37854 14.9207 9.4839 15.1751 9.67144 15.3626C9.85897 15.5502 10.1133 15.6555 10.3785 15.6555C10.6438 15.6555 10.8981 15.5502 11.0856 15.3626C11.2732 15.1751 11.3785 14.9207 11.3785 14.6555V11.6555H14.3785C14.6438 11.6555 14.8981 11.5502 15.0856 11.3626C15.2732 11.1751 15.3785 10.9207 15.3785 10.6555C15.3785 10.3903 15.2732 10.1359 15.0856 9.94841C14.8981 9.76087 14.6438 9.65551 14.3785 9.65551Z"
+                                />
+                            </svg>
+                        </ng-container>
+                    </app-button>
+                    <app-button *ngIf="modeEditor" label="Copier" type="grey" (click)="openCopyCourseModal()">
+                        <ng-container left-icon>
+                            <svg class="w-4 h-4 fill-dark dark:fill-white" viewBox="0 0 74 92" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M37 21.9C36.3 21.2 35.4 21 34.5 21H4.6C2.6 21 0 22.2 0 24.1V87.4C0 89.4 2.6 91.9 4.6 91.9H52C54 91.9 55 89.3 55 87.4V41.8C55 40.9 54.9 40.1 54.2 39.4L37 21.9ZM46.9 42H34V29.1L46.9 42ZM8 84V28H27V45.2C27 47.2 28.8 49 30.8 49H48V84H8ZM73.4 18L56 0.6C55.4 0.1 54.8 0 54 0H24.1C22.4 0 21 0.9 21 2.5V12.1C21 13.8 22.3 15.1 24 15.1C25.7 15.1 27 13.7 27 12.1V6H48V22.9C48 24.6 49.4 26 51.1 26H68V63H63.9C62.2 63 60.9 64.3 60.9 66C60.9 67.7 62.3 69 63.9 69H71.5C73.2 69 74 67.5 74 65.8V20.2C74 19.4 73.9 18.6 73.4 18ZM54 7L66.9 20H54V7Z"
+                                />
+                            </svg>
+                        </ng-container>
+                    </app-button>
+                </div>
+                <div class="flex items-center justify-center gap-x-6">
+                    <app-button label="Filtrer" (click)="openFilterModal()">
+                        <ng-container left-icon>
+                            <svg class="w-4 h-3 fill-white" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 12H10C10.55 12 11 11.55 11 11C11 10.45 10.55 10 10 10H8C7.45 10 7 10.45 7 11C7 11.55 7.45 12 8 12ZM0 1C0 1.55 0.45 2 1 2H17C17.55 2 18 1.55 18 1C18 0.45 17.55 0 17 0H1C0.45 0 0 0.45 0 1ZM4 7H14C14.55 7 15 6.55 15 6C15 5.45 14.55 5 14 5H4C3.45 5 3 5.45 3 6C3 6.55 3.45 7 4 7Z" />
+                            </svg>
+                        </ng-container>
+                    </app-button>
+                    <app-button [label]="modeEditor ? 'Simple' : 'Editeur'" type="secondary" (click)="changeMode()">
+                        <ng-container left-icon>
+                            <svg class="w-4 h-3 fill-white rotate-45" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M16.323 14.8481L14.848 16.2601C14.7781 16.3271 14.6899 16.3719 14.5946 16.3888C14.4993 16.4058 14.4011 16.3941 14.3124 16.3552C14.2237 16.3164 14.1485 16.2522 14.0963 16.1706C14.0441 16.0891 14.0172 15.9939 14.019 15.8971V1.00011C14.019 0.448108 13.555 0.000108321 13.003 0.000108321H13.011C12.88 0.000237682 12.7504 0.0262429 12.6295 0.0766298C12.5087 0.127017 12.3989 0.200792 12.3067 0.293717C12.2144 0.386641 12.1414 0.496884 12.0918 0.618109C12.0423 0.739335 12.0172 0.869155 12.018 1.00011V15.8821C12.018 16.3231 11.472 16.5481 11.154 16.2421L9.691 14.8381C9.59587 14.7478 9.48383 14.6772 9.36134 14.6304C9.23884 14.5835 9.1083 14.5613 8.97719 14.565C8.84609 14.5687 8.71701 14.5983 8.59737 14.652C8.47773 14.7058 8.36987 14.7826 8.28 14.8781L8.275 14.8801C8.09612 15.0714 8.00023 15.3257 8.00829 15.5875C8.01635 15.8492 8.1277 16.0972 8.318 16.2771L11.658 19.4541C12.0308 19.8058 12.5244 20.0012 13.0369 19.9999C13.5494 19.9986 14.042 19.8007 14.413 19.4471L17.693 16.2981C17.8815 16.1186 17.9917 15.872 17.9996 15.6117C18.0074 15.3515 17.9124 15.0987 17.735 14.9081L17.725 14.8981C17.6364 14.8025 17.5297 14.7254 17.4112 14.6711C17.2927 14.6169 17.1647 14.5866 17.0344 14.5819C16.9041 14.5773 16.7742 14.5984 16.6522 14.6441C16.5301 14.6898 16.4182 14.7591 16.323 14.8481ZM0.275004 5.10211L0.265004 5.09211C0.0876474 4.90153 -0.00741111 4.6487 0.00045167 4.38848C0.00831445 4.12826 0.118464 3.88163 0.307004 3.70211L3.587 0.553108C3.95808 0.199297 4.4507 0.00125259 4.96341 -0.000235692C5.47612 -0.00172397 5.96989 0.193457 6.343 0.545108L9.683 3.72311C9.87339 3.90272 9.98489 4.15042 9.99314 4.41203C10.0014 4.67363 9.9057 4.92786 9.727 5.11911L9.724 5.12211C9.63462 5.21775 9.52716 5.29471 9.40784 5.34854C9.28851 5.40237 9.1597 5.432 9.02885 5.43572C8.898 5.43944 8.76771 5.41718 8.64552 5.37021C8.52334 5.32324 8.41168 5.25251 8.317 5.16211L6.863 3.75811C6.79228 3.68982 6.70304 3.64385 6.60638 3.62592C6.50972 3.60799 6.40993 3.6189 6.31942 3.65727C6.22892 3.69565 6.1517 3.75981 6.09739 3.84175C6.04309 3.92369 6.01409 4.0198 6.014 4.11811V19.0001C6.014 19.2655 5.90859 19.5199 5.72096 19.7076C5.53333 19.8952 5.27885 20.0006 5.0135 20.0006C4.74816 20.0006 4.49367 19.8952 4.30604 19.7076C4.11841 19.5199 4.013 19.2655 4.013 19.0001V4.10311C4.01322 4.00514 3.98465 3.90927 3.93085 3.8274C3.87704 3.74553 3.80037 3.68128 3.71036 3.64261C3.62035 3.60394 3.52096 3.59257 3.42454 3.6099C3.32812 3.62723 3.23891 3.67251 3.168 3.74011L1.677 5.15211C1.58179 5.24112 1.46993 5.31046 1.34786 5.35614C1.22578 5.40182 1.09588 5.42295 0.965619 5.4183C0.835358 5.41365 0.707295 5.38333 0.588782 5.32907C0.470268 5.27481 0.363636 5.19768 0.275004 5.10211Z"
+                                />
+                            </svg>
+                        </ng-container>
+                    </app-button>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <div *ngIf="view === calendarView.Day" class="cal-day-headers !rounded-t-xl cursor-pointer" (click)="setView(calendarView.Week)">
+                    <div [ngClass]="{ 'text-primary': isToday(viewDate), 'text-body dark:text-light': !isToday(viewDate) }" class="hover:text-primary dark:hover:text-primary py-4 flex flex-col items-center transition-all duration-300">
+                        <b>{{ viewDate | date : "EEEE" : "fr" }}</b>
+                        <span>{{ viewDate | date : "d MMM" : "fr" }}</span>
+                    </div>
+                </div>
+                <ng-template #customEventTemplate let-event="event">
+                    <app-custom-event-calendar [event]="event" />
+                </ng-template>
+                <span [ngSwitch]="view">
+                    <mwl-calendar-week-view
+                        *ngSwitchCase="calendarView.Week"
+                        [viewDate]="viewDate"
+                        [events]="events"
+                        [excludeDays]="excludeDays"
+                        [dayStartHour]="dayStartHour"
+                        [dayEndHour]="dayEndHour"
+                        [hourSegments]="hourSegments"
+                        locale="fr"
+                        (eventClicked)="showEventDetails($event)"
+                        (dayHeaderClicked)="changeDay($event.day.date)"
+                        [refresh]="refresh"
+                        [hourSegmentHeight]="15"
+                        [eventTitleTemplate]="customEventTemplate"
+                        (eventClicked)="onCourseClicked($event.event)"
+                    ></mwl-calendar-week-view>
+                    <mwl-calendar-day-view *ngSwitchCase="calendarView.Day" [viewDate]="viewDate" [events]="events" [dayStartHour]="dayStartHour" [dayEndHour]="dayEndHour" [hourSegments]="hourSegments" locale="fr" (click)="dayViewClick()" (eventClicked)="showEventDetails($event)" [refresh]="refresh" [hourSegmentHeight]="15" [eventTitleTemplate]="customEventTemplate" (eventClicked)="onCourseClicked($event.event)"> </mwl-calendar-day-view>
+                </span>
+            </div>
+            <app-copy-course-modal [isOpen]="copyCourseModalOpened" (closed)="closedCopyCourseModal($event)" [mapSpecializations]="mapSpecializations" />
+            <app-edit-course-modal [isOpen]="editCourseModalOpened" [course]="selectedCourse" (closed)="closedEditCourseModal($event)" [mapTeachings]="mapTeachings" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" [mapSubGroups]="mapSubGroups" [mapGroups]="mapGroups" [mapSpecializations]="mapSpecializations" />
+            <app-course-modal [isOpen]="courseModalOpened" (closed)="closedCourseModal($event)" [mapTeachings]="mapTeachings" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" [mapSubGroups]="mapSubGroups" [mapGroups]="mapGroups" [mapSpecializations]="mapSpecializations" />
+            <app-filter-modal [isOpen]="filterModalOpened" (closed)="closedFilterModal()" [mapSpecializations]="mapSpecializations" [mapPersonals]="mapPersonals" [mapRooms]="mapRooms" (filterChanged)="onFilterChanged($event)" />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<li #menuItem class="flex overflow-x-hidden">
+    <a
+        [routerLink]="routePath"
+        class="grow flex items-center py-2.5 my-0.5 mx-4 rounded-lg transition-all duration-100"
+        [ngClass]="{
+            'justify-center': collapse,
+            'justify-start': !collapse,
+            'bg-light dark:bg-grey-dark': active,
+            'hover:bg-light dark:hover:bg-grey-dark': !active,
+            'pl-3 mx-4': !collapse,
+            'mx-2': collapse
+        }"
+    >
+        <ng-content select="[icon]"></ng-content>
+        <span *ngIf="!collapse" class="ml-3 font-aileron text-sm truncate" [ngClass]="{ 'text-body dark:text-white font-semibold': active, 'text-grey dark:text-body-light': !active }">{{ label }}</span>
+    </a>
+    <div #tooltip [ngClass]="{ hidden: !collapse }" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-aileron font-bold text-grey dark:text-white bg-subtitle dark:bg-grey-dark rounded-lg shadow-sm opacity-0 tooltip">
+        <span class="whitespace-nowrap">{{ label }}</span>
+        <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
+</li>
