@@ -114,26 +114,21 @@ export class GestionCalendarComponent {
 
             const [teachings, groups, subgroups] = await Promise.all([this.courseService.getTeachings(), this.courseService.getGroups(), this.courseService.getSubGroups()]);
 
-            this.initializeSelect('selectSpecialization', specializations.data, this.mapSpecializations, FilterType.Specialization);
-            this.initializeSelect('selectPersonal', personals.data, this.mapPersonals, FilterType.Personal);
-            this.initializeSelect('selectRoom', rooms.data, this.mapRooms, FilterType.Room);
-            this.initializeSelect('selectTeaching', teachings.data, this.mapTeachings, FilterType.Teaching);
-            this.initializeSelect('selectSubgroups', subgroups.data, this.mapSubGroups, FilterType.SubGroup);
-            this.initializeSelect('selectGroups', groups.data, this.mapGroups, FilterType.Group);
+            this.initializeSelect(specializations.data, this.mapSpecializations, FilterType.Specialization);
+            this.initializeSelect(personals.data, this.mapPersonals, FilterType.Personal);
+            this.initializeSelect(rooms.data, this.mapRooms, FilterType.Room);
+            this.initializeSelect(teachings.data, this.mapTeachings, FilterType.Teaching);
+            this.initializeSelect(subgroups.data, this.mapSubGroups, FilterType.SubGroup);
+            this.initializeSelect(groups.data, this.mapGroups, FilterType.Group);
         } catch (error) {
             console.error('Error loading select field data:', error);
         }
     }
 
-    private initializeSelect(elementId: string, data: any[], map: Map<string, any>, filterType: FilterType) {
-        const selectElement = document.querySelector(`.${elementId}`);
+    private initializeSelect(data: any[], map: Map<string, any>, filterType: FilterType) {
         data.forEach((item) => {
             const [key, value] = this.extractKeyAndValue(item, filterType);
             map.set(key, value);
-            const option = document.createElement('option');
-            option.value = value;
-            option.text = key;
-            selectElement?.appendChild(option);
         });
     }
 
@@ -150,7 +145,7 @@ export class GestionCalendarComponent {
             case FilterType.SubGroup:
                 return [item.id, new Subgroup(item)];
             case FilterType.Group:
-                return [item.id, new Subgroup(item)];
+                return [item.id, new Group(item)];
             default:
                 throw new Error(`Type de filtre non pris en charge: ${filterType}`);
         }

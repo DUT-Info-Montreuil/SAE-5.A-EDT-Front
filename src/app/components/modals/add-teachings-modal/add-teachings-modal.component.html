@@ -5,50 +5,50 @@
     <div class="grid grid-cols-2 gap-4">
         <div class="ml-2">
             <p>Nom :</p>
-            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.title" >
+            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.title" />
         </div>
         <div class="mr-2">
             <p>type de cour :</p>
-            <select class="rounded-xl bg-gray-50 dark:bg-grey-dark " [(ngModel)]="jsonRessource.teaching_type">
-                <option >RCC</option>
-                <option >RCC</option>
-                <option >RCC</option>
-
+            <select class="rounded-xl bg-gray-50 dark:bg-grey-dark" [(ngModel)]="jsonRessource.teaching_type">
+                <option>RCC</option>
+                <option>RCC</option>
+                <option>RCC</option>
             </select>
         </div>
         <div class="ml-2">
             <p>Semestre :</p>
-            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.semestre">
+            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.semestre" />
         </div>
         <div class="mr-2">
-            <p>Taux horaire (semestre) : </p>
-            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.hour_number">
+            <p>Taux horaire (semestre) :</p>
+            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.hour_number" />
         </div>
         <div class="ml-2">
             <p>Séquence :</p>
-            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.sequence">
+            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.sequence" />
         </div>
         <div class="mr-2">
-            <p>Couleur : </p>
-            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.color">
-        </div>     
+            <p>Couleur :</p>
+            <select class="w-full rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.color">
+                <option *ngFor="let color of colors">{{ color }}</option>
+            </select>
+        </div>
         <div class="ml-2">
-            <p>Description : </p>
-            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.description">
-        </div>   
+            <p>Description :</p>
+            <input class="rounded-xl bg-gray-50 dark:bg-grey-dark p-2" [(ngModel)]="jsonRessource.description" />
+        </div>
         <div class="mr-2">
             <p>Parcour :</p>
-            <select class="rounded-xl bg-gray-50 dark:bg-grey-dark "[(ngModel)]="jsonRessource.specialization_id">
+            <select class="rounded-xl bg-gray-50 dark:bg-grey-dark" [(ngModel)]="jsonRessource.specialization_id">
                 <!-- Boucle à travers listeDepartment pour créer les options -->
                 <option value="" disabled selected>Choissisez un parcour</option>
                 <ng-container *ngFor="let spe of listeSpecialization">
-                    <option >{{ spe[2]}}</option>
+                    <option>{{ spe[2] }}</option>
                 </ng-container>
-            </select>                
+            </select>
         </div>
-        
-      </div>       
-          
+    </div>
+
     <div class="flex justify-center items-center p-6 space-x-2 border-gray-200 rounded-b">
         <app-button label="Valider" type="primary" (click)="submit()"></app-button>
         <app-button label="Annuler" type="grey" (click)="close(false)"></app-button>
