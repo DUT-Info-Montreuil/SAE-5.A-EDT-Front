@@ -1,19 +1,18 @@
-<div class="bg-calendar-purple shadow-purple h-full flex flex-col justify-between rounded-md border-subtitle dark:border-grey-dark border-0.5 text-white py-1 px-4 bg-opacity-80 dark:bg-opacity-60 hover:bg-opacity-100 hover:dark:bg-opacity-80 transition-all duration-300">
-    <span class="font-bold">
-        {{ course.teaching?.title }}
-    </span>
-    <div class="flex justify-between">
-        <span class="font-normal">
+<div class="gap-x-4 h-full flex justify-between rounded-md border-subtitle dark:border-grey-dark border-0.5 text-white py-1 px-4 bg-opacity-80 dark:bg-opacity-60 hover:bg-opacity-100 hover:dark:bg-opacity-80 transition-all duration-300" [ngClass]="[customClass, !isOneLine() ? 'flex-col' : 'items-center']">
+    <div class="w-full flex text-center font-bold" [ngClass]="{ 'flex-col': !isTwoLine(), 'justify-between': isTwoLine() }">
+        <span *ngIf="course.teaching?.title" class="truncate basis-4/5" [ngClass]="{ 'text-start': isTwoLine() }">
+            {{ course.teaching?.title }}
+        </span>
+        <span *ngIf="course.subgroups" class="truncate" [ngClass]="{ 'text-end': isTwoLine(), 'basis-4/5': !isOneLine() }">
+            {{ getSubGroupsName() }}
+        </span>
+    </div>
+    <div class="w-full flex justify-between">
+        <span class="font-normal truncate basis-4/5">
             {{ getRoomCodes() }}
         </span>
-        <div class="flex gap-x-1 items-center">
-            <span class="font-bold">
-                {{ getPersonalCodes() }}
-            </span>
-            <svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M1.20201 0.258433C1.57096 -0.0861443 2.16916 -0.0861443 2.53811 0.258433L6.31715 3.78789C6.68612 4.13248 6.68612 4.69107 6.31715 5.03566L2.53811 8.56507C2.16916 8.90966 1.57096 8.90966 1.20201 8.56507C0.833055 8.22049 0.833055 7.6619 1.20201 7.31731L4.31298 4.41177L1.20201 1.50627C0.833055 1.16169 0.833055 0.60301 1.20201 0.258433Z" fill="white" />
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.24083 0.258433C6.6098 -0.0861443 7.2079 -0.0861443 7.57686 0.258433L11.3559 3.78789C11.7249 4.13248 11.7249 4.69107 11.3559 5.03566L7.57686 8.56507C7.2079 8.90966 6.6098 8.90966 6.24083 8.56507C5.87187 8.22049 5.87187 7.6619 6.24083 7.31731L9.35177 4.41177L6.24083 1.50627C5.87187 1.16169 5.87187 0.60301 6.24083 0.258433Z" fill="white" />
-            </svg>
-        </div>
+        <span class="font-bold truncate">
+            {{ getPersonalCodes() }}
+        </span>
     </div>
 </div>

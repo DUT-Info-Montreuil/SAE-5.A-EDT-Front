@@ -50,10 +50,10 @@
                             </app-sidebar-item>
                         </ul>
                     </div>
-                    <app-sidebar-toggle-item label="Gestion" [collapse]="sideBarCollapsed" class="border-t-0.5 border-subtitle dark:border-grey">
+                    <app-sidebar-toggle-item *ngIf="userRole === Role.ADMIN || userRole === Role.TEACHER_RESPONSIBLE" label="Gestion" [collapse]="sideBarCollapsed" class="border-t-0.5 border-subtitle dark:border-grey">
                         <ng-container subitems>
                             <ul class="mt-2">
-                                <app-sidebar-item label="Administration" [collapse]="sideBarCollapsed" [routePath]="routes.GESTION" [active]="isRouteActive(routes.GESTION)">
+                                <app-sidebar-item *ngIf="userRole === Role.ADMIN" label="Administration" [collapse]="sideBarCollapsed" [routePath]="routes.GESTION" [active]="isRouteActive(routes.GESTION)">
                                     <ng-container icon>
                                         <svg class="w-5 h-5" [ngClass]="{ 'fill-primary': isRouteActive(routes.GESTION), 'fill-grey dark:fill-body-light': !isRouteActive(routes.GESTION) }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none">
                                             <g clip-path="url(#clip0_62_172)">
@@ -72,7 +72,7 @@
                                         </svg>
                                     </ng-container>
                                 </app-sidebar-item>
-                                <app-sidebar-item label="Emploi du temps" [collapse]="sideBarCollapsed" [routePath]="routes.GESTION_CALENDAR" [active]="isRouteActive(routes.GESTION_CALENDAR)">
+                                <app-sidebar-item *ngIf="userRole === Role.ADMIN || userRole === Role.TEACHER_RESPONSIBLE" label="Emploi du temps" [collapse]="sideBarCollapsed" [routePath]="routes.GESTION_CALENDAR" [active]="isRouteActive(routes.GESTION_CALENDAR)">
                                     <ng-container icon>
                                         <svg class="w-5 h-5" [ngClass]="{ 'fill-primary': isRouteActive(routes.GESTION_CALENDAR), 'fill-grey dark:fill-body-light': !isRouteActive(routes.GESTION_CALENDAR) }" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path

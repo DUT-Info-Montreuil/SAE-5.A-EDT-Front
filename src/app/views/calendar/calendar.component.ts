@@ -6,8 +6,9 @@ import { Subject } from 'rxjs';
 import { isSameDay } from 'date-fns';
 import { TimetableService } from 'src/app/services/timetable.service';
 import { FilterType } from 'src/app/models/enums';
-import { Specialization, Room, Personal } from 'src/app/models/entities';
+import { Specialization, Room, Personal, User } from 'src/app/models/entities';
 import { DateFormattingService } from 'src/app/services/date-formatting.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -37,10 +38,16 @@ export class CalendarComponent {
     currentFilterType!: FilterType;
     currentFilterValue: any;
     formattedDate: string | null;
+    user?: User;
 
-    constructor(private timetableService: TimetableService, private dateFormattingService: DateFormattingService) {
+    constructor(private authService: AuthService, private timetableService: TimetableService, private dateFormattingService: DateFormattingService) {
         this.formattedDate = this.dateFormattingService.format(new Date());
         this.initSelectFields();
+    }
+
+    ngOnInit(): void {
+        this.user = this.authService.getUser()!;
+        this.loadEventsUser();
     }
 
     get viewDate(): Date {
@@ -50,18 +57,33 @@ export class CalendarComponent {
     set viewDate(value: Date) {
         if (value !== this._viewDate) {
             this._viewDate = value;
-            this.loadEvents();
+            if (this.currentFilterType && this.currentFilterValue) {
+                this.loadEvents();
+            } else {
+                this.loadEventsUser();
+            }
         }
     }
 
     onFilterChanged(filterDetails: { filterType: FilterType; filterValue: string }) {
-        this.currentFilterType = filterDetails.filterType;
-        this.currentFilterValue = filterDetails.filterValue;
-        this.loadEvents();
+        this.currentFilterType = filterDetails?.filterType;
+        this.currentFilterValue = filterDetails?.filterValue;
+        if (this.currentFilterType && this.currentFilterValue) {
+            this.loadEvents();
+        } else {
+            this.loadEventsUser();
+        }
+    }
+
+    loadEventsUser() {
+        this.timetableService.getEventsByUser(this.user!, this.viewDate).then((events) => {
+            this.events = events;
+            this.refresh.next();
+        });
     }
 
     loadEvents() {
-        this.timetableService.getEvents(this.currentFilterType, this.currentFilterValue, this.view, this.viewDate).then((events) => {
+        this.timetableService.getEvents(this.currentFilterType, this.currentFilterValue, this.viewDate).then((events) => {
             this.events = events;
             this.refresh.next();
         });

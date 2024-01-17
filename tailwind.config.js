@@ -1,6 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    purge: ["./src/**/*.{html,ts}"],
+    content: ["./src/**/*.{html,ts}"],
+    safelist: [
+        {
+            pattern: /(text|bg|shadow-s|border)-calendar-[\w-]+/,
+        },
+    ],
     darkMode: "class",
     theme: {
         borderWidth: {
@@ -62,6 +67,22 @@ module.exports = {
             "calendar-pink": "#BD428F",
             "calendar-red": "#FF808B",
             "calendar-blue": "#9698D6",
+            "calendar-green": "#4CAF50",
+            "calendar-yellow": "#D4C02A",
+            "calendar-orange": "#CC8400",
+            "calendar-teal": "#008080",
+            "calendar-indigo": "#4B0082",
+            "calendar-gray": "#808080",
+            "calendar-brown": "#A52A2A",
+            "calendar-cyan": "#00BCD4",
+            "calendar-lime": "#CDDC39",
+            "calendar-amber": "#FFBF00",
+            "calendar-emerald": "#50C878",
+            "calendar-fuchsia": "#FF00FF",
+            "calendar-magenta": "#FF00FF",
+            "calendar-maroon": "#800000",
+            "calendar-olive": "#808000",
+            "calendar-navy": "#000080",
         },
         container: {
             center: true,
@@ -79,10 +100,26 @@ module.exports = {
             },
             boxShadow: {
                 card: "0px 8px 16px 0px rgba(0, 0, 0, 0.03)",
-                purple: "0px 4px 10px 0px rgba(63, 61, 86, 0.15)",
-                pink: "0px 4px 10px 0px rgba(189, 66, 143, 0.15)",
-                red: "0px 4px 10px 0px rgba(255, 128, 139, 0.15)",
-                blue: "0px 4px 10px 0px rgba(150, 152, 214, 0.15)",
+                "s-calendar-purple": "0px 4px 10px 0px rgba(63, 61, 86, 0.15)",
+                "s-calendar-pink": "0px 4px 10px 0px rgba(189, 66, 143, 0.15)",
+                "s-calendar-red": "0px 4px 10px 0px rgba(255, 128, 139, 0.15)",
+                "s-calendar-blue": "0px 4px 10px 0px rgba(150, 152, 214, 0.15)",
+                "s-calendar-green": "0px 4px 10px 0px rgba(76, 175, 80, 0.15)",
+                "s-calendar-yellow": "0px 4px 10px 0px rgba(212, 192, 42, 0.15)",
+                "s-calendar-orange": "0px 4px 10px 0px rgba(204, 132, 0, 0.15)",
+                "s-calendar-teal": "0px 4px 10px 0px rgba(0, 128, 128, 0.15)",
+                "s-calendar-indigo": "0px 4px 10px 0px rgba(75, 0, 130, 0.15)",
+                "s-calendar-gray": "0px 4px 10px 0px rgba(128, 128, 128, 0.15)",
+                "s-calendar-brown": "0px 4px 10px 0px rgba(165, 42, 42, 0.15)",
+                "s-calendar-cyan": "0px 4px 10px 0px rgba(0, 188, 212, 0.15)",
+                "s-calendar-lime": "0px 4px 10px 0px rgba(205, 220, 57, 0.15)",
+                "s-calendar-amber": "0px 4px 10px 0px rgba(255, 191, 0, 0.15)",
+                "s-calendar-emerald": "0px 4px 10px 0px rgba(80, 200, 120, 0.15)",
+                "s-calendar-fuchsia": "0px 4px 10px 0px rgba(255, 0, 255, 0.15)",
+                "s-calendar-magenta": "0px 4px 10px 0px rgba(255, 0, 255, 0.15)",
+                "s-calendar-maroon": "0px 4px 10px 0px rgba(128, 0, 0, 0.15)",
+                "s-calendar-olive": "0px 4px 10px 0px rgba(128, 128, 0, 0.15)",
+                "s-calendar-navy": "0px 4px 10px 0px rgba(0, 0, 128, 0.15)",
             },
             lineHeight: {
                 12: "3rem",
@@ -116,5 +153,5 @@ module.exports = {
             "2xl": "1536px",
         },
     },
-    plugins: [require("tailwindcss-inner-border"), require("@tailwindcss/line-clamp"), require("flowbite/plugin")],
+    plugins: [require("tailwindcss-inner-border"), require("flowbite/plugin")],
 };

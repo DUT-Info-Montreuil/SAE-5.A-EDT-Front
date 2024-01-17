@@ -56,10 +56,11 @@ export class LabeledTimeInputComponent implements AfterViewInit {
     }
 
     private getRoundedTime(date: Date): string {
+        const hours = date.getHours();
         const minutes = date.getMinutes();
         const roundedMinutes = Math.round(minutes / 10) * 10;
         date.setMinutes(roundedMinutes);
-        return date.getHours() + ':' + (roundedMinutes < 10 ? '0' : '') + roundedMinutes;
+        return (hours < 10 ? '0' : '') + hours + ':' + (roundedMinutes < 10 ? '0' : '') + roundedMinutes;
     }
 
     ngOnDestroy() {

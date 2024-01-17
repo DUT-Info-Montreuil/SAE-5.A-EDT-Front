@@ -4,4 +4,5 @@ export enum FilterType {
     Specialization = 'specialization',
     Teaching = 'teaching',
     SubGroup = 'subgroup',
+    Group = 'group',
 }

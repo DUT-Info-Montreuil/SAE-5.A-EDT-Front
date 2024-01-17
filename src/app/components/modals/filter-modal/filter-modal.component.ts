@@ -16,7 +16,7 @@ export class FilterModalComponent {
     @Output() filterChanged = new EventEmitter<{ filterType: FilterType; filterValue: any }>();
     FilterType = FilterType;
     isLoading: boolean = false;
-    filterValue!: Personal | Room | Specialization;
+    filterValue?: Personal | Room | Specialization;
     filterType?: FilterType;
     searchText: string = '';
     filteredSpecializations: Array<{ key: string; value: Specialization }> = [];
@@ -27,25 +27,13 @@ export class FilterModalComponent {
     constructor() {}
 
     ngOnInit() {
-        this.initFilter();
+        this.filterType = FilterType.Specialization;
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['isOpen'].currentValue === true) {
             this.onSearchChange(this.searchText);
         }
-    }
-
-    initFilter() {
-        this.filterType = FilterType.Specialization;
-        this.filterValue = new Specialization({
-            code: 'INFO',
-            department_id: '1',
-            id: '1', //Todo à gerer au moment de la connexion
-
-            name: 'Semestre de preparation au parcours',
-        });
-        this.filterChanged.emit({ filterType: this.filterType, filterValue: this.filterValue });
     }
 
     setActiveFilterType(filterType: FilterType) {
@@ -74,8 +62,12 @@ export class FilterModalComponent {
     }
 
     selectFilter(type: FilterType, value: Personal | Specialization | Room) {
-        this.filterType = type;
-        this.filterValue = value;
+        if (value === this.filterValue) {
+            this.filterValue = undefined;
+        } else {
+            this.filterType = type;
+            this.filterValue = value;
+        }
     }
 
     updateNumberOfResults(): void {
@@ -95,7 +87,17 @@ export class FilterModalComponent {
     }
 
     submit() {
-        this.filterChanged.emit({ filterType: this.filterType!, filterValue: this.filterValue });
+        let emitValue;
+
+        if (this.filterValue instanceof Room) {
+            emitValue = { filterType: FilterType.Room, filterValue: this.filterValue };
+        } else if (this.filterValue instanceof Specialization) {
+            emitValue = { filterType: FilterType.Specialization, filterValue: this.filterValue };
+        } else if (this.filterValue instanceof Personal) {
+            emitValue = { filterType: FilterType.Personal, filterValue: this.filterValue };
+        }
+
+        this.filterChanged.emit(emitValue);
         this.close(true);
     }
 
