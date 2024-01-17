@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-update-eleve-modal',
   templateUrl: './update-eleve-modal.component.html',
   styleUrls: ['./update-eleve-modal.component.css']
 })
-export class UpdateEleveModalComponent implements OnInit{
+export class UpdateEleveModalComponent{
   @Input() isOpen!: boolean;
   @Input() eleve = {
     department_id: '',
@@ -30,37 +30,30 @@ export class UpdateEleveModalComponent implements OnInit{
   departmentTrouve : any [] = []
   groupTrouve: any [] = []
   sousGroupTrouve: any [] = []
+  isDepartChange = false
+  isTdChange = false
 
   constructor(private fb: FormBuilder) {
     this.updateEleveForm = this.fb.group({
     });
   }
-  ngOnInit(): void {
-    this.listeGroup.forEach((item, index) => {
-      this.organizeTDList.push([item]);
-    });
-    this.listeSubGroup.forEach((item, index) => {
-      this.organizeTPList.push([item]);
-    });
-    this.listeDepartment.forEach((item, index) => {
-      this.organizeDepartList.push(item);
-    });
-  }
-
-  toggleDepartClicked(event : any) {
-    this.isDepartmentClicked = !this.isDepartmentClicked;
+  departChange(event : any) {
     this.organizeTDList = []
     this.departmentTrouve = this.listeDepartment.find(departement =>
       departement[1]=== event.target.value
   );
     const filteredItemGroups = this.listeGroup.filter(itemGroup => itemGroup[2] === this.departmentTrouve[0]);
     this.organizeTDList.push(...filteredItemGroups);
+    this.isDepartChange = true
+  }
+
+  toggleDepartClicked() {
+    this.isDepartmentClicked = true;
+    
   }  
-
-
-  toggleTDClicked(event:any) {
+  changeTd(event : any) {
+    this.isTdChange = true
     this.organizeTPList = []
-    this.isTDClicked = !this.isTDClicked;
     this.groupTrouve = this.listeGroup.find(group =>
       (group[1] + ', ' +group[3] + ' année') === event.target.value 
       );
@@ -68,12 +61,16 @@ export class UpdateEleveModalComponent implements OnInit{
     this.organizeTPList.push(...filteredItemSubGroups);
   }
 
+  toggleTDClicked(event:any) {
+    this.isTDClicked = true;
+  }
+
   toggleTPClicked(event:any) {
     this.isTPClicked = !this.isTPClicked;
     this.sousGroupTrouve = this.listeSubGroup.find(subgroup =>
       subgroup[1] === event.target.value 
     );
-    this.eleve.subgroup_id = this.sousGroupTrouve[0]
+    this.eleve.department_id = this.sousGroupTrouve[0]
   }
 
   close(reload: boolean = false) {
