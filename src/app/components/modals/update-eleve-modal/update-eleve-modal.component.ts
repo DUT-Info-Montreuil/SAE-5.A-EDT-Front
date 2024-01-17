@@ -41,7 +41,6 @@ export class UpdateEleveModalComponent implements OnInit{
     });
     this.listeSubGroup.forEach((item, index) => {
       this.organizeTPList.push([item]);
-      
     });
     this.listeDepartment.forEach((item, index) => {
       this.organizeDepartList.push(item);

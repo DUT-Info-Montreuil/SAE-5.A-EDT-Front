@@ -251,18 +251,18 @@ export class GestionComponent {
     let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
-        if (dept[0] === tab[7]) {
-          tab[7] = dept[1];
+        if (dept[0] === tab[5]) {
+          tab[5] = dept[1];
         }
       });
       this.listeGroup.forEach((group: string[]) => {
-        if (group[0] === tab[4]) {
-          tab[4] = group[1];
+        if (group[0] === tab[2]) {
+          tab[2] = group[1];
         }
       });
       this.listeSubGroup.forEach((subGroup: string[]) => {
-        if (subGroup[0] === tab[5]) {
-          tab[5] = subGroup[1];
+        if (subGroup[0] === tab[3]) {
+          tab[3] = subGroup[1];
         }
       });
       this.listeEleves.push(tab);
@@ -287,18 +287,18 @@ export class GestionComponent {
     let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
-        if (dept[0] === tab[7]) {
-          tab[7] = dept[1];
+        if (dept[0] === tab[5]) {
+          tab[5] = dept[1];
         }
       });
       this.listeGroup.forEach((group: string[]) => {
-        if (group[0] === tab[4]) {
-          tab[4] = group[1];
+        if (group[0] === tab[2]) {
+          tab[2] = group[1];
         }
       });
       this.listeSubGroup.forEach((subGroup: string[]) => {
-        if (subGroup[0] === tab[5]) {
-          tab[5] = subGroup[1];
+        if (subGroup[0] === tab[3]) {
+          tab[3] = subGroup[1];
         }
       });
       this.listeEleves.push(tab);
@@ -325,18 +325,18 @@ export class GestionComponent {
     let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
-        if (dept[0] === tab[7]) {
-          tab[7] = dept[1];
+        if (dept[0] === tab[5]) {
+          tab[5] = dept[1];
         }
       });
       this.listeGroup.forEach((group: string[]) => {
-        if (group[0] === tab[4]) {
-          tab[4] = group[1];
+        if (group[0] === tab[2]) {
+          tab[2] = group[1];
         }
       });
       this.listeSubGroup.forEach((subGroup: string[]) => {
-        if (subGroup[0] === tab[5]) {
-          tab[5] = subGroup[1];
+        if (subGroup[0] === tab[3]) {
+          tab[3] = subGroup[1];
         }
       });
       this.listeEleves.push(tab);
@@ -364,18 +364,18 @@ export class GestionComponent {
     let data1 = response1.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
     data1.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
-        if (dept[0] === tab[7]) {
-          tab[7] = dept[1];
+        if (dept[0] === tab[5]) {
+          tab[5] = dept[1];
         }
       });
       this.listeGroup.forEach((group: string[]) => {
-        if (group[0] === tab[4]) {
-          tab[4] = group[1];
+        if (group[0] === tab[2]) {
+          tab[2] = group[1];
         }
       });
       this.listeSubGroup.forEach((subGroup: string[]) => {
-        if (subGroup[0] === tab[5]) {
-          tab[5] = subGroup[1];
+        if (subGroup[0] === tab[3]) {
+          tab[3] = subGroup[1];
         }
       });
       this.listeEleves.push(tab);
@@ -424,18 +424,18 @@ export class GestionComponent {
     let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.group_id, eleve.subgroup_id, eleve.id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
-        if (dept[0] === tab[7]) {
-          tab[7] = dept[1];
+        if (dept[0] === tab[5]) {
+          tab[5] = dept[1];
         }
       });
       this.listeGroup.forEach((group: string[]) => {
-        if (group[0] === tab[4]) {
-          tab[4] = group[1];
+        if (group[0] === tab[2]) {
+          tab[2] = group[1];
         }
       });
       this.listeSubGroup.forEach((subGroup: string[]) => {
-        if (subGroup[0] === tab[5]) {
-          tab[5] = subGroup[1];
+        if (subGroup[0] === tab[3]) {
+          tab[3] = subGroup[1];
         }
       });
       this.listeEleves.push(tab);
@@ -532,19 +532,11 @@ export class GestionComponent {
   }
 
   async updateEleveSubmit(formData: any) {
-    console.log(JSON.stringify(formData));
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     await axios.patch(`${environment.apiUrl}/students/update/${formData.id}`, formData, { headers })
-    .then(response => {
-      console.log('Données mises à jour avec succès :', response.data);
-      // Traitez la réponse en conséquence
-    })
-    .catch(error => {
-      console.error('Erreur lors de la mise à jour des données :', error);
-      // Gérez les erreurs en conséquence
-    });
+   
   }
     
   openUpdateProfModal(prof : any) {
