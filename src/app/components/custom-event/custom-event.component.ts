@@ -10,6 +10,7 @@ import { Color } from 'src/app/models/entities/Color';
 export class CustomEventComponent {
     @Input()
     course!: Course;
+
     color!: Color;
 
     getRoomCodes(): string {

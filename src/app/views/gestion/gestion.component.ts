@@ -24,6 +24,7 @@ export class GestionComponent {
   listeEleves: any[] = [];
   listeSubGroup: any[] = [];
   listeGroup:any [] = [];
+  listeSpecialization:any [] = [];
   valeurInput: any = "";
   listeRecherche: any[] = []
   listeDepartment: any[] = []
@@ -34,12 +35,16 @@ export class GestionComponent {
   isUpdateEleveModalOpen: boolean = false;
   isUpdateProfModalOpen: boolean = false;
   isAddEleveModalOpen: boolean = false;
+  isAddProfModalOpen: boolean = false;
+  isAddRessourceModalOpen: boolean = false;
+  isAddRoomModalOpen: boolean = false;
   isUpdateSalleModalOpen:boolean = false;
   updateEleveClicked:boolean = false
   isUpdateRessourceModalOpen:boolean = false;
   isTDClicked: boolean = false;
   isTPClicked: boolean = false;
   isPromotionClicked: boolean = false;
+  isDeleteCohorteClicked: boolean = false
   showAllCohorte: boolean = false;
   selectedTD: any[] = []
 
@@ -49,7 +54,10 @@ export class GestionComponent {
     semestre: '',
     hour_number: '',
     color: '',
-    sequence: ''
+    sequence: '',
+    id:'',
+    specialization_id: '',
+    description: ''
   }; 
   jsonEleve:any  = {
     last_name: '',
@@ -58,13 +66,14 @@ export class GestionComponent {
     phone_number: '',
     group_id: '',
     department_id: '',
-    user_id: '',
+    id: '',
     subgroup_id: ''
   };  
   jsonProf: any = {
     first_name: '',
     last_name: '',
     mail: '',
+    phone_number: '',
     personal_code: '',
     id: ''
   };
@@ -72,11 +81,13 @@ export class GestionComponent {
     code: '',
     capacity: '',
     has_computer: '',
-    has_projector: ''
+    has_projector: '',
+    id:''
   };  
   
   constructor( private dateFormattingService: DateFormattingService, private authService: AuthService) {
     this.formattedDate = this.dateFormattingService.format(new Date());  
+    this.initSpecializationList()
     this.initListeGroup()
     this.initListeDepartment()
     this.initListeSubGroup()
@@ -85,15 +96,69 @@ export class GestionComponent {
 
   }
  
-  addCohorte(event : any) {
-    // TODO
-  }
+  async addCohorte(formData : any, ) {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    switch (formData.itemType) {
+      case 'department':
+        let jsonDepartment = {
+          "degree_type":`${formData.degree_type}`,
+          "description":`${formData.description}`,
+          "name":`${formData.name}`,
+          "personal_id":parseInt(`${formData.personal_id}`, 10)
+        }
+        
+        let response = await axios.put(`${environment.apiUrl}/departments/add`,jsonDepartment, { headers });
+      break;
+      case 'group':
+        let jsonGroup = {
+          "department_id":parseInt(`${formData.department_id}`, 10),
+          "type":`${formData.type}`,
+          "promotion":parseInt(`${formData.promotion}`, 10)
+        }
+        let response1 = await axios.put(`${environment.apiUrl}/groups/add`,jsonGroup, { headers });
+
+        break;
+      case 'subgroup':
+        let jsonSubGroup = {
+          "group_id":parseInt(`${formData.group_id}`, 10),
+          "name": `${formData.name}`
+        }
+        console.log("subgroup = "+JSON.stringify(jsonSubGroup, null, 2))
+        let response2 = await axios.put(`${environment.apiUrl}/subgroups/add`,jsonSubGroup, { headers });
+      break;
+      }
+    }
+
   closeAddCohorteModal() {
     this.addCohorteClicked = false;
   }
   openAddCohorteModal() {
     this.addCohorteClicked = true;
   }
+  openDeleteCohorteModal() {
+    this.isDeleteCohorteClicked = true
+  }
+  closeDeleteCohorteModal() {
+    this.isDeleteCohorteClicked = false
+  }
+  async deleteCohorteSubmit(formData : any) {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    console.log(JSON.stringify(formData));
+    switch (formData.itemType) {
+      case 'department':
+        await axios.delete(`${environment.apiUrl}/departments/delete/${formData.id}`, { headers });
+        break;
+      case 'group':
+        await axios.delete(`${environment.apiUrl}/groups/delete/${formData.id}`, { headers });
+        break;
+      case 'subgroup':
+        await axios.delete(`${environment.apiUrl}/subgroups/delete/${formData.id}`, { headers });
+      break;
+      }  }
   async deleteItem(item : any, itemType : any) {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
@@ -103,8 +168,7 @@ export class GestionComponent {
         const confirmation = window.confirm("Êtes-vous sûr de vouloir effectuer cette action ? "+
                       "\n Cela supprimera definitivement "+ item[0] + " "+item[1]);
         if (confirmation) {
-          let response = await axios.delete(`${environment.apiUrl}/students/delete/${item[6]}`, { headers });
-        console.log(response)
+          await axios.delete(`${environment.apiUrl}/students/delete/${item[6]}`, { headers });
         }
         break;
       case 'ressource':
@@ -248,6 +312,7 @@ export class GestionComponent {
     data1.forEach((tab: string[]) => {
       this.listeSubGroup.push(tab);
     });  
+    console.log('subgroup = '+ this.listeSubGroup)
   }
 
   async departmentClick(department: any) {   
@@ -359,8 +424,7 @@ export class GestionComponent {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     this.listeEleves = [];
     let response = await axios.get(`${environment.apiUrl}/students/get`, {headers});
-    console.log(response.data)
-    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.user_id,eleve.department_id]);
+    let data = response.data.map((eleve: any) => [eleve.first_name, eleve.last_name, eleve.mail,eleve.phone_number,eleve.group_id, eleve.subgroup_id, eleve.id,eleve.department_id]);
     data.forEach((tab: string[]) => {
       this.listeDepartment.forEach((dept: string[]) => {
         if (dept[0] === tab[7]) {
@@ -405,7 +469,7 @@ export class GestionComponent {
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     let response = await axios.get(`${environment.apiUrl}/personals/get`, {headers});
-    let data = response.data.map((prof: any) => [ prof.mail,prof.first_name,prof.last_name, prof.personal_code,prof.id]);
+    let data = response.data.map((prof: any) => [ prof.first_name, prof.last_name, prof.mail, prof.phone_number, prof.personal_code, prof.id]);
     data.forEach((tab: string[]) => {
       this.listeProfs.push(tab);
     });
@@ -420,8 +484,13 @@ export class GestionComponent {
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     let response = await axios.get(`${environment.apiUrl}/teachings/get`, {headers});
-    let data = response.data.map((ressource: any) => [ressource.title, ressource.teaching_type, ressource.semestre, ressource.hour_number,  ressource.color, ressource.sequence, ressource.id]);
+    let data = response.data.map((ressource: any) => [ressource.title, ressource.teaching_type, ressource.semestre, ressource.hour_number,  ressource.color, ressource.sequence, ressource.id, ressource.specialization_id, ressource.description]);
     data.forEach((tab: string[]) => {
+      this.listeSpecialization.forEach((spe: string[]) => {
+        if (spe[0] === tab[7]) {
+          tab[7] = spe[2];
+        }
+      });
       this.listeRessources.push(tab);
     });
     this.listeRecherche = this.listeRessources
@@ -452,14 +521,6 @@ export class GestionComponent {
   afficherMoins() {
     this.limit -= 4; 
   }
-  
-  openAddEleveModal(){
-      this.isAddEleveModalOpen = true;
-  }
-
-  closeAddEleveModal(reload?: boolean) {
-      this.isAddEleveModalOpen = false;
-  }
 
   openUpdateEleveModal(eleve : any) {
     this.updateEleveClicked = ! this.updateEleveClicked
@@ -474,18 +535,19 @@ export class GestionComponent {
   }
 
   async updateEleveSubmit(formData: any) {
+    console.log(JSON.stringify(formData));
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    // await axios.patch(`${environment.apiUrl}/students/update/${formData.user_id}`, formData, { headers })
-    // .then(response => {
-    //   console.log('Données mises à jour avec succès :', response.data);
-    //   // Traitez la réponse en conséquence
-    // })
-    // .catch(error => {
-    //   console.error('Erreur lors de la mise à jour des données :', error);
-    //   // Gérez les erreurs en conséquence
-    // });
+    await axios.patch(`${environment.apiUrl}/students/update/${formData.id}`, formData, { headers })
+    .then(response => {
+      console.log('Données mises à jour avec succès :', response.data);
+      // Traitez la réponse en conséquence
+    })
+    .catch(error => {
+      console.error('Erreur lors de la mise à jour des données :', error);
+      // Gérez les erreurs en conséquence
+    });
   }
     
   openUpdateProfModal(prof : any) {
@@ -503,8 +565,9 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    console.log(JSON.stringify(formData));
+    
     await axios.patch(`${environment.apiUrl}/personals/update/${formData.id}`, formData, { headers })
-
   }
 
   openUpdateSalleModal(prof : any) {
@@ -521,8 +584,8 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
-  }
+    await axios.patch(`${environment.apiUrl}/rooms/update/${formData.id}`, formData, { headers })
+   }
 
   openUpdateRessourceModal(ressource : any) {
     Object.keys(this.jsonRessource).forEach((key, index) => {
@@ -538,5 +601,114 @@ export class GestionComponent {
     this.authService.checkAuthentication();
     const token = this.authService.getToken();
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    console.log(JSON.stringify(formData));
+    await axios.patch(`${environment.apiUrl}/teachings/update/${formData.id}`, formData, { headers })
+
   }
+
+  async initSpecializationList() {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    let response = await axios.get(`${environment.apiUrl}/specializations/get`, {headers});
+    let data = response.data.map((spe: any) => [ spe.id, spe.name, spe.code,spe.department_id ]);
+    data.forEach((tab: string[]) => {
+      this.listeSpecialization.push(tab);
+    });
+  }
+
+  openAddEleveModal(){
+    this.isAddEleveModalOpen = true;
+  }
+
+  closeAddEleveModal(reload?: boolean) {
+      this.isAddEleveModalOpen = false;
+  }
+  async addEleveSubmit(eleve: any) {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const jsonEleve = {
+      "department_id": `${parseInt(eleve.department_id, 10)}`,
+      "first_name": `${eleve.first_name}`,
+      "group_id": `${parseInt(eleve.group_id, 10)}`,
+      "last_name": `${eleve.last_name}`,
+      "mail": `${eleve.mail}`,
+      "phone_number": `${eleve.phone_number}`,
+      "subgroup_id": `${parseInt(eleve.subgroup_id, 10)}`,
+      "password": `${eleve.password}`
+    }
+    console.log("Eleve = " +JSON.stringify(eleve));
+
+    await axios.put(`${environment.apiUrl}/students/add`, jsonEleve, { headers })
+  
+  }
+
+  openAddProfModal(){
+    this.isAddProfModalOpen = true;
+  }
+
+  closeAddProfModal(reload?: boolean) {
+    this.isAddProfModalOpen = false;
+  }
+  async addProfSubmit(formData: any) {
+    console.log(JSON.stringify(formData));
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const jsonProf = {
+      "first_name":`${formData.first_name}`,
+      "last_name":`${formData.last_name}`,
+      "mail":`${formData.mail}`,
+      "personal_code":`${formData.personal_code}`,
+      "phone_number":`${formData.phone_number}`,
+      "password":`${formData.password}`
+    }
+    await axios.put(`${environment.apiUrl}/personals/add`, jsonProf, { headers })
+  }
+  
+  openAddRoomModal(){
+    this.isAddRoomModalOpen = true;
+  }
+  closeAddRoomModal(reload?: boolean) {
+    this.isAddRoomModalOpen = false;
+  }
+  async addRoomSubmit(salle: any) {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const jsonSalle = {
+      "capacity":`${parseInt(salle.capacity, 10)}`,
+      "code":`${salle.code}`,
+      "has_computer":`${salle.has_computer}`,
+      "has_projector":`${salle.has_projector}`
+    }
+    await axios.put(`${environment.apiUrl}/rooms/add`, jsonSalle, { headers })
+  
+  }
+  
+  openAddRessourceModal(){
+    this.isAddRessourceModalOpen = true;
+  }
+
+  closeAddRessourceModal(reload?: boolean) {
+    this.isAddRessourceModalOpen = false;
+  }
+  async addRessourceSubmit(ressource: any) {
+    this.authService.checkAuthentication();
+    const token = this.authService.getToken();
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const jsonRessource = {
+      "color": `${ressource.color}`,
+      "description": `${ressource.description}`,
+      "hour_number": `${parseInt(ressource.hour_number, 10)}`,
+      "semestre": `${parseInt(ressource.semestre, 10)}`,
+      "sequence": `${ressource.sequence}`,
+      "specialization_id": `${parseInt(ressource.specialization_id, 10)}`,
+      "teaching_type": `${ressource.teaching_type}`,
+      "title": `${ressource.title}`
+    }
+    await axios.put(`${environment.apiUrl}/teachings/add`, jsonRessource, { headers })
+  }
+  
 }

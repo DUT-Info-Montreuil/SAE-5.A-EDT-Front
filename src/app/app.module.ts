@@ -56,6 +56,10 @@ import { UpdateProfModalComponent } from './components/modals/update-prof-modal/
 import { UpdateSalleModalComponent } from './components/modals/update-salle-modal/update-salle-modal.component';
 import { UpdateRessourceModalComponent } from './components/modals/update-ressource-modal/update-ressource-modal.component';
 import { AddCohorteModalComponent } from './components/modals/add-cohorte-modal/add-cohorte-modal.component';
+import { AddPersonalModalComponent } from './components/modals/add-personal-modal/add-personal-modal.component';
+import { AddRoomsModalComponent } from './components/modals/add-rooms-modal/add-rooms-modal.component';
+import { AddTeachingsModalComponent } from './components/modals/add-teachings-modal/add-teachings-modal.component';
+import { DeleteCohorteModalComponent } from './components/modals/delete-cohorte-modal/delete-cohorte-modal.component';
 import { CopyCourseModalComponent } from './components/modals/copy-course-modal/copy-course-modal.component';
 
 export function localStorageSyncReducer(reducer: any): any {
@@ -118,6 +122,10 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
         LabeledTimeInputComponent,
         DropdownComponent,
         EditCourseModalComponent,
+        AddPersonalModalComponent,
+        AddRoomsModalComponent,
+        AddTeachingsModalComponent,
+        DeleteCohorteModalComponent,
         CopyCourseModalComponent,
     ],
     imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, ClickOutsideModule, FormsModule, ReactiveFormsModule, StoreModule.forRoot({ layout: layoutReducer, user: userReducer }, { metaReducers }), CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })],

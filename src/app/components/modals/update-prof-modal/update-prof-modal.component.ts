@@ -9,11 +9,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class UpdateProfModalComponent {
   @Input() isOpen!: boolean;
   @Input() prof = {
-    last_name: '',
+    id: '',
     first_name: '',
+    last_name: '',
     mail: '',
-    personal_code: '',
-    id: ''
+    phone_number: '',
+    personal_code: ''
   };  
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter<any>();
   @Output() closed = new EventEmitter<boolean>();
@@ -32,16 +33,11 @@ export class UpdateProfModalComponent {
   }
 
   submit() {
-    const updatedValues = {
-      lastName: this.prof.last_name,
-      firstName: this.prof.first_name,
-      mail: this.prof.mail,
-      personal_code : this.prof.personal_code,
-      id : this.prof.id,
-      phone_number : this.prof.id
-    };
+    console.log("prof = " + JSON.stringify(this.prof, null, 2));
 
-    this.formSubmitted.emit(updatedValues);
+
+    this.formSubmitted.emit(this.prof);
+    this.close()
   }
   
 }

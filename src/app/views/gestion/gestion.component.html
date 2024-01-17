@@ -185,18 +185,19 @@
 
             <ng-container *ngIf="showAllCohorte && gestionActuelle == 'eleves'">
                 <div class="flex justify-between items-center">
-                    <h3>Toutes les cohortes</h3>
-                    <app-button *ngIf="gestionActuelle == 'eleves'" label="Ajouter" type="primary" (click)="openAddCohorteModal()">
-                        <ng-container left-icon>
-                            <svg class="w-4 h-4" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M10.3785 0.655518C8.40073 0.655518 6.46733 1.24201 4.82284 2.34082C3.17835 3.43963 1.89663 5.00142 1.13975 6.82868C0.382873 8.65594 0.18484 10.6666 0.570692 12.6064C0.956544 14.5462 1.90895 16.3281 3.30748 17.7266C4.706 19.1251 6.48783 20.0775 8.42764 20.4634C10.3674 20.8492 12.3781 20.6512 14.2054 19.8943C16.0326 19.1374 17.5944 17.8557 18.6932 16.2112C19.792 14.5667 20.3785 12.6333 20.3785 10.6555C20.3785 9.3423 20.1199 8.04194 19.6173 6.82868C19.1148 5.61543 18.3782 4.51303 17.4496 3.58445C16.521 2.65586 15.4186 1.91927 14.2054 1.41672C12.9921 0.914175 11.6918 0.655518 10.3785 0.655518ZM10.3785 18.6555C8.79629 18.6555 7.24957 18.1863 5.93398 17.3073C4.61839 16.4282 3.59301 15.1788 2.98751 13.717C2.38201 12.2552 2.22358 10.6466 2.53226 9.09479C2.84094 7.54294 3.60287 6.11748 4.72169 4.99866C5.84051 3.87984 7.26597 3.11792 8.81782 2.80923C10.3697 2.50055 11.9782 2.65898 13.44 3.26448C14.9018 3.86998 16.1512 4.89536 17.0303 6.21095C17.9093 7.52655 18.3785 9.07326 18.3785 10.6555C18.3785 12.7772 17.5357 14.8121 16.0354 16.3124C14.5351 17.8127 12.5003 18.6555 10.3785 18.6555ZM14.3785 9.65551H11.3785V6.65552C11.3785 6.3903 11.2732 6.13595 11.0856 5.94841C10.8981 5.76087 10.6438 5.65552 10.3785 5.65552C10.1133 5.65552 9.85897 5.76087 9.67144 5.94841C9.4839 6.13595 9.37854 6.3903 9.37854 6.65552V9.65551H6.37854C6.11333 9.65551 5.85897 9.76087 5.67144 9.94841C5.4839 10.1359 5.37854 10.3903 5.37854 10.6555C5.37854 10.9207 5.4839 11.1751 5.67144 11.3626C5.85897 11.5502 6.11333 11.6555 6.37854 11.6555H9.37854V14.6555C9.37854 14.9207 9.4839 15.1751 9.67144 15.3626C9.85897 15.5502 10.1133 15.6555 10.3785 15.6555C10.6438 15.6555 10.8981 15.5502 11.0856 15.3626C11.2732 15.1751 11.3785 14.9207 11.3785 14.6555V11.6555H14.3785C14.6438 11.6555 14.8981 11.5502 15.0856 11.3626C15.2732 11.1751 15.3785 10.9207 15.3785 10.6555C15.3785 10.3903 15.2732 10.1359 15.0856 9.94841C14.8981 9.76087 14.6438 9.65551 14.3785 9.65551Z"
-                                    fill="white"
-                                />
-                            </svg>
-                        </ng-container>
-                    </app-button>
+                    <h3 class="mr-auto">Toutes les cohortes</h3>
+
+                    <div class="flex items-end space-x-2">
+                        <app-button *ngIf="gestionActuelle == 'eleves'" label="Ajouter une cohorte" type="primary" (click)="openAddCohorteModal()">
+                            <ng-container left-icon>
+                                <!-- Votre icône ici -->
+                            </ng-container>
+                        </app-button>
+
+                        <app-button *ngIf="gestionActuelle == 'eleves'" label="Supprimer une cohorte" type="grey" (click)="openDeleteCohorteModal()"></app-button>
+                    </div>
                 </div>
+
                 <div class="flex flex-col">
                     <div class="flex flex-col sm:flex-row gap-1">
                         <button (click)="departmentClick(department)" *ngFor="let department of listeDepartment" [class.bg-gray-200]="selectedDepartment[1] === department" class="flex-1 border mb-2 border-gray-300 py-2 text-center rounded-md">
@@ -222,8 +223,8 @@
                             <h3>TP :</h3>
                             <select class="rounded-md ml-3 w-max selectPromo border py-2 px-3 focus:outline-none focus:border-blue-500" (change)="onChangeTPSelect($event)">
                                 <option value=""></option>
-                                <ng-container *ngFor="let td of listeSubGroup">
-                                    <option [value]="td">{{ td[1] }}</option>
+                                <ng-container *ngFor="let tp of listeSubGroup">
+                                    <option [value]="tp">{{ tp[1] }}</option>
                                 </ng-container>
                             </select>
                         </div>
@@ -302,7 +303,7 @@
             <ng-container *ngIf="gestionActuelle == 'professeurs'">
                 <div class="flex justify-between items-center">
                     <h3 class="text-left">Tous les professeurs</h3>
-                    <app-button *ngIf="gestionActuelle == 'professeurs'" label="Ajouter" type="primary" (click)="openAddEleveModal()">
+                    <app-button *ngIf="gestionActuelle == 'professeurs'" label="Ajouter" type="primary" (click)="openAddProfModal()">
                         <ng-container left-icon>
                             <svg class="w-4 h-4" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -378,11 +379,8 @@
                                     </svg>
                                 </div>
                                 <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
+                                    <p><strong>Nom :</strong> {{ prof[0] }} <br /></p>
                                     <p><strong>Nom :</strong> {{ prof[1] }} <br /></p>
-                                </div>
-
-                                <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
-                                    <p><strong>Prénom : </strong>{{ prof[2] }}</p>
                                 </div>
                             </div>
                         </div>
@@ -440,11 +438,8 @@
                                     </svg>
                                 </div>
                                 <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
+                                    <p><strong>Nom :</strong> {{ prof[0] }} <br /></p>
                                     <p><strong>Nom :</strong> {{ prof[1] }} <br /></p>
-                                </div>
-
-                                <div class="m-3 p-2 rounded-xl bg-gray-50 dark:bg-light-dark">
-                                    <p><strong>Prénom :</strong> {{ prof[2] }} <br /></p>
                                 </div>
                             </div>
                         </div>
@@ -460,7 +455,7 @@
             <ng-container *ngIf="gestionActuelle == 'salles'">
                 <div class="flex justify-between items-center">
                     <h3 class="text-left">Toutes les salles</h3>
-                    <app-button *ngIf="gestionActuelle == 'salles'" label="Ajouter" type="primary" (click)="openAddEleveModal()">
+                    <app-button *ngIf="gestionActuelle == 'salles'" label="Ajouter" type="primary" (click)="openAddRoomModal()">
                         <ng-container left-icon>
                             <svg class="w-4 h-4" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -562,7 +557,7 @@
             <ng-container *ngIf="gestionActuelle == 'ressources'">
                 <div class="flex justify-between items-center">
                     <h3 class="text-left">Toutes les ressources</h3>
-                    <app-button *ngIf="gestionActuelle == 'ressources'" label="Ajouter" type="primary" (click)="openAddEleveModal()">
+                    <app-button *ngIf="gestionActuelle == 'ressources'" label="Ajouter" type="primary" (click)="openAddRessourceModal()">
                         <ng-container left-icon>
                             <svg class="w-4 h-4" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -665,15 +660,29 @@
                 <h3 class="text-center">Statistiques</h3>
             </div>
         </div>
-        <app-add-eleve-modal [isOpen]="isAddEleveModalOpen" (closed)="closeAddEleveModal()"></app-add-eleve-modal>
+        <ng-container *ngIf="isAddEleveModalOpen">
+            <app-add-eleve-modal (formSubmitted)="addEleveSubmit($event)" [listeSubGroup]="listeSubGroup" [listeGroup]="listeGroup" [listeDepartment]="listeDepartment" [isOpen]="isAddEleveModalOpen" (closed)="closeAddEleveModal()"></app-add-eleve-modal>
+        </ng-container>
+        <ng-container *ngIf="isAddProfModalOpen">
+            <app-add-personal-modal (formSubmitted)="addProfSubmit($event)" [isOpen]="isAddProfModalOpen" (closed)="closeAddProfModal()"></app-add-personal-modal>
+        </ng-container>
+        <ng-container *ngIf="isAddRessourceModalOpen">
+            <app-add-teachings-modal (formSubmitted)="addRessourceSubmit($event)" [listeSpecialization]="listeSpecialization" [isOpen]="isAddRessourceModalOpen" (closed)="closeAddRessourceModal()"></app-add-teachings-modal>
+        </ng-container>
+        <ng-container *ngIf="isAddRoomModalOpen">
+            <app-add-rooms-modal (formSubmitted)="addRoomSubmit($event)" [isOpen]="isAddRoomModalOpen" (closed)="closeAddRoomModal()"></app-add-rooms-modal>
+        </ng-container>
         <ng-container *ngIf="updateEleveClicked">
             <app-update-eleve-modal (formSubmitted)="updateEleveSubmit($event)" [eleve]="jsonEleve" [listeSubGroup]="listeSubGroup" [listeGroup]="listeGroup" [listeDepartment]="listeDepartment" [isOpen]="isUpdateEleveModalOpen" (closed)="closeUpdateEleveModal()"></app-update-eleve-modal>
         </ng-container>
         <ng-container *ngIf="addCohorteClicked">
             <app-add-cohorte-modal (formSubmitted)="addCohorte($event)" [listePersonel]="listeProfs" [listeSubGroup]="listeSubGroup" [listeGroup]="listeGroup" [listeDepartment]="listeDepartment" [isOpen]="addCohorteClicked" (closed)="closeAddCohorteModal()"></app-add-cohorte-modal>
         </ng-container>
+        <ng-container *ngIf="isDeleteCohorteClicked">
+            <app-delete-cohorte-modal (formSubmitted)="deleteCohorteSubmit($event)" [listeSubGroup]="listeSubGroup" [listeGroup]="listeGroup" [listeDepartment]="listeDepartment" [isOpen]="isDeleteCohorteClicked" (closed)="closeDeleteCohorteModal()"></app-delete-cohorte-modal>
+        </ng-container>
         <app-update-prof-modal (formSubmitted)="updateProfSubmit($event)" [prof]="jsonProf" [isOpen]="isUpdateProfModalOpen" (closed)="closeUpdateProfModal()"></app-update-prof-modal>
         <app-update-salle-modal (formSubmitted)="updateSalleSubmit($event)" [salle]="jsonSalle" [isOpen]="isUpdateSalleModalOpen" (closed)="closeUpdateSalleModal()"></app-update-salle-modal>
-        <app-update-ressource-modal (formSubmitted)="updateRessourceSubmit($event)" [ressource]="jsonRessource" [isOpen]="isUpdateRessourceModalOpen" (closed)="closeUpdateRessourceModal()"></app-update-ressource-modal>
+        <app-update-ressource-modal (formSubmitted)="updateRessourceSubmit($event)" [listeSpecialization]="listeSpecialization" [ressource]="jsonRessource" [isOpen]="isUpdateRessourceModalOpen" (closed)="closeUpdateRessourceModal()"></app-update-ressource-modal>
     </div>
 </div>
